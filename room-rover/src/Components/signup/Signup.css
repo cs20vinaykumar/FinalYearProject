@@ -1,0 +1,105 @@
+.main-container{
+    height: 100vh;
+    width: 100vw;
+}
+
+.main-content{
+    position: absolute;
+    left: 50%;
+    top: 49%;
+    transform: translate(-50%, -50%);
+}
+
+.signup{
+    position: relative;
+    padding: 60px;
+    background: rgba(255, 255, 255, 0.992);
+    backdrop-filter: blur(20px);
+    border: 1px solid #fff;
+    border-radius: 45px;
+    /* width: 310px; */
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+}
+
+.signup h4{
+    color: #8f2c24;
+    color: black;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    margin-top: -50px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.form-group{
+    margin: 10px;
+}
+
+.labels{
+    margin: 15px 40px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.inputs{
+    width: 40%;
+    border-radius: 5px;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.inpus{
+    width: 2%;
+    display: inline-block;
+}
+label {
+    width:180px;
+    clear:right;
+    text-align:right;
+    padding-right:10px;
+
+}
+
+.male{
+    display: inline-block;
+    font-weight: 600;
+}
+
+
+.form-class{
+    margin-left: -100px;
+}
+
+
+#svgimg{
+    position: absolute;
+    top: 43%;
+    right: 31%;
+    z-index: 1;
+    animation-name: svgpic;
+    animation-duration: 5s;
+    animation-iteration-count: 1 ;
+}
+
+
+@keyframes svgpic{
+    0%{
+        top: 0%;
+        right: 0%;
+       
+    }
+
+    50%{
+        top: 25%;
+        right: 1%;
+    }
+
+    100%{
+        top: 43%;
+        right: 31%;
+    }
+}
+

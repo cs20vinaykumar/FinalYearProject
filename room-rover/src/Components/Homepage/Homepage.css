@@ -1,0 +1,313 @@
+body{
+  width: 100vw;
+}
+.firstsection {
+    display: flex;
+    justify-content: space-around;
+    height: 70vh;
+    margin: 70px 0;
+    align-items: center;
+    
+  }
+  .firstsection > div {
+    width: 35%;
+    font-size: 2rem;
+    margin-bottom: 120px;
+ 
+  }
+
+  .leftsection{
+    margin-bottom: 200px;
+  }
+  
+  .first {
+    font-size: 3rem;
+  }
+  
+  .right img {
+    width: 90%;
+  }
+  
+  .purple {
+    /* color: rgb(172, 110, 230); */
+    color: black;
+  }
+
+  span{
+    color: rgb(81, 80, 80);
+  }
+
+  .rightsection{
+    background-image: url('E:\FinalYearProject\room-rover\src\Components\Homepage\Bgroom.png');
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
+    background-position: center;
+    background-size: cover;
+    height: 80%;
+    width: 100vw;
+    border-radius: 20px;
+    flex-basis: 45%;
+  }
+
+  .searchbar{
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.search-bar {
+    position: relative;
+  }
+  
+  .search-bar .icon {
+    position: absolute;
+    top: 57%;
+    left: 10px;
+    transform: translateY(-50%);
+    height: 10px;
+
+  }
+
+    
+  
+  
+  .search-bar .input-text {
+    width: 95%;
+    height: 8vh;
+    border: 0px;
+    background-color: #fff;
+    padding: 8px 8px 8px 35px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+  }
+  .search-bar .input-text:focus {
+    /* width: 80%; */
+    background-color: #ccc;
+  }
+  .search-bar .icon2 {
+    position: absolute;
+    top: 57%;
+    left: 90%;
+    transform: translateY(-50%);
+    height: 10px;
+
+  }
+
+  /* ------------------2nd paraghraoh-------------- */
+ 
+
+  #Find {
+    margin: -100px 60px;
+
+  }
+
+
+
+  .secondsection{
+    display: flex;
+    justify-content: space-around;
+    height: 70vh;
+    margin: 50px 0;
+    align-items: center;
+
+  }
+
+  .box-left{
+    flex-basis: 45%;
+    background-image: url('E:\FinalYearProject\room-rover\Images\Rectangle 17.png');
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
+    background-position: center;
+    /* background-size: cover; */
+    height: 55%;
+    border-top-left-radius: 110px;
+    border-bottom-right-radius: 110px;
+
+  }
+
+  .box-right{
+    flex-basis: 45%;
+    background-image: url('E:\FinalYearProject\room-rover\Images\Rectangle 16.png');
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
+    background-position: center;
+    /* background-size: cover; */
+    height: 55%;
+    border-top-left-radius: 110px;
+    border-bottom-right-radius: 110px;
+  }
+
+  .midDiv{
+    position: relative;
+    
+  }
+
+  .midDiv .btnB{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    height: 15%;
+    font-size: large;
+  }
+
+
+    /* ------------------3rd paragraph-------------- */
+
+
+    #Cities {
+      margin: 140px 80px;
+  
+    }
+
+    .cities-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      /* height: 220px; */
+      grid-gap: 40px;
+      margin-top: 80px;
+    }
+
+    .cities-list div {
+      /* background: #262626; */
+      padding: 40px;
+      cursor: pointer;
+      font-weight: 300;
+      font-size: 13px;
+      border-radius: 10px;
+      width: 270px;
+      height: 210px;
+    }
+
+    .media-1{
+      background-image: url('E:\FinalYearProject\room-rover\Images\karachi 1.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      
+    
+
+    }
+    .media-2{
+      background-image: url('E:\FinalYearProject\room-rover\Images\Hyderabad.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      
+    
+
+    }
+    .media-3{
+      background-image: url('E:\FinalYearProject\room-rover\Images\Sukkur.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      
+    
+
+    }
+    .media-4{
+      background-image: url('E:\FinalYearProject\room-rover\Images\Lahore.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      
+    
+
+    }
+
+
+
+    .media-5{
+      background-image: url('E:\FinalYearProject\room-rover\Images\multan.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      
+    
+
+    }
+    
+    .media-6{
+      background-image: url('E:\FinalYearProject\room-rover\Images\Rawalpindi.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      
+    
+
+    }
+    .media-7{
+      background-image: url('E:\FinalYearProject\room-rover\Images\Islamabad.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      
+    
+
+    }
+    .media-8{
+      background-image: url('E:\FinalYearProject\room-rover\Images\Faisalabad.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      
+    
+
+    }
+    .media-9{
+      background-image: url('E:\FinalYearProject\room-rover\Images\Jamshoro.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      
+    
+
+    }
+
+    .midDiv .btnc{
+      height: 20%;
+    }
+
+        /* ------------------4th paragraph-------------- */
+
+        #footer{
+        height: 300px;
+        width: 100vw;
+        background-color: #292828ef;
+        display: flex;
+        justify-content: space-evenly;
+     
+        }
+
+        .class-1{
+          flex-basis: 25%;
+          
+        }
+        .class-2{
+          flex-basis: 25%;
+          
+        }
+        .class-3{
+          flex-basis: 25%;
+          
+        }
+        .class-4{
+          flex-basis: 25%;
+          
+        }
+
+        .class-same{
+          margin-top: 70px;
+          color: white;
+          font-size: larger;
+        }
+
+         .green-1{
+          color: #00ED64;
+
+          
+        }
+
+    
