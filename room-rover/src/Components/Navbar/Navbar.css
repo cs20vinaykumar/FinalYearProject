@@ -40,13 +40,18 @@ body{
   .Logo-1{
     font-size: x-large;
     margin-top: 20px;
+    text-decoration: none;
+    color: black;
   }
+  
   
   .green{
     color: #00ED64;
   
     
   }
+
+  
   
   /* #Login{
     background-color: #00ED64;
@@ -108,6 +113,14 @@ body{
     font-size: large;
     font-weight: 600;
   }
-  
+
+  .active {
+    color: #00ED64;
+  }
+
+
+
+
+
   /* ----------------Main-1------------------- */
   

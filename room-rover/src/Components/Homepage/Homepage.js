@@ -53,7 +53,7 @@ export default function Homepage() {
             </h2>
             <div className="secondsection">
               <div className="box-left midDiv">
-                <button className=" btn btn-dark btnB"> + Find a Place</button>
+                <button className=" btn btn-dark btnB" > + Find a Place</button>
               </div>
               <div className="box-right midDiv">
                 <button className=" btn btn-dark btnB"> + List a Place</button>
@@ -65,7 +65,7 @@ export default function Homepage() {
 
         <div id="Cities">
           <h2 className="subtitle">
-            <span id="element"> popular cities in pakistan</span>
+            <span id="element"> Popular cities in pakistan</span>
           </h2>
           <div className="container">
             <div className="cities-list ">
