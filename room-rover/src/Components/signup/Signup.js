@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import "./Signup.css" 
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-// import { useHistory } from 'react-router-dom';
+
 
 export default function Signup() {
    const [user, setUser] = useState({
@@ -26,25 +26,14 @@ setUser({
 })
  }
  
-// const register = ()=>{
-// const {name, lname, email, number, password} = user
-// if (name && lname && email && number && password ){
-//   axios.post("http://localhost:3000/Signup", user)
-//   .then(res => console.log(res))
-// } 
-// else{
-//   alert("invalid input")
-// }
 
-  
-// }
 
 const register = async () => {
   const { name, lname, email, number, password } = user;
   
   if (name && lname && email && number && password) {
     try {
-      const response = await axios.post("http://localhost:3000/Signup", user);
+      const response = await axios.post("http://localhost:4000/Signup", user);
       console.log(response.data); // Log the response data from the server
     } catch (error) {
       if (error.response) {
