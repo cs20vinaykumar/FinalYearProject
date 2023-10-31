@@ -81,7 +81,6 @@ body{
     transition: width 0.4s ease-in-out;
   }
   .search-bar .input-text:focus {
-    /* width: 80%; */
     background-color: #ccc;
   }
   .search-bar .icon2 {

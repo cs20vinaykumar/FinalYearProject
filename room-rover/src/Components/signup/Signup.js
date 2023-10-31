@@ -74,7 +74,7 @@ const register = async () => {
       <input type="email" name="email" value={user.email} id="email" className='inputs' placeholder='Enter Your email Id' onChange={hanldechange}/>
       </div>
       <div className="form-group">
-      <label htmlFor="number" className='labels'> Number:</label>
+      <label htmlFor="number" className='labels'>Phone No:</label>
       <input type="number" name="number" value={user.number} id="number" className='inputs' placeholder='Enter Your Phone Number' onChange={hanldechange}/>
       </div>
       <div className="form-group">
@@ -82,12 +82,12 @@ const register = async () => {
       <input type="password" name="password" value={user.password} id="pass" className='inputs' placeholder='Enter Your Password' onChange={hanldechange}/>
       </div>
 
-      <div className="form-group">
+      {/* <div className="form-group">
       <label  className='labels'> Gender:</label>  
-      <input type="checkbox"   className='inpus mx-3' />
+      <input type="radio"  className='inpus mx-3' />
       <div className="male">Male</div>
 
-      <input type="checkbox"   className='inpus mx-3' />
+      <input type="radio"  className='inpus mx-3' />
       <div className="male">Female</div>
       
 
@@ -95,7 +95,7 @@ const register = async () => {
   
    
   
-      </div>
+      </div> */}
 
 
      
@@ -103,7 +103,7 @@ const register = async () => {
     
     </form>
 
-    <button className='btn btn-primary' onClick={register}>Register</button>  
+    <button className='btn btn-primary my-3' onClick={register}>Register</button>  
     <p id='para-login ' className='my-3'>Already have an account ? <Link to="/Login">Login</Link></p>
 
 

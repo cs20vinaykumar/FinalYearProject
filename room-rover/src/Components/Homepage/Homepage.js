@@ -4,7 +4,7 @@ import "./Homepage.css";
 
 export default function Homepage() {
   useEffect(() => {
-    var typed = new Typed("#element", {
+    let typed = new Typed("#element", {
       strings: [
         "Welcome at the RoomRover",
         "Find home together",

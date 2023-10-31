@@ -59,6 +59,9 @@ const login = () => {
 
 <div className="main-content">
   <div className="signup">
+   <div className="image" id='svgimg'> 
+
+   </div>
     <h4>Login</h4> <br />
     
 
@@ -70,7 +73,7 @@ const login = () => {
 
       <div className="form-group ">
       <label htmlFor="password" className='labels'>Password</label>
-      <input type="password" name="password" id="password"  value={user.password} className='inputs' placeholder='Enter your password' onChange={hanldechange}/>
+      <input type="password" name="password" id="password"  value={user.password} className='inputs ' placeholder='Enter your password' onChange={hanldechange}/>
       </div>
 
 
@@ -92,9 +95,10 @@ const login = () => {
 
 
 
+
+</div>
+</div>
   </div>
-</div>
-</div>
 
 </>
   )
