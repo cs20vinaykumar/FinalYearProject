@@ -34,16 +34,16 @@ const register = async () => {
   if (name && lname && email && number && password) {
     try {
       const response = await axios.post("http://localhost:4000/Signup", user);
-      console.log(response.data); // Log the response data from the server
+      console.log(response.data); 
     } catch (error) {
       if (error.response) {
-        console.error(error.response.data); // Log the server's error response
+        console.error(error.response.data); 
       } else {
-        console.error(error.message); // Log a general error message
+        console.error(error.message); 
       }
     }
   } else {
-    alert("Invalid input");
+    alert("Please fill in all the required fields");
   }
 }
 

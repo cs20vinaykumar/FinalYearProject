@@ -68,12 +68,12 @@ const login = () => {
     <form action="" className='form-class'>
       <div className="form-group ">
       <label htmlFor="email" className='labels'>Email Id</label>
-      <input type="email" name="email" id="email" className='inputs'  value={user.email} placeholder='Enter your email' onChange={hanldechange}/>
+      <input type="email" name="email" id="email" className='inputs'  value={user.email} placeholder='Enter your email' onChange={hanldechange} required/>
       </div>
 
       <div className="form-group ">
       <label htmlFor="password" className='labels'>Password</label>
-      <input type="password" name="password" id="password"  value={user.password} className='inputs ' placeholder='Enter your password' onChange={hanldechange}/>
+      <input type="password" name="password" id="password"  value={user.password} className='inputs ' placeholder='Enter your password' onChange={hanldechange} required/>
       </div>
 
 

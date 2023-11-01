@@ -8,16 +8,21 @@ app.use(express.json())
 app.use(express.urlencoded())
 app.use(cors())
 
-mongoose.connect("mongodb://127.0.0.1:27017/room-rover",{
-    useNewUrlParser: true,
-      useUnifiedTopology: true,
-});
 
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-  console.log("Connected to Mongo Successfully");
-});
+
+const connectToMongoDB = async () => {
+    try {
+      await mongoose.connect("mongodb://127.0.0.1:27017/room-rover")
+  
+      console.log("Connected to MongoDB Successfully");
+    } catch (error) {
+      console.error("Connection error:", error.message);
+    }
+  };
+  
+  connectToMongoDB();
+  
+
 
 
 const userSchema = new mongoose.Schema({
@@ -46,6 +51,10 @@ const User = new mongoose.model("user" , userSchema)
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
+    if (!email || !password) {
+        return res.send({ message: "Please fill in both email and password fields" });
+    }
+
     try {
         const user = await User.findOne({ email: email });
 
@@ -69,7 +78,6 @@ app.post("/login", async (req, res) => {
 
 app.post("/Signup", async (req, res) => {
     const { name, lname, email, number, password } = req.body;
-
     try {
         const existingUser = await User.findOne({ email: email });
         if (existingUser) {
@@ -94,7 +102,7 @@ app.post("/Signup", async (req, res) => {
 
 
 
-app.listen(port,() =>{
+app.listen( port,() =>{
     console.log(`Example app listening on port http://localhost:${port}`)
 })
 

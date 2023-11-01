@@ -3,6 +3,9 @@ import "./Navbar.css";
 import { Link } from "react-router-dom";
 
 export default function Navbar(props) {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
   const [activeLink, setActiveLink] = useState(null);
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -17,7 +20,13 @@ export default function Navbar(props) {
             </h3>
           </div>
           <div className="right-text">
-            <ul>
+             <ul>
+              
+
+
+
+
+
               <li>
                 <Link to="/" className={activeLink === 'home' ? 'active' : ''}
             onClick={() => handleLinkClick('home')}
@@ -45,7 +54,7 @@ export default function Navbar(props) {
               {/* <li>
                 <Link to="/Dashboard">Dashboard</Link>
               </li> */}
-            </ul>
+            </ul> 
           </div>
         </nav-head>
       </div>
