@@ -15,7 +15,7 @@ export default function Dashboard() {
   return (
 
     <div>
-      <h1> Hey this is my Dashboard page</h1>
+      <h1 className='head1'> Hey this is my Dashboard page</h1>
       <button className='btn btn-primary' onClick={handleLogout}>Logout</button>
     </div>
 

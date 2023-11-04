@@ -1,0 +1,68 @@
+h6{
+    text-align: -webkit-center;
+    margin: 14px;
+    font-weight: lighter;
+font-size: large;
+}
+
+
+
+
+
+.new-pass{
+    margin: 15px;
+    padding: 12px;
+}
+
+.new-pass-input{
+    width: 90%;
+    height: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(200, 46, 46, 0.2);
+    border: 2px solid rgb(0, 255, 30);
+    margin-bottom: 25px;
+  
+    }
+
+    .new-pass-input-2{
+        width: 90%;
+        height: 40px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(200, 46, 46, 0.2);
+        border: 2px solid rgb(0, 255, 30);
+      
+      
+        }
+
+    .continue-new-password{
+        width: 90%;
+        height: 40px;
+        border-radius: 8px;
+       background-color:rgb(52, 176, 66); 
+      text-decoration: none;
+      margin-top: 37px;
+      color:  rgb(252, 252, 252);
+      cursor: pointer;
+border: none;
+
+       
+    }
+
+    .continue-new-password:hover {
+      background-color: #00ED64; 
+        text-align: center;
+         /* margin-top: 15px;  */
+        
+      } 
+
+      
+
+      .sign-up{
+    color:rgb(52, 176, 66);  
+    
+      }
+
+
+      p{
+        text-align: center;
+      }

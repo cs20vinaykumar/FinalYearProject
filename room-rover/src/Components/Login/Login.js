@@ -80,7 +80,7 @@ const login = () => {
       
       <div className="form-group passwords">
         <div className="labels rember">Rember me ?  <input type="checkbox"  className='inpus'/> </div>
-        <div className="forgot"> <a href="/">Forgot Password ?</a></div>
+        <div className="forgot"><Link to="/Login/Forgot">Forgot Password ?</Link></div>
        </div>
 
 
