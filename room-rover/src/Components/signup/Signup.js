@@ -5,6 +5,7 @@ import axios from 'axios'
 
 
 export default function Signup() {
+  
    const [user, setUser] = useState({
     name: "",
     lname: "",
@@ -34,7 +35,7 @@ const register = async () => {
   if (name && lname && email && number && password) {
     try {
       const response = await axios.post("http://localhost:4000/Signup", user);
-      console.log(response.data); 
+      alert(response.data.message); 
     } catch (error) {
       if (error.response) {
         console.error(error.response.data); 

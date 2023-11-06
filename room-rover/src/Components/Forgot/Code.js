@@ -21,7 +21,7 @@ export default function Code() {
     <h5>Code</h5>
         <input type="text" className='code-input' />
     
-        <button class="continue-code"> <Link to="/Newpass" className='continue-link'>Continue</Link></button>
+        <Link to="/Newpass" className='continue-link'><button class="continue-code">Continue</button></Link>
      
         </div>
     

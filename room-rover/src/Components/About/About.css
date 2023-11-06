@@ -30,11 +30,13 @@
 
 
 .right-about {
-  flex-basis: 30%;
+  flex-basis: 32%;
 }
 .parahead {
   font-size: 18px;
   font-weight: 600;
+  text-align: justify;
+  text-justify: inter-word;
  
 }
 

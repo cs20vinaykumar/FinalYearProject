@@ -21,11 +21,11 @@ export default function Forgot() {
  <div className="email">   
 <h5>Email</h5>
     <input type="text" className='email-input' />
-    <button class="continue-forgot-password"> <Link to="/Code" className='continue-link'>Continue</Link></button>
+    <Link to="/Code" className='continue-link'><button class="continue-forgot-password"> Continue</button></Link>
 
     </div>
 
-    <p>Don't have an account? <span class="sign-up"><Link to="/Signup">Sign up</Link></span></p>
+    <p>Don't have an account? <span class="sign-up"><Link to="/Signup">Sign up</Link> </span></p>
  
     
 
