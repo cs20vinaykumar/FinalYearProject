@@ -17,7 +17,7 @@ export default function Signup() {
 
 
   const hanldechange = (e) =>{
-    console.log(e.target)
+    // console.log(e.target)
 const   {name, value} = e.target
 
 setUser({
@@ -59,6 +59,7 @@ const register = async () => {
 
 <div className="main-content">
   <div className="signup">
+    {console.log("user", user)}
     <h4>Create Account</h4> <br />
 
     <form action="" className='form-class'>

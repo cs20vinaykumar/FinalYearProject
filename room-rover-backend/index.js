@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema({
     name: String,
     lname: String,
     email: String,
-    number: String,
+    number: Number,
     password: String
 })
 
