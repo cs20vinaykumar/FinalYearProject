@@ -8,7 +8,7 @@ import Dashboard from "./Components/Dashboard/Dashboard";
 import Forgot from "./Components/Forgot/Forgot";
 import Code from "./Components/Forgot/Code"
 import Newpass from "./Components/Forgot/Newpass"
-// import profile from "./Components/Profile/profile";
+import Upload from "./Components/Upload/Upload";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 function App() {
@@ -26,6 +26,8 @@ function App() {
             <Route exact path="/Newpass" element={<Newpass/>} /> 
           <Route exact path="/Signup" element={<Signup />} />
           <Route exact path="/Dashboard" element={<Dashboard />} />
+          <Route exact path="/Upload" element={<Upload />} />
+
 
         </Routes>
       </Router>

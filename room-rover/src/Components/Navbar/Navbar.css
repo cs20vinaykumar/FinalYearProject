@@ -117,7 +117,41 @@ body{
   .active {
     color: #00ED64;
   }
+  .search-bar .icon-1 {
+    position: absolute;
+    top: 63%;
+    left: 10px;
+    transform: translateY(-50%);
+    height: 10px;
 
+  }
+
+  .search-bar .input-text-2 {
+    width: 95%;
+    height: 4vh;
+    border: 0px;
+    background-color: #fff;
+    padding: 8px 8px 8px 35px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+  }
+  .search-bar .input-text:focus {
+    background-color: #ccc;
+  }
+  .search-bar .icon2-2 {
+    position: absolute;
+    top: 65%;
+    left: 87%;
+    transform: translateY(-50%);
+    height: 10px;
+
+  }
+
+
+  /* .btn-post{
+    border-radius: 0px 150px 0px 150px;
+  }
+ */
 
 
 

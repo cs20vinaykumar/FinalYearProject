@@ -51,7 +51,6 @@ const User = new mongoose.model("user" , userSchema)
 
 
 
-
 //Routes
 
 
@@ -105,6 +104,10 @@ app.post("/Signup", async (req, res) => {
         res.status(500).send(err.message);
     }
 });
+
+
+
+
 
 
 
