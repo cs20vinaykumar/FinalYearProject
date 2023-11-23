@@ -12,6 +12,7 @@ export default function Signup() {
     email: "",
     number: "",
     password: "",
+    gender: ""
   
    })
 
@@ -24,15 +25,16 @@ setUser({
   ...user,
   [name]: value
 
+
 })
  }
  
 
 
 const register = async () => {
-  const { name, lname, email, number, password } = user;
+  const { name, lname, email, number, password, gender } = user;
   
-  if (name && lname && email && number && password) {
+  if (name && lname && email && number && password && gender) {
     try {
       const response = await axios.post("http://localhost:4000/Signup", user);
       alert(response.data.message); 
@@ -84,21 +86,16 @@ const register = async () => {
       <input type="password" name="password" value={user.password} id="pass" className='inputs' placeholder='Enter Your Password' onChange={hanldechange}/>
       </div>
 
-      {/* <div className="form-group">
-      <label  className='labels'> Gender:</label>  
-      <input type="radio"  className='inpus mx-3' />
-      <div className="male">Male</div>
 
-      <input type="radio"  className='inpus mx-3' />
-      <div className="male">Female</div>
-      
-
-
-  
-   
-  
-      </div> */}
-
+ <div className="form-group">
+    <label className='labels'>Gender:</label>
+    <div className="radio-group">
+      <label htmlFor="male">Male</label>
+      <input type="radio" id="male" name="gender" value="male" onChange={hanldechange} />
+      <label htmlFor="female" className='female'>Female</label>
+      <input type="radio" id="female" name="gender" value="female"  onChange={hanldechange} />
+     </div> 
+     </div>  
 
      
       

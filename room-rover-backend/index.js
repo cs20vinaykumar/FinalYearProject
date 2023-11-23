@@ -37,7 +37,8 @@ const userSchema = new mongoose.Schema({
     lname: String,
     email: String,
     number: Number,
-    password: String
+    password: String,
+    gender: String
 })
 
 
@@ -83,7 +84,7 @@ app.post("/login", async (req, res) => {
 
 
 app.post("/Signup", async (req, res) => {
-    const { name, lname, email, number, password } = req.body;
+    const { name, lname, email, number, password, gender } = req.body;
     try {
         const existingUser = await User.findOne({ email: email });
         if (existingUser) {
@@ -94,7 +95,9 @@ app.post("/Signup", async (req, res) => {
                 lname,
                 email,
                 number,
-                password
+                password,
+                gender
+                
             });
 
             await newUser.save();
