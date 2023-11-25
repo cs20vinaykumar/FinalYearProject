@@ -1,41 +1,91 @@
-import React, { useReducer } from 'react';
-import "./Upload.css"
+import React, { useState } from "react";
+import "./Upload.css";
 
-const initialState = 0
+function Upload(props) {
+  const [showInput, setShowInputs] = useState(false);
 
-const reducer = (state, action) => {
-  if(action.type === 'Increment'){
-    return state + 1
+  const handleRoomClick = () => {
+    setShowInputs(true);
+  };
 
-  }
-  if(action.type === 'Decrement'){
-    return state - 1
+  const handleFlatClick = () => {
+    setShowInputs(false);
+  };
 
-  }
+  return props.trigger ? (
+    <div className="popup">
+      <div
+        className="popup-inner"
+        style={{ maxHeight: "400px", overflowY: "auto" }}
+      >
+        <button
+          className="close-btn btn btn-success"
+          onClick={() => props.setTrigger(false)}
+        >
+          Close
+        </button>
+        <h1>vinay</h1>
+        <p>hey this is my props</p>
+        <input
+          type="checkbox"
+          className="btn-check"
+          id="btn-check-outlined"
+          autocomplete="off"
+        />
+        <input
+          type="radio"
+          className="btn-check"
+          name="options"
+          id="option1"
+          autocomplete="off"
+          checked
+          onClick={handleFlatClick}
+        />
+        <label className="btn btn-success mx-3" for="option1">
+          Flat
+        </label>
+        <input
+          type="radio"
+          className="btn-check"
+          name="options"
+          id="option2"
+          autocomplete="off"
+          onClick={handleRoomClick}
+        />
+        <label className="btn btn-primary my-4" for="option2">
+          Room
+        </label>{" "}
+        <br />
+        {showInput && (
+          <>
+            <input
+              type="radio"
+              className="btn-check"
+              name="options"
+              id="option3"
+              autocomplete="off"
+            />
+            <label className="btn btn-dark mx-3" for="option3">
+              Single room
+            </label>
 
- 
-  
-return state
-
-}; 
-
-export default function Upload() {
-
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-return (
- <>
- <div className='container'>
-  <p className='para'>{state}</p>
-  <div className='btnstyleproperty'>
-    <button className='btn btn-primary mx-5' onClick={() => dispatch({type: 'Increment'})}>Increment</button>
-    <button className='btn btn-primary' onClick={() => dispatch({type: 'Decrement'})}>Decrement</button>
-  </div>
-
-
-
- </div>
- </>
-  )
+            <input
+              type="radio"
+              className="btn-check"
+              name="options"
+              id="option4"
+              autocomplete="off"
+            />
+            <label className="btn btn-success" for="option4">
+              Shared Room
+            </label>
+          </>
+        )}
+      </div>
+    </div>
+  ) : (
+    ""
+  );
 }
 
+export default Upload;

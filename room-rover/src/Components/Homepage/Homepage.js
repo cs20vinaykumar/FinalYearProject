@@ -53,7 +53,7 @@ export default function Homepage() {
             </h2>
             <div className="secondsection">
               <div className="box-left midDiv">
-                <button className=" btn btn-dark btnB" > + Find a Place</button>
+                <button className=" btn btn-dark btnB"> + Find a Place</button>
               </div>
               <div className="box-right midDiv">
                 <button className=" btn btn-dark btnB"> + List a Place</button>
@@ -107,7 +107,9 @@ export default function Homepage() {
 
         <footer>
           <div id="footer">
-            <div className="class1 class-same">Room<span className="green-1">Rover</span></div>
+            <div className="class1 class-same">
+              Room<span className="green-1">Rover</span>
+            </div>
             <div className="class2 class-same">Resources</div>
             <div className="class3 class-same">Useful Links</div>
             <div className="class4 class-same">News Letter</div>
