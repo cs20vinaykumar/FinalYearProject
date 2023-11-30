@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import "./Signup.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Signup() {
+  const navigate = useNavigate();
+  const [message, setMessage] = useState(false);
   const [user, setUser] = useState({
     name: "",
     lname: "",
@@ -29,7 +31,10 @@ export default function Signup() {
     if (name && lname && email && number && password && gender) {
       try {
         const response = await axios.post("http://localhost:4000/Signup", user);
-        alert(response.data.message);
+        setMessage(response.data.message);
+        setTimeout(() => {
+          navigate("/Login");
+        }, 2000);
       } catch (error) {
         if (error.response) {
           console.error(error.response.data);
@@ -38,7 +43,7 @@ export default function Signup() {
         }
       }
     } else {
-      alert("Please fill in all the required fields");
+      setMessage("Please fill in all the required fields");
     }
   };
 
@@ -151,6 +156,7 @@ export default function Signup() {
             <button className="btn btn-primary my-3" onClick={register}>
               Register
             </button>
+            <p className="tomato-red">{message}</p>
             <p id="para-login " className="my-3">
               Already have an account ? <Link to="/Login">Login</Link>
             </p>

@@ -6,7 +6,7 @@
 .main-content {
   position: absolute;
   left: 50%;
-  top: 49%;
+  top: 45%;
   transform: translate(-50%, -50%);
 }
 
@@ -17,7 +17,6 @@
   backdrop-filter: blur(20px);
   border: 1px solid #fff;
   border-radius: 45px;
-  /* width: 310px; */
   display: flex;
   flex-direction: column;
   width: 600px;

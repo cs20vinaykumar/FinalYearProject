@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function Login(props) {
   const navigate = useNavigate();
+  const [message, setMessage] = useState(false);
 
   const [user, setUser] = useState({
     email: "",
@@ -25,11 +26,13 @@ export default function Login(props) {
     axios
       .post("http://localhost:4000/login", user)
       .then((res) => {
-        alert(res.data.message);
+        setMessage(res.data.message);
 
         if (res.data.message === "Login Successful") {
           localStorage.setItem("token", res.data.token); // Set the token in local storage
-          navigate("/Dashboard");
+          setTimeout(() => {
+            navigate("/Dashboard");
+          }, 2000);
         }
       })
       .catch((error) => {
@@ -90,6 +93,8 @@ export default function Login(props) {
             <button className="btn btn-primary" onClick={login}>
               Login
             </button>{" "}
+            <br />
+            <p className="tomato-red">{message}</p>
             <br />
             <p id="para-login " className="my-3 text-color">
               Dont have an account ? <Link to="/Signup">Sign up</Link>
