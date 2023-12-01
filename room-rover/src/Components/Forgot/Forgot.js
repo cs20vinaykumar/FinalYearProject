@@ -23,7 +23,7 @@ export default function Forgot() {
     }
 
     try {
-      const response = await axios.post("http://localhost:4000/Forgot", {
+      const response = await axios.post("http://localhost:4000/sendEmail", {
         email,
       });
 
