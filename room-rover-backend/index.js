@@ -3,8 +3,9 @@ import cors from "cors";
 import connectToMongoDB from "./Database-connection/db.js";
 import User from "./models/User.js";
 import router from "./routes/login.js";
-import routers from "./routes/signup.js";
+import routers from "./routes/signup.js"; 
 import otpVerify from "./routes/sendEmail.js"
+import verifycode from "./routes/verifycode.js";
 
 
 const app = express();
@@ -26,6 +27,10 @@ app.use("/Signup", routers);
 
 // SendEmail Api
 app.use("/sendEmail", otpVerify);
+
+
+// verifycode Api
+app.use("/verifycode", verifycode);
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);

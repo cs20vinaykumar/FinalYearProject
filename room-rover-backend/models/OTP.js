@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const OTPSchema = new mongoose.Schema({
   email: String,
-  code: String,
+  code: Number,
   expireIn: Number,
 });
 
