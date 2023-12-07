@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import "./Code.css";
 import { Link, useNavigate } from "react-router-dom";
+import { useAppContext } from "../AppContext";
 
 export default function Code() {
   const [otp, setOtp] = useState("");
   const [message, setMessage] = useState(false);
 
   const navigate = useNavigate();
+  const { user } = useAppContext();
 
   const handleVerification = async () => {
     try {
@@ -16,7 +18,7 @@ export default function Code() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: "vinaychoithani223@gmail.com",
+          email: user,
           enteredOtp: otp,
         }),
       });

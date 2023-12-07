@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import "./Forgot.css";
 import { Link, useNavigate } from "react-router-dom";
+import { useAppContext } from "../AppContext";
 import axios from "axios";
 
 export default function Forgot() {
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [message, setMessage] = useState("");
+  const { setUserEmail } = useAppContext();
+
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
-    console.log(e.target);
     setIsEmailValid(true);
+    setUserEmail(e.target.value);
   };
 
   const handleContinueClick = async () => {
@@ -85,4 +88,3 @@ export default function Forgot() {
     </>
   );
 }
-

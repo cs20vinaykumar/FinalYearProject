@@ -6,7 +6,7 @@ import router from "./routes/login.js";
 import routers from "./routes/signup.js"; 
 import otpVerify from "./routes/sendEmail.js"
 import verifycode from "./routes/verifycode.js";
-import password from "./routes/password.js";
+import resetPassword from "./routes/resetPassword.js";
 
 
 const app = express();
@@ -35,7 +35,7 @@ app.use("/verifycode", verifycode);
 
 
 // verifycode Api
-app.use("/password", password);
+app.use("/resetpassword", resetPassword);
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
