@@ -5,10 +5,10 @@ const AppContext = createContext();
 export const useAppContext = () => useContext(AppContext);
 
 export const AppProvider = (props) => {
-  const [user, setEmail] = useState("");
+  const [user, setUser] = useState("");
 
   const setUserEmail = (newEmail) => {
-    setEmail(newEmail);
+    setUser(newEmail);
   };
 
   return (

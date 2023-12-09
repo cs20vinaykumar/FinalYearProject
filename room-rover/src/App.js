@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "./Components/Navbar/Navbar";
 import Signup from "./Components/signup/Signup";
+import EmailVerify from "./Components/signup/EmailVerify";
 import Login from "./Components/Login/Login";
 import Homepage from "./Components/Homepage/Homepage";
 import About from "./Components/About/About";
@@ -26,6 +27,8 @@ function App() {
             <Route exact path="/Code" element={<Code />} />
             <Route exact path="/Newpass" element={<Newpass />} />
             <Route exact path="/Signup" element={<Signup />} />
+            <Route exact path="/EmailVerify" element={<EmailVerify />} />
+
             <Route exact path="/Dashboard" element={<Dashboard />} />
             <Route exact path="/Upload" element={<Upload />} />
           </Routes>

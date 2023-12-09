@@ -33,7 +33,7 @@ export default function Signup() {
         const response = await axios.post("http://localhost:4000/Signup", user);
         setMessage(response.data.message);
         setTimeout(() => {
-          navigate("/Login");
+          navigate("/EmailVerify");
         }, 2000);
       } catch (error) {
         if (error.response) {

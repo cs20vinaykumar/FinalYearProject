@@ -3,11 +3,11 @@ import cors from "cors";
 import connectToMongoDB from "./Database-connection/db.js";
 import User from "./models/User.js";
 import router from "./routes/login.js";
-import routers from "./routes/signup.js"; 
-import otpVerify from "./routes/sendEmail.js"
+import routers from "./routes/signup.js";
+import otpVerify from "./routes/sendEmail.js";
 import verifycode from "./routes/verifycode.js";
 import resetPassword from "./routes/resetPassword.js";
-
+import EmailVerify from "./routes/EmailVerify.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -29,13 +29,14 @@ app.use("/Signup", routers);
 // SendEmail Api
 app.use("/sendEmail", otpVerify);
 
-
 // verifycode Api
 app.use("/verifycode", verifycode);
 
-
 // verifycode Api
 app.use("/resetpassword", resetPassword);
+
+// verifycode Api
+app.use("/EmailVerify", EmailVerify);
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
