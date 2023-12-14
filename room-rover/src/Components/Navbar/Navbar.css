@@ -31,7 +31,7 @@ ul li {
   list-style: none;
   margin: 20px 30px;
   font-size: large;
-  font-weight: 500;
+  font-weight: 550;
 }
 
 .Logo-1 {
@@ -39,6 +39,7 @@ ul li {
   margin-top: 20px;
   text-decoration: none;
   color: black;
+  font-weight: 550;
 }
 
 .green {
@@ -59,7 +60,7 @@ nav-head ul li a:hover {
 nav-head ul li a::after {
   content: "";
   width: 0;
-  height: 3px;
+  height: 3.5px;
   background: #00ed64;
   position: absolute;
   bottom: -6px;

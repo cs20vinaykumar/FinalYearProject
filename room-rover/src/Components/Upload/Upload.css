@@ -1,8 +1,6 @@
-/* .para{
-  font-size: 50px;
-
+* {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
- */
 
 .popup {
   position: fixed;
@@ -22,12 +20,77 @@
   width: 100%;
   max-width: 750px;
   height: 100vh;
-  max-height: 650px;
+  max-height: 800px;
   background-color: #fff;
 }
 
 .popup-inner .close-btn {
-  position: absolute;
+  position: fixed;
   bottom: 16px;
   right: 16px;
+  /* margin-left: 77%; */
+}
+
+.popup-inner .close-btn-2 {
+  position: absolute;
+  bottom: -247%;
+  right: 16px;
+}
+
+#fullWidth {
+  font-size: larger;
+  width: 100%;
+}
+
+#fullWidth-label {
+  clear: left;
+  text-align: left;
+  font-size: larger;
+}
+
+#demo-simple-select-label {
+  clear: left;
+  text-align: left;
+  width: 50%;
+  font-weight: bold;
+}
+
+.MuiInputBase-root {
+  width: 80%;
+}
+
+.one {
+  width: 40%;
+  display: inline-block;
+}
+
+.two {
+  width: 40%;
+  display: inline-block;
+}
+
+.span-p {
+  color: gray;
+}
+
+.MuiFormLabel-root {
+  clear: left;
+  text-align: left;
+}
+
+.datePicker {
+  width: 80%;
+}
+
+.Utilities {
+  display: inline-block;
+}
+
+.Amenities {
+  display: inline-block;
+}
+
+.MuiTypography-root {
+  clear: left;
+  text-align: left;
 }

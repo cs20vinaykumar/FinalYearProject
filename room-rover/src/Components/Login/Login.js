@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 export default function Login(props) {
   const navigate = useNavigate();
   const [message, setMessage] = useState(false);
+  const [password, setPassword] = useState(true);
 
   const [user, setUser] = useState({
     email: "",
@@ -40,6 +41,10 @@ export default function Login(props) {
       });
   };
 
+  const handleClick = () => {
+    setPassword(!password);
+  };
+
   return (
     <>
       <div className="main-container">
@@ -69,7 +74,7 @@ export default function Login(props) {
                   Password
                 </label>
                 <input
-                  type="password"
+                  type={password ? "password" : "text"}
                   name="password"
                   id="password"
                   value={user.password}
@@ -78,6 +83,8 @@ export default function Login(props) {
                   onChange={hanldechange}
                   required
                 />
+
+                <i class="fa-solid fa-eye icon3" onClick={handleClick}></i>
               </div>
 
               <div className="form-group passwords">
