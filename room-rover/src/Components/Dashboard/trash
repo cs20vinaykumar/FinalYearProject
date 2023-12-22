@@ -1,0 +1,37 @@
+/* .head1 {
+  background-color: burlywood;
+  color: black;
+  height: 200px;
+  width: 200px;
+}
+
+
+
+
+.main-box{
+  height: 100vh;
+  margin: 50px 40px;
+
+}
+
+.boxes{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr ;
+  max-height: 700px;
+  grid-gap: 40px;
+  margin-top: 80px;
+  height: 100vh;
+}
+.box{
+  border-radius: 10px;
+  
+}
+
+.pic{
+  background-image: url('E:\FinalYearProject\room-rover\Images\Sukkur.png');
+  height: 50%;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+} */

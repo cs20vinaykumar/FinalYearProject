@@ -1,6 +1,14 @@
-.head1 {
-  background-color: burlywood;
-  color: black;
-  height: 200px;
-  width: 200px;
+.filters {
+  height: 55px;
+}
+.main {
+  display: flex;
+  justify-content: space-between;
+  margin: 50px 40px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px; /* Adjust the gap according to your preference */
 }
