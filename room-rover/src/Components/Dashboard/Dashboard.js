@@ -112,15 +112,24 @@ export default function Dashboard() {
       <div className="main">
         <div className="grid-container">
           {Products &&
-            Products?.data.map((Product) => (
-              <div key={Product._id} class="card" style={{ width: "20rem" }}>
-                {/* <div className="id">id={Product._id}</div> */}
-                <img class="card-img-top" src="" alt="Image" />
-                <div class="card-body">
-                  <h5 class="card-title">title= {Product.title}</h5>
-                  <p class="card-text">Description={Product.description}</p>
-                  <p class="card-text">Rent={Product.pricing.rent}</p>
-                  <Link to="/Detail" class="btn btn-primary">
+            Products.data.map((Product) => (
+              <div
+                key={Product._id}
+                className="card"
+                style={{ width: "20rem" }}
+              >
+                <img
+                  className="card-img-top image"
+                  src={`http://localhost:4000/Images/${Product.file}`}
+                  alt={Product.altText || "Product Image"}
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{Product.title}</h5>
+                  <p className="card-text">{Product.description}</p>
+                  <p className="card-text">
+                    Rent={Product.pricing && Product.pricing.rent}
+                  </p>
+                  <Link to="/Detail" className="btn btn-primary btnSee">
                     See Details
                   </Link>
                 </div>

@@ -1,33 +1,36 @@
 import mongoose from "mongoose";
 
 const formDataSchema = new mongoose.Schema({
-
   title: String,
-  location: String, 
+  location: String,
   propertyType: {
-    flat: String, 
-    room: String, 
+    flat: String,
+    room: String,
   },
-  availability: String, 
+  availability: String,
   dateRange: {
-    start: Date, 
-    end: Date,   
+    start: { type: Date },
+    end: { type: Date },
   },
   pricing: {
     deposite: Number,
-    rent: Number,     
+    rent: Number,
   },
-   amenities: [String],
-  description: String, 
+  amenities: [String],
+  description: String,
+  file: {
+    type: String,
+    require: true,
+  },
+
   contactForm: {
     name: String,
     email: String,
-    cnic: String, 
+    cnic: String,
     phoneNumber: String,
-    userEmail: String
   },
 });
 
-const formData = new mongoose.model( "formData", formDataSchema,"formData" );
+const formData = new mongoose.model("formData", formDataSchema, "formData");
 
 export default formData;

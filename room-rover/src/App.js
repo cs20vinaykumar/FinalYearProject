@@ -34,7 +34,9 @@ function App() {
             <Route exact path="/EmailVerify" element={<EmailVerify />} />
             <Route exact path="/Upload" element={<Upload />} />
             <Route exact path="/Dashboard" element={<Dashboard />} />
-            <Route exact path="/Detail" element={<Detail />} />
+            {/* <Route exact path="/Detail" element={<Detail />} /> */}
+            <Route path="/Detail/:productId" element={Detail} />
+
 
           </Routes>
         </Router>

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./Upload.css";
 import { Link } from "react-router-dom";
-// import Dashboard from "../Dashboard/Dashboard";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -18,19 +17,15 @@ import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
-import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
 
 function Upload(props) {
-  const [text, setText] = useState("");
-
+  const [description, setText] = useState("");
   const [Name, setname] = useState("");
   const [email, setEmail] = useState("");
   const [cnic, setCnic] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [room, setRoom] = useState("");
@@ -38,8 +33,8 @@ function Upload(props) {
   const [availability, setAvailability] = useState("");
   const [deposite, setDeposite] = useState("");
   const [rent, setRent] = useState("");
-
   const [errors, setErrors] = useState({});
+  const [file, setFile] = useState();
 
   const validateCnic = (cnic) => {
     // Validate if CNIC is a 13-digit number
@@ -92,29 +87,32 @@ function Upload(props) {
 
     try {
       // Prepare the data to be sent to the server
-      const formData = {
-        title,
-        location,
-        propertyType: { flat, room },
-        availability,
-        dateRange: {
-          start: Date(),
-          end: Date(),
-        },
-        pricing: { deposite, rent },
-        amenities: selectedAmenities,
-        description: text,
-        contactForm: { name: Name, email, cnic, phoneNumber },
-      };
+      // const formData = new FormData();
+
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("location", location);
+      formData.append("propertyType.flat", flat);
+      formData.append("propertyType.room", room);
+      formData.append("availability", availability);
+      formData.append("dateRange.start", Date());
+      formData.append("dateRange.end", Date());
+      formData.append("pricing.deposite", deposite);
+      formData.append("pricing.rent", rent);
+      formData.append("amenities", amenities);
+      formData.append("description", description);
+      formData.append("contactForm.name", Name);
+      formData.append("contactForm.email", email);
+      formData.append("contactForm.cnic", cnic);
+      formData.append("contactForm.phoneNumber", phoneNumber);
+      formData.append("file", file);
       console.log("formData:", formData);
 
-      // Make a POST request to the backend API
       const response = await axios.post(
         "http://localhost:4000/PropertyForm",
         formData
       );
 
-      // Check the status code of the response
       if (response.status === 200) {
         console.log("Form submitted:", {
           title,
@@ -126,15 +124,15 @@ function Upload(props) {
           end: Date(),
           deposite,
           rent,
-          amenities: [],
-          text,
+          amenities: [amenities],
+          description,
+          file,
           Name,
           email,
           cnic,
           phoneNumber,
         });
         alert("Form submitted successfully:", response.data.message);
-        // Reset the form and errors
 
         setErrors({});
       } else {
@@ -144,10 +142,6 @@ function Upload(props) {
       console.error("Error submitting form:", error);
       setErrors({ submissionError: "Unexpected Error" });
     }
-
-    // Form submission logic (you can replace this with your actual logic)
-
-    // // Reset the form and errors
   };
 
   const handlechange = (event) => {
@@ -159,18 +153,6 @@ function Upload(props) {
     setText(filteredValue);
   };
 
-  const VisuallyHiddenInput = styled("input")({
-    clip: "rect(0 0 0 0)",
-    clipPath: "inset(50%)",
-    height: 1,
-    overflow: "hidden",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    whiteSpace: "nowrap",
-    width: 1,
-  });
-
   // ------------------------------------------------------------------------------------
   const [furnished, setFurnished] = useState(false);
   const [kitchenAvailability, setKitchenAvailability] = useState(false);
@@ -181,7 +163,7 @@ function Upload(props) {
   const [Air, setAir] = useState(false);
   const [Laundry, setLaundry] = useState(false);
 
-  const selectedAmenities = [
+  const amenities = [
     furnished ? "Furnished" : null,
     kitchenAvailability ? "Kitchen Availability" : null,
     parkingAvailability ? "Parking Availability" : null,
@@ -478,29 +460,24 @@ function Upload(props) {
                 class="form-control"
                 id="exampleFormControlTextarea1"
                 rows="5"
-                value={text}
+                value={description}
                 onChange={handlechange}
                 required
               ></textarea>
             </div>
             <p>
               {
-                text.split(" ").filter((element) => {
+                description.split(" ").filter((element) => {
                   return element !== 0;
                 }).length
               }{" "}
-              words and {text.length} character
+              words and {description.length} character
             </p>
           </div>
           {/* --------------------Upload Pictures------------------------- */}
-          <Button
-            component="label"
-            variant="contained"
-            startIcon={<CloudUploadIcon />}
-          >
-            Upload file
-            <VisuallyHiddenInput type="file" />
-          </Button>{" "}
+          <div>
+            <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+          </div>
           <br />
           <span className="span-p">Upload Pictures of your flat or room</span>
           <br />

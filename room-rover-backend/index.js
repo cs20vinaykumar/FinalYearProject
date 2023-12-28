@@ -15,7 +15,7 @@ const port = process.env.PORT || 4000;
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cors());
-
+app.use(express.static("public"));
 connectToMongoDB();
 
 //Routes
@@ -39,13 +39,10 @@ app.use("/resetpassword", resetPassword);
 // verifycode Api
 app.use("/EmailVerify", EmailVerify);
 
-
 // Property Form Api
 app.use("/PropertyForm", uploadForm);
-// 
-app.use("/GetPropertyForm", GetForm)
-
-
+//
+app.use("/GetPropertyForm", GetForm);
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);

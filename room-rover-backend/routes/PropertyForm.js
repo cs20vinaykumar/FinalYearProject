@@ -1,18 +1,31 @@
 import express from "express";
 import formData from "../models/PropertyForm.js";
+import multer from "multer";
+import path from "path";
 
 const uploadForm = express.Router();
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/Images");
+  },
+  filename: (req, file, cb) => {
+    cb(
+      null,
+      file.fieldname + "_" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
 
-uploadForm.post("/", async (req, res) => {
+const upload = multer({
+  storage: storage,
+});
+
+uploadForm.post("/", upload.single("file"), async (req, res) => {
   try {
-    const formDataEntry = new formData(req.body);
-    const missingFields = validateRequiredFields(formDataEntry);
-    if (missingFields.length > 0) {
-      res.status(400).send({
-        error: `Missing required fields: ${missingFields.join(", ")}`,
-      });
-      return;
-    }
+    const formDataEntry = new formData({
+      ...req.body,
+      file: req.file.filename, // Save only the filename
+    });
 
     await formDataEntry.save();
     res
@@ -24,37 +37,4 @@ uploadForm.post("/", async (req, res) => {
   }
 });
 
-function validateRequiredFields(formDataEntry) {
-  const requiredFields = [
-    "title",
-    "location",
-    "propertyType.flat",
-    "propertyType.room",
-    "availability",
-    "dateRange.start",
-    "dateRange.end",
-    "pricing.deposite",
-    "pricing.rent",
-    "amenities",
-    "description",
-    "contactForm.name",
-    "contactForm.email",
-    "contactForm.cnic",
-    "contactForm.phoneNumber",
-  ];
-
-  const missingFields = [];
-
-  requiredFields.forEach((fieldPath) => {
-    const value = fieldPath
-      .split(".")
-      .reduce((obj, key) => obj[key], formDataEntry);
-
-    if (!value) {
-      missingFields.push(fieldPath);
-    }
-  });
-
-  return missingFields;
-}
 export default uploadForm;
