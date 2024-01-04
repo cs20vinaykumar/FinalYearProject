@@ -9,12 +9,16 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await axios.get("http://localhost:4000/GetPropertyForm");
-      // console.log("products >>>>>", data)
-      setProducts(data);
+         setProducts(data);
     };
 
     fetchData();
   }, []);
+
+  // const convertSpacesToHyphens = (title) => {
+  //   return title.replace(/\s+/g, '-').toLowerCase();
+  // };
+
   return (
     <>
       <nav class="navbar navbar-expand-lg navbar-light bg-light filters">
@@ -122,15 +126,15 @@ export default function Dashboard() {
                   className="card-img-top image"
                   src={`http://localhost:4000/Images/${Product.file}`}
                   alt={Product.altText || "Product Image"}
-                />
+                /> 
                 <div className="card-body">
                   <h5 className="card-title">{Product.title}</h5>
                   <p className="card-text">{Product.description}</p>
                   <p className="card-text">
-                    Rent={Product.pricing && Product.pricing.rent}
+                    Rent <b>{Product.pricing && Product.pricing.rent}</b> 
                   </p>
-                  <Link to="/Detail" className="btn btn-primary btnSee">
-                    See Details
+                  <Link to={`/product/${Product._id}`} className="btn btn-primary btnSee">
+                    See Details 
                   </Link>
                 </div>
               </div>

@@ -27,7 +27,7 @@ export default function Navbar(props) {
           <div className="left-text-2">
             <h3 className="Logo-1">
               {" "}
-              <Link to="/" className="Logo-1">
+              <Link to="/" className="Logo-1" onClick={handleLogout}>
                 {" "}
                 ROOM<span className="green">ROVER</span>
               </Link>

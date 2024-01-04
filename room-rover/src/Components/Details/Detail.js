@@ -1,46 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import "./Detail.css";
 
-export default function Detail() {
-  const [product, setProduct] = useState(null);
+const Detail = () => {
   const { productId } = useParams();
+  const [product, setProduct] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/GetPropertyForm/${productId}`
+          "http://localhost:4000/GetPropertyForm"
         );
-        console.log("response >>>>>", response);
-        setProduct(response.data);
+        const products = response.data; // Assuming response.data is an array of products
+        const foundProduct = products.find((p) => p._id === productId);
+        setProduct(foundProduct);
       } catch (error) {
-        console.error("Error fetching product details:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
   }, [productId]);
 
+  if (!product) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
-      <p>Product ID: {productId}</p>
-      <div className="main">
-        <div className="grid-container">
-          {product && ( // Check if product exists before rendering
-            <div key={product._id} className="card" style={{ width: "20rem" }}>
-              {/* Add image rendering logic if needed */}
-              <div className="card-body">
-                <h5 className="card-title">{product.title}</h5>
-                <p className="card-text">{product.description}</p>
-                <p className="card-text">
-                  Rent={product.pricing && product.pricing.rent}
-                </p>
-              </div>
-            </div>
-          )}
+      <h1>{product.title}</h1>
+      <p>{product.description}</p>
+      <p>{product.amenities}</p>
+      {/* ------------------------------footer----------------------------------------------- */}
+      <footer className="footer">
+        <div id="footer">
+          <div className="class1 class-same">
+            Room<span className="green-1">Rover</span>
+          </div>
+          <div className="class2 class-same">Resources</div>
+          <div className="class3 class-same">Useful Links</div>
+          <div className="class4 class-same">News Letter</div>
         </div>
-      </div>
+      </footer>
     </>
   );
-}
+};
+
+export default Detail;

@@ -1,4 +1,9 @@
 h1 {
-  font-size: larger;
   color: brown;
+}
+
+
+.footer{
+  position: absolute;
+  top: 1000px;
 }

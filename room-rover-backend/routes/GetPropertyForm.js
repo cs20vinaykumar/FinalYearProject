@@ -5,7 +5,7 @@ const GetForm = express.Router();
 
 GetForm.get("/", async (req, res) => {
   try {
-    const data = await formData.find(); //.exec()
+    const data = await formData.find().exec();
     res.status(200).json(data);
   } catch (error) {
     console.error(err);

@@ -16,3 +16,16 @@
 .btnSee {
   margin-left: 80px;
 }
+
+.image{
+  height: 150px;
+}
+
+.card{
+  max-width: 100%;
+}
+
+.card:hover{
+  background: rgba(255, 255, 255, 0.685);
+  backdrop-filter: blur(10px);
+}
