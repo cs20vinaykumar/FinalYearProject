@@ -35,11 +35,18 @@ function Upload(props) {
   const [rent, setRent] = useState("");
   const [errors, setErrors] = useState({});
   const [file, setFile] = useState();
+  const [propertyType, setPropertyType] = useState("");
 
   const validateCnic = (cnic) => {
     // Validate if CNIC is a 13-digit number
     const cnicRegex = /^\d{13}$/;
     return cnicRegex.test(cnic);
+  };
+  const handlePropertyTypeChange = (event) => {
+    setPropertyType(event.target.value);
+    // Clear values of room and flat when propertyType changes
+    setRoom("");
+    setFlat("");
   };
 
   const handleFormSubmit = async (event) => {
@@ -119,7 +126,7 @@ function Upload(props) {
           location,
           flat,
           room,
-          availability,
+          availability: [availability],
           start: Date(),
           end: Date(),
           deposite,
@@ -200,6 +207,9 @@ function Upload(props) {
               helperText={errors.title}
               required
             />
+            <span className="span-p">
+              Building Name like Abc Apartment Block / Phase 1
+            </span>
           </Box>
           <br />
           {/* --------------------Location------------------------- */}
@@ -239,43 +249,62 @@ function Upload(props) {
             <br /> <br />
             <div className="one">
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Flat</InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  Property Type
+                </InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={flat}
-                  label="Flat"
-                  onChange={(e) => setFlat(e.target.value)}
+                  value={propertyType}
+                  label="Property Type"
+                  onChange={handlePropertyTypeChange}
                   error={!!errors.propertyType}
                   required
                 >
-                  <MenuItem value={"2 Bed Drawing"}>2 Bed Drawing</MenuItem>
-                  <MenuItem value={"3 Bed Drawing"}>3 Bed Drawing</MenuItem>
-                  <MenuItem value={"4 Bed Drawing"}>4 Bed Drawing</MenuItem>
-                  <MenuItem value={"Pent House"}>Pent House</MenuItem>
-                  <MenuItem value={"Studio Apartment"}>
-                    Studio Apartment
-                  </MenuItem>
+                  <MenuItem value={"flat"}>Flat</MenuItem>
+                  <MenuItem value={"room"}>Room</MenuItem>
                 </Select>
               </FormControl>
             </div>
-            <div className="two">
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Room</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={room}
-                  label="Room"
-                  onChange={(e) => setRoom(e.target.value)}
-                  error={!!errors.propertyType}
-                  required
-                >
-                  <MenuItem value={"Single Room"}>Single Room</MenuItem>
-                  <MenuItem value={"Shared Room"}>Shared Room</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
+            {propertyType === "flat" && (
+              <div className="one">
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Flat</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={flat}
+                    label="Flat"
+                    onChange={(e) => setFlat(e.target.value)}
+                  >
+                    <MenuItem value={"2 Bed Drawing"}>2 Bed Drawing</MenuItem>
+                    <MenuItem value={"3 Bed Drawing"}>3 Bed Drawing</MenuItem>
+                    <MenuItem value={"4 Bed Drawing"}>4 Bed Drawing</MenuItem>
+                    <MenuItem value={"Pent House"}>Pent House</MenuItem>
+                    <MenuItem value={"Studio Apartment"}>
+                      Studio Apartment
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+            )}
+            {propertyType === "room" && (
+              <div className="two">
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Room</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={room}
+                    label="Room"
+                    onChange={(e) => setRoom(e.target.value)}
+                  >
+                    <MenuItem value={"Single Room"}>Single Room</MenuItem>
+                    <MenuItem value={"Shared Room"}>Shared Room</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+            )}
             {errors.propertyType && (
               <p style={{ color: "red" }}>{errors.propertyType}</p>
             )}
@@ -327,7 +356,7 @@ function Upload(props) {
           <br />
           {/* --------------------Pricing------------------------- */}
           <div className="pricing">
-            <h4>Fixed Deposite And Monthly Rent in PKR</h4> <br />
+            <h4>Security Deposit And Monthly Rent in PKR</h4> <br />
             <Box
               component="form"
               sx={{
@@ -339,7 +368,7 @@ function Upload(props) {
               <TextField
                 id="outlined-controlled"
                 label="Deposite"
-                type="number" // Set type to "number" for numeric input
+                type="number"
                 value={deposite}
                 onChange={(event) => setDeposite(event.target.value)}
                 error={!!errors.deposite}
@@ -350,7 +379,7 @@ function Upload(props) {
               <TextField
                 id="outlined-uncontrolled"
                 label="Rent"
-                type="number" // Set type to "number" for numeric input
+                type="number"
                 value={rent}
                 onChange={(event) => setRent(event.target.value)}
                 error={!!errors.rent}
@@ -451,13 +480,13 @@ function Upload(props) {
           <br />
           {/* --------------------Description------------------------- */}
           <div className="description">
-            <div class="form-group">
+            <div className="form-group">
               <label for="exampleFormControlTextarea1">
                 {" "}
                 <h5> Add Description</h5>
               </label>
               <textarea
-                class="form-control"
+                className="form-control"
                 id="exampleFormControlTextarea1"
                 rows="5"
                 value={description}

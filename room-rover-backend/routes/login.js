@@ -2,6 +2,9 @@ import express from "express";
 import User from "../models/User.js";
 const router = express.Router();
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken"
+import dotenv from "dotenv";
+dotenv.config();
 
 router.post("/", async (req, res) => {
   const { email, password } = req.body;
@@ -19,7 +22,10 @@ router.post("/", async (req, res) => {
       const passwordMatch = await bcrypt.compare(password, user.password);
 
       if (passwordMatch) {
-        res.send({ message: "Login Successful", user: user });
+        const token = jwt.sign({userID: user._id}, process.env.JWT_SECRET , {
+          expiresIn: "1h"
+        })
+        res.send({ message: "Login Successful", user: user, token: token });
       } else {
         res.send({ message: "Password didn't match" });
       }
@@ -31,5 +37,8 @@ router.post("/", async (req, res) => {
     res.send({ message: "Internal Server Error" });
   }
 });
+
+
+
 
 export default router;

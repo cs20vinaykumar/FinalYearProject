@@ -63,6 +63,13 @@ export default function Navbar(props) {
                     </Link>
                   </li>
 
+
+                  <li>
+                    <Link to="/Post">
+                      <button className="btn btn-dark">My post</button>
+                    </Link>
+                  </li>
+
                   <li>
                     <button className="btn btn-primary" onClick={handleLogout}>
                       Logout

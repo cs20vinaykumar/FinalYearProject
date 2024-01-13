@@ -9,6 +9,9 @@ import resetPassword from "./routes/resetPassword.js";
 import EmailVerify from "./routes/EmailVerify.js";
 import uploadForm from "./routes/PropertyForm.js";
 import GetForm from "./routes/GetPropertyForm.js";
+import profileRouter from "./routes/Profile.js";
+import DeleteForm from "./routes/DeletePropertyForm.js";
+import UpdateForm from "./routes/UpdatePropertyForm.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -22,6 +25,9 @@ connectToMongoDB();
 
 // Login APi
 app.use("/login", router);
+
+
+app.use("/profile", profileRouter)
 
 // Signup Api
 
@@ -39,10 +45,16 @@ app.use("/resetpassword", resetPassword);
 // verifycode Api
 app.use("/EmailVerify", EmailVerify);
 
-// Property Form Api
-app.use("/PropertyForm", uploadForm);
+// Property Form Api   CRUD Operations
+app.use("/PropertyForm", uploadForm); 
 //
 app.use("/GetPropertyForm", GetForm);
+//
+app.use("/DeletePropertyForm", DeleteForm);
+//
+app.use("/UpdatePropertyForm", UpdateForm)
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);

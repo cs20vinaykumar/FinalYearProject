@@ -25,6 +25,7 @@ uploadForm.post("/", upload.single("file"), async (req, res) => {
     const formDataEntry = new formData({
       ...req.body,
       file: req.file.filename, // Save only the filename
+  
     });
 
     await formDataEntry.save();

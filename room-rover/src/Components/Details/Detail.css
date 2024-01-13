@@ -1,9 +1,45 @@
-h1 {
-  color: brown;
+.main-seeDetails {
+  margin: 50px 40px;
 }
 
-
-.footer{
-  position: absolute;
-  top: 1000px;
+.DetailImageBox {
+  width: 50%;
+  height: 70vh;
+   margin: auto;
 }
+
+.rental-p {
+  font-family: "Roboto Serif", serif;
+  font-weight: bold;
+  font-size: larger;
+  display: flex;
+  justify-content: space-around;
+}
+
+.Details-button {
+  margin-left: 42%;
+}
+
+.btn-text {
+  width: 30%;
+  font-size: large;
+  font-weight: bold;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.head-des {
+  margin-left: 220px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.5rem;
+}
+
+.description-1 {
+  height: 200px;
+  width: 50%;
+  margin-left: 5%;
+  margin-left: 160px;
+  font-size: large;
+  margin: auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+

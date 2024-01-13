@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./Login.css";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Login(props) {
@@ -23,23 +22,39 @@ export default function Login(props) {
     });
   };
 
-  const login = () => {
-    axios
-      .post("http://localhost:4000/login", user)
-      .then((res) => {
-        setMessage(res.data.message);
-
-        if (res.data.message === "Login Successful") {
-          localStorage.setItem("token", res.data.token); // Set the token in local storage
-          setTimeout(() => {
-            navigate("/Dashboard");
-          }, 2000);
-        }
-      })
-      .catch((error) => {
-        console.error("Login error:", error);
+  const login = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          
+        },
+        body: JSON.stringify(user),
       });
+  
+      const data = await response.json();
+  
+      setMessage(data.message);
+  
+      if (data.message === "Login Successful") {
+        const token = data.token;
+  
+
+        localStorage.setItem("token", token);
+  
+
+  
+        setTimeout(() => {
+          navigate("/Dashboard");
+        }, 2000);
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+    }
   };
+  
+ 
 
   const handleClick = () => {
     setPassword(!password);

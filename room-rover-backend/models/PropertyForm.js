@@ -18,6 +18,7 @@ const formDataSchema = new mongoose.Schema({
   },
   amenities: [String],
   description: String,
+  
   file: {
     type: String,
     require: true,
