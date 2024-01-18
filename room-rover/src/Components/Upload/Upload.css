@@ -94,3 +94,23 @@
   clear: left;
   text-align: left;
 }
+.date-range-picker {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input {
+  padding: 8px;
+}
+
+
+

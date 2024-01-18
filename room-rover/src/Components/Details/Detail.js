@@ -11,7 +11,12 @@ const Detail = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/GetPropertyForm"
+          "http://localhost:4000/GetPropertyForm",
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
         );
         const products = response.data; // Assuming response.data is an array of products
         const foundProduct = products.find((p) => p._id === productId);
@@ -35,7 +40,10 @@ const Detail = () => {
       <p>{product.amenities}</p> */}
 
       <div className="main-seeDetails">
-        <h1 className="head-1">{product.title} {product.location}</h1> <br />
+        <h1 className="head-1">
+          {product.title} {product.location}
+        </h1>{" "}
+        <br />
         <div className="DetailImageBox">
           <img
             className="card-img-top"
@@ -46,11 +54,11 @@ const Detail = () => {
         <br />
         <p className="rental-p">
           Monthly Rent &nbsp; &nbsp; | &nbsp; &nbsp; Security Deposite &nbsp;
-          &nbsp; {" "}
+          &nbsp;{" "}
         </p>
         <p className="rental-p">
           {product.pricing.rent} &nbsp; &nbsp; | &nbsp; &nbsp;{" "}
-          {product.pricing.deposite} &nbsp; &nbsp; {" "}
+          {product.pricing.deposite} &nbsp; &nbsp;{" "}
         </p>
         <br />
         <div className="Details-button">
@@ -63,17 +71,24 @@ const Detail = () => {
         </div>{" "}
         <br />
         <br />
+        <div className="avaibility">
+          <strong className="head-des">Availability</strong>:
+          <p>
+            This is an {product.availability} Vacancy from{" "}
+            {product.dateRange.fromDate} to {product.dateRange.toDate}
+          </p>
+        </div>
         <br />
         <strong className="head-des">Description</strong>: <br />
-        <div className="description-1">
-          {product.description}
-        </div>
-<br />
+        <div className="description-1">{product.description}</div>
+        <br />
         <div className=" head-des ">
-        <h4 className=""><strong>Utilities And Amenities</strong></h4> 
-        {product.amenities.slice(0, 2).map((amenity, index) => (
-    <p key={index}>{amenity}</p>
-  ))}
+          <h4 className="">
+            <strong>Utilities And Amenities</strong>
+          </h4>
+          {product.amenities.slice(0, 2).map((amenity, index) => (
+            <p key={index}>{amenity}</p>
+          ))}
         </div>
       </div>
 

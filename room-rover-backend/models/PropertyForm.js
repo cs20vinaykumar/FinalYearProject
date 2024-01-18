@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+const { ObjectId } = mongoose.Schema.Types;
+
 const formDataSchema = new mongoose.Schema({
   title: String,
   location: String,
@@ -9,8 +11,8 @@ const formDataSchema = new mongoose.Schema({
   },
   availability: String,
   dateRange: {
-    start: { type: Date },
-    end: { type: Date },
+    fromDate: String,
+    toDate: String,
   },
   pricing: {
     deposite: Number,
@@ -18,7 +20,7 @@ const formDataSchema = new mongoose.Schema({
   },
   amenities: [String],
   description: String,
-  
+
   file: {
     type: String,
     require: true,
@@ -28,7 +30,12 @@ const formDataSchema = new mongoose.Schema({
     name: String,
     email: String,
     cnic: String,
-    phoneNumber: String,
+    phoneNumber: Number,
+  },
+
+  postedBy: {
+    type: ObjectId,
+    ref: "user",
   },
 });
 

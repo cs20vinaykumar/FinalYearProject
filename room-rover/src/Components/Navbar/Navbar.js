@@ -6,7 +6,7 @@ import Upload from "../Upload/Upload";
 export default function Navbar(props) {
   const [activeLink, setActiveLink] = useState(null);
   const [buttonPopup, setButtonPopup] = useState(false);
-  const isLoggedIn = !!localStorage.getItem("token");
+  const isLoggedIn = localStorage.getItem("token");
 
   const handleLinkClick = (link) => {
     console.log("Clicked on link:", link);
@@ -20,6 +20,15 @@ export default function Navbar(props) {
     navigate("/");
   };
 
+  const handleLogoClick = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/ ");
+    } else {
+      navigate("/");
+    }
+  };
+
   return (
     <>
       <div id="header-one">
@@ -27,7 +36,7 @@ export default function Navbar(props) {
           <div className="left-text-2">
             <h3 className="Logo-1">
               {" "}
-              <Link to="/" className="Logo-1" onClick={handleLogout}>
+              <Link to="/" className="Logo-1" onClick={handleLogoClick}>
                 {" "}
                 ROOM<span className="green">ROVER</span>
               </Link>
@@ -62,7 +71,6 @@ export default function Navbar(props) {
                       </button>{" "}
                     </Link>
                   </li>
-
 
                   <li>
                     <Link to="/Post">

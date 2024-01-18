@@ -36,10 +36,11 @@
 .description-1 {
   height: 200px;
   width: 50%;
-  margin-left: 5%;
-  margin-left: 160px;
   font-size: large;
   margin: auto;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.date{
+ margin: auto;
+}

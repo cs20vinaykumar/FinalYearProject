@@ -39,9 +39,8 @@ export default function Login(props) {
   
       if (data.message === "Login Successful") {
         const token = data.token;
-  
 
-        localStorage.setItem("token", token);
+        localStorage.setItem('token', token);
   
 
   

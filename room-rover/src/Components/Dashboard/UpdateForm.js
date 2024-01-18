@@ -10,10 +10,6 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { LocalizationProvider } from "@mui/x-date-pickers-pro";
-import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
-import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
@@ -34,6 +30,8 @@ const UpdateForm = () => {
   const [errors] = useState({});
   const [file, setFile] = useState();
   const [propertyType, setPropertyType] = useState("");
+  const [fromDate, setFromDate] = useState(null);
+  const [toDate, setToDate] = useState(null);
   const params = useParams();
   const navigate = useNavigate();
   // ----------------------------------- Ameinities------------------------------
@@ -62,6 +60,8 @@ const UpdateForm = () => {
     setLocation(result.location);
     setPropertyType(result.propertyType);
     setAvailability(result.availability);
+    setFromDate(result.formData);
+    setToDate(result.toDate);
     setDeposite(result.pricing.deposite);
     setRent(result.pricing.rent);
     setText(result.description);
@@ -69,6 +69,7 @@ const UpdateForm = () => {
     setname(result.contactForm.name);
     setEmail(result.contactForm.email);
     setCnic(result.contactForm.cnic);
+    setPhoneNumber(result.phoneNumber);
     console.log("Property Type from API:", result.propertyType);
   };
 
@@ -94,7 +95,13 @@ const UpdateForm = () => {
       .join("\n");
     setText(filteredValue);
   };
+  const handleFromDateChange = (date) => {
+    setFromDate(date);
+  };
 
+  const handleToDateChange = (date) => {
+    setToDate(date);
+  };
   const UpdateFormSubmit = async () => {
     try {
       let result = await fetch(
@@ -110,6 +117,8 @@ const UpdateForm = () => {
             },
 
             availability,
+            fromDate,
+            toDate,
             deposite,
             rent,
             description,
@@ -128,7 +137,7 @@ const UpdateForm = () => {
       result = await result.json();
       console.warn(result);
       alert("Form Updated Successfully");
-      navigate("/Dashboard");
+      navigate("/Post");
     } catch (error) {
       console.error("Error:", error.message);
       alert("Failed to update form. Please try again.");
@@ -302,15 +311,22 @@ const UpdateForm = () => {
             </div>
             <br />
             {/* --------------------Date Range------------------------- */}
-            <div className="date-range">
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={["DateRangePicker"]}>
-                  <DateRangePicker
-                    className="datePicker"
-                    localeText={{ start: "From", end: "To" }}
-                  />
-                </DemoContainer>
-              </LocalizationProvider>
+            <div className="date-range-picker">
+              <label htmlFor="fromDate">From Date:</label>
+              <input
+                type="date"
+                id="fromDate"
+                value={fromDate}
+                onChange={(e) => handleFromDateChange(e.target.value)}
+              />
+              <br />
+              <label htmlFor="toDate">To Date:</label>
+              <input
+                type="date"
+                id="toDate"
+                value={toDate}
+                onChange={(e) => handleToDateChange(e.target.value)}
+              />
             </div>
             <br />
             <br />
@@ -524,7 +540,7 @@ const UpdateForm = () => {
             >
               Update Form
             </Button>
-            <Link to="/Dashboard">
+            <Link to="/Post">
               <button className="close-btn btn btn-success">Close</button>
             </Link>
           </form>

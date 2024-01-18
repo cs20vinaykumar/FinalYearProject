@@ -12,6 +12,8 @@ import GetForm from "./routes/GetPropertyForm.js";
 import profileRouter from "./routes/Profile.js";
 import DeleteForm from "./routes/DeletePropertyForm.js";
 import UpdateForm from "./routes/UpdatePropertyForm.js";
+import authMiddleware from "../room-rover-backend/middleWare/requiredLogin.js"
+import myPost from "./routes/mypost.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -46,13 +48,19 @@ app.use("/resetpassword", resetPassword);
 app.use("/EmailVerify", EmailVerify);
 
 // Property Form Api   CRUD Operations
-app.use("/PropertyForm", uploadForm); 
+app.use("/PropertyForm",authMiddleware,  uploadForm); 
 //
-app.use("/GetPropertyForm", GetForm);
+app.use("/GetPropertyForm", authMiddleware, GetForm);
 //
 app.use("/DeletePropertyForm", DeleteForm);
 //
 app.use("/UpdatePropertyForm", UpdateForm)
+
+
+// onlyLoginUserPosts
+
+
+app.use("/mypost",authMiddleware, myPost)
 
 
 

@@ -11,10 +11,6 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { LocalizationProvider } from "@mui/x-date-pickers-pro";
-import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
-import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
@@ -36,17 +32,26 @@ function Upload(props) {
   const [errors, setErrors] = useState({});
   const [file, setFile] = useState();
   const [propertyType, setPropertyType] = useState("");
+  const [fromDate, setFromDate] = useState(null);
+  const [toDate, setToDate] = useState(null);
 
   const validateCnic = (cnic) => {
-    // Validate if CNIC is a 13-digit number
     const cnicRegex = /^\d{13}$/;
     return cnicRegex.test(cnic);
   };
   const handlePropertyTypeChange = (event) => {
     setPropertyType(event.target.value);
-    // Clear values of room and flat when propertyType changes
     setRoom("");
     setFlat("");
+  };
+  // const formattedFromDate = fromDate ? fromDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '';
+  // const formattedToDate = toDate ? toDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '';
+  const handleFromDateChange = (date) => {
+    setFromDate(date);
+  };
+
+  const handleToDateChange = (date) => {
+    setToDate(date);
   };
 
   const handleFormSubmit = async (event) => {
@@ -102,8 +107,8 @@ function Upload(props) {
       formData.append("propertyType.flat", flat);
       formData.append("propertyType.room", room);
       formData.append("availability", availability);
-      formData.append("dateRange.start", Date());
-      formData.append("dateRange.end", Date());
+      formData.append("dateRange.fromDate", fromDate);
+      formData.append("dateRange.toDate", toDate);
       formData.append("pricing.deposite", deposite);
       formData.append("pricing.rent", rent);
       formData.append("amenities", amenities);
@@ -114,10 +119,15 @@ function Upload(props) {
       formData.append("contactForm.phoneNumber", phoneNumber);
       formData.append("file", file);
       console.log("formData:", formData);
-
+      const token = localStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:4000/PropertyForm",
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       if (response.status === 200) {
@@ -126,9 +136,9 @@ function Upload(props) {
           location,
           flat,
           room,
-          availability: [availability],
-          start: Date(),
-          end: Date(),
+          availability,
+          fromDate,
+          toDate,
           deposite,
           rent,
           amenities: [amenities],
@@ -342,15 +352,22 @@ function Upload(props) {
           </div>
           <br />
           {/* --------------------Date Range------------------------- */}
-          <div className="date-range">
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={["DateRangePicker"]}>
-                <DateRangePicker
-                  className="datePicker"
-                  localeText={{ start: "From", end: "To" }}
-                />
-              </DemoContainer>
-            </LocalizationProvider>
+          <div className="date-range-picker">
+            <label htmlFor="fromDate">From Date:</label>
+            <input
+              type="date"
+              id="fromDate"
+              value={fromDate}
+              onChange={(e) => handleFromDateChange(e.target.value)}
+            />
+            <br />
+            <label htmlFor="toDate">To Date:</label>
+            <input
+              type="date"
+              id="toDate"
+              value={toDate}
+              onChange={(e) => handleToDateChange(e.target.value)}
+            />
           </div>
           <br />
           <br />
@@ -512,45 +529,49 @@ function Upload(props) {
           <br />
           <br />
           {/* --------------------Contact form------------------------- */}
-          <h4>Contact Form</h4>
-          <Box
-            display="flex"
-            flexDirection="column"
-            justifyContent="space-between"
-          >
-            <TextField
-              label="Name"
-              value={Name}
-              onChange={(e) => setname(e.target.value)}
-              error={!!errors.name}
-              helperText={errors.name}
-            />
-            <br />
-            <TextField
-              label="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              error={!!errors.email}
-              helperText={errors.email}
-            />
-            <br />
-            <TextField
-              type="Number"
-              label="CNIC (13-digit number)"
-              value={cnic}
-              onChange={(e) => setCnic(e.target.value)}
-              error={!!errors.cnic}
-              helperText={errors.cnic}
-            />
-            <br />
-            <TextField
-              label="Phone Number"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              error={!!errors.phoneNumber}
-              helperText={errors.phoneNumber}
-            />
-          </Box>
+          <div>
+            <h4>Contact Form</h4>
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="space-between"
+            >
+              <TextField
+                label="Name"
+                value={Name}
+                onChange={(e) => setname(e.target.value)}
+                error={!!errors.name}
+                helperText={errors.name}
+              />
+              <br />
+              <TextField
+                label="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                error={!!errors.email}
+                helperText={errors.email}
+              />
+              <br />
+              <TextField
+                type="Number"
+                label="CNIC (13-digit number)"
+                value={cnic}
+                onChange={(e) => setCnic(e.target.value)}
+                error={!!errors.cnic}
+                helperText={errors.cnic}
+              />
+              <br />
+              <TextField
+                type="Number"
+                label="Phone Number"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                error={!!errors.phoneNumber}
+                helperText={errors.phoneNumber}
+              />
+            </Box>
+          </div>
+          {/* ------------------------------------------ */}
           <br />
           <Button type="submit" variant="contained" color="primary">
             Submit
