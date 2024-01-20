@@ -34,6 +34,7 @@ function Upload(props) {
   const [propertyType, setPropertyType] = useState("");
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
+  // const [contactOption, setContactOption] = useState("owner");
 
   const validateCnic = (cnic) => {
     const cnicRegex = /^\d{13}$/;
@@ -44,6 +45,10 @@ function Upload(props) {
     setRoom("");
     setFlat("");
   };
+
+  // const handleContactOptionChange = (event) => {
+  //   setContactOption(event.target.value);
+  // };
   // const formattedFromDate = fromDate ? fromDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '';
   // const formattedToDate = toDate ? toDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '';
   const handleFromDateChange = (date) => {
@@ -529,6 +534,84 @@ function Upload(props) {
           <br />
           <br />
           {/* --------------------Contact form------------------------- */}
+          {/* <div>
+            <h4>Contact Form</h4>
+            <FormControl component="fieldset">
+              <RadioGroup
+                aria-label="contact-option"
+                name="contact-option"
+                value={contactOption}
+                onChange={handleContactOptionChange}
+              >
+                <div  className="head-contact">
+                <FormControlLabel
+                  value="assistant"
+                  control={<Radio />}
+                  label="I am the owner"
+                  className="head-input"
+                />
+                <FormControlLabel
+                  value="owner"
+                  control={<Radio />}
+                  label="My assistant will deal with the tenant"
+                  className="head-input"
+                />
+             
+                </div>
+              </RadioGroup>
+            </FormControl>
+
+            {contactOption === "owner" && (
+              <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="space-between"
+              >
+                  <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="space-between"
+            >
+              <TextField
+                label="Name"
+                value={Name}
+                onChange={(e) => setname(e.target.value)}
+                error={!!errors.name}
+                helperText={errors.name}
+              />
+              <br />
+              <TextField
+                label="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                error={!!errors.email}
+                helperText={errors.email}
+              />
+              <br />
+              <TextField
+                type="Number"
+                label="CNIC (13-digit number)"
+                value={cnic}
+                onChange={(e) => setCnic(e.target.value)}
+                error={!!errors.cnic}
+                helperText={errors.cnic}
+              />
+              <br />
+              <TextField
+                type="Number"
+                label="Phone Number"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                error={!!errors.phoneNumber}
+                helperText={errors.phoneNumber}
+              />
+            </Box>
+              </Box>
+            )}
+          </div> */}
+
+
+          {/* --------------------Contact form------------------------- */}
           <div>
             <h4>Contact Form</h4>
             <Box
@@ -571,6 +654,7 @@ function Upload(props) {
               />
             </Box>
           </div>
+
           {/* ------------------------------------------ */}
           <br />
           <Button type="submit" variant="contained" color="primary">

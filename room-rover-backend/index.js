@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 import cors from "cors";
-import connectToMongoDB from "./Database-connection/db.js";
+import connectToMongoDB from "./Database-connection/db.js"
 import router from "./routes/login.js";
 import routers from "./routes/signup.js";
 import otpVerify from "./routes/sendEmail.js";
@@ -14,6 +14,7 @@ import DeleteForm from "./routes/DeletePropertyForm.js";
 import UpdateForm from "./routes/UpdatePropertyForm.js";
 import authMiddleware from "../room-rover-backend/middleWare/requiredLogin.js"
 import myPost from "./routes/mypost.js";
+
 
 const app = express();
 const port = process.env.PORT || 4000;

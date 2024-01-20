@@ -101,19 +101,24 @@ export default function Login(props) {
                 <i class="fa-solid fa-eye icon3" onClick={handleClick}></i>
               </div>
 
-              <div className="form-group passwords">
-                <div className="labels rember">
+              {/* <div className="form-group passwords"> */}
+                {/* <div className="labels rember">
                   Rember me ? <input type="checkbox" className="inpus" />{" "}
-                </div>
-                <div className="forgot">
+                </div> */}
+                {/* <div className="forgot">
                   <Link to="/Login/Forgot">Forgot Password ?</Link>
-                </div>
-              </div>
+                </div> */}
+              {/* </div> */}
             </form>
+            <br />
             <br />
             <button className="btn btn-primary" onClick={login}>
               Login
-            </button>{" "}
+            </button> <br />
+           <button className="btn btn-primary">
+           <Link to="/Login/Forgot" className="login-forgot">Forgot Password ?
+           </Link> </button>
+            
             <br />
             <p className="tomato-red">{message}</p>
             <br />

@@ -112,6 +112,12 @@ export default function Dashboard() {
           </div>
         </div>
       </nav>
+      <div className="dashboard">
+        <legend>dashboard</legend>
+        <hr className="lakeer" />
+        {/* <headinv>Welcome to Room Rover</headinv> */}
+      </div>
+      <br /> <br />
       {/* ------------------------------------------------------ */}
       <div className="main">
         <div className="grid-container">

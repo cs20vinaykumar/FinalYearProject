@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Dropdown } from "react-bootstrap";
+import { Dropdown, Modal, Button } from "react-bootstrap";
+import "./post.css";
 
 export default function Post() {
-  const [Products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [productToDelete, setProductToDelete] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:4000/mypost", {
@@ -38,14 +41,35 @@ export default function Post() {
     }
   };
 
+  const handleDeleteClick = (id) => {
+    setProductToDelete(id);
+    setShowDeleteModal(true);
+  };
+
+  const handleConfirmDelete = () => {
+    deleteProduct(productToDelete);
+    setShowDeleteModal(false);
+  };
+
+  const handleCancelDelete = () => {
+    setProductToDelete(null);
+    setShowDeleteModal(false);
+  };
+
   return (
     <>
+      <div className="dashboard">
+        <legend>My Post</legend>
+        <hr className="lakeer" />
+        {/* <headinv>Welcome to Room Rover</headinv> */}
+      </div>
+      <br /> <br />
       <div className="main">
         <div className="grid-container">
-          {Products &&
-            Products.map((Product) => (
+          {products &&
+            products.map((product) => (
               <div
-                key={Product._id}
+                key={product._id}
                 className="card"
                 style={{ width: "20rem" }}
               >
@@ -57,18 +81,15 @@ export default function Post() {
 
                   <Dropdown.Menu>
                     <Dropdown.Item>
-                      {" "}
                       <button
-                        onClick={() => deleteProduct(Product._id)}
+                        onClick={() => handleDeleteClick(product._id)}
                         className="btn btn-dark"
                       >
                         delete
-                      </button>{" "}
+                      </button>
                     </Dropdown.Item>
-                    {/* <Dropdown.Item href="#/action-2">Action 2</Dropdown.Item> */}
                     <Dropdown.Item>
-                      {" "}
-                      <Link to={`/Update/${Product._id}`}>
+                      <Link to={`/Update/${product._id}`}>
                         <button className="btn btn-success">Update</button>
                       </Link>
                     </Dropdown.Item>
@@ -76,22 +97,22 @@ export default function Post() {
                 </Dropdown>
                 <img
                   className="card-img-top image"
-                  src={`http://localhost:4000/Images/${Product.file}`}
-                  alt={Product.altText || "Product Image"}
+                  src={`http://localhost:4000/Images/${product.file}`}
+                  alt={product.altText || "Product Image"}
                 />
-                <div className="card-body" key={Product._id}>
-                  <h5 className="card-title">{Product.title}</h5>
+                <div className="card-body" key={product._id}>
+                  <h5 className="card-title">{product.title}</h5>
                   <h5 className="card-title">
-                    <b>{Product.location}</b>
+                    <b>{product.location}</b>
                   </h5>
                   <p className="card-text">
-                    {Product.propertyType.room || Product.propertyType.flat}
+                    {product.propertyType.room || product.propertyType.flat}
                   </p>
                   <p className="card-text">
-                    Rent <b>{Product.pricing && Product.pricing.rent}</b>
+                    Rent <b>{product.pricing && product.pricing.rent}</b>
                   </p>
                   <Link
-                    to={`/product/${Product._id}`}
+                    to={`/product/${product._id}`}
                     className="btn btn-primary btnSee "
                   >
                     See Details
@@ -101,6 +122,21 @@ export default function Post() {
             ))}
         </div>
       </div>
+      {/* Delete Confirmation Modal */}
+      <Modal show={showDeleteModal} onHide={handleCancelDelete}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this product?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCancelDelete}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleConfirmDelete}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }

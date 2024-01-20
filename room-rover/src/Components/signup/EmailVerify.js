@@ -46,7 +46,7 @@ export default function Code() {
             <div className="image" id="svgimg"></div>
             <h4>Enter the Code</h4> <br />
             <h6>
-              Enter the code sent to your email address to reset the password of
+              Enter the code sent to your email address to create
               your account
             </h6>
             <div className="code">
