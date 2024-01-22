@@ -82,30 +82,3 @@ label {
 .form-class {
   margin-left: -100px;
 }
-
-#svgimg {
-  position: absolute;
-  top: 43%;
-  right: 31%;
-  z-index: 1;
-  animation-name: svgpic;
-  animation-duration: 5s;
-  animation-iteration-count: 1;
-}
-
-@keyframes svgpic {
-  0% {
-    top: 0%;
-    right: 0%;
-  }
-
-  50% {
-    top: 25%;
-    right: 1%;
-  }
-
-  100% {
-    top: 43%;
-    right: 31%;
-  }
-}

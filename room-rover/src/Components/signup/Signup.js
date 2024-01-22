@@ -32,9 +32,14 @@ export default function Signup() {
       try {
         const response = await axios.post("http://localhost:4000/Signup", user);
         setMessage(response.data.message);
-        setTimeout(() => {
-          navigate("/EmailVerify");
-        }, 2000);
+        if(response.data.message === "OTP Sent TO Your Email"){
+          setTimeout(() => {
+            navigate("/EmailVerify");
+          }, 2000);
+        }else{
+          setMessage(response.data.message)
+        }
+        
       } catch (error) {
         if (error.response) {
           console.error(error.response.data);

@@ -9,11 +9,12 @@ import resetPassword from "./routes/resetPassword.js";
 import EmailVerify from "./routes/EmailVerify.js";
 import uploadForm from "./routes/PropertyForm.js";
 import GetForm from "./routes/GetPropertyForm.js";
-import profileRouter from "./routes/Profile.js";
+// import profile from "./routes/Profile.js";
 import DeleteForm from "./routes/DeletePropertyForm.js";
 import UpdateForm from "./routes/UpdatePropertyForm.js";
 import authMiddleware from "../room-rover-backend/middleWare/requiredLogin.js"
 import myPost from "./routes/mypost.js";
+import GetSignup from "./routes/getSingup.js";
 
 
 const app = express();
@@ -30,7 +31,7 @@ connectToMongoDB();
 app.use("/login", router);
 
 
-app.use("/profile", profileRouter)
+// app.use("/profile", profile)
 
 // Signup Api
 
@@ -59,9 +60,10 @@ app.use("/UpdatePropertyForm", UpdateForm)
 
 
 // onlyLoginUserPosts
-
-
 app.use("/mypost",authMiddleware, myPost)
+
+// GetSignup Api
+app.use("/GetSignup", authMiddleware, GetSignup)
 
 
 

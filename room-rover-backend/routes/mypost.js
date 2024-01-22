@@ -7,7 +7,8 @@ myPost.get("/", async (req, res) => {
   try {
     let posts = await formData
       .find({ postedBy: req.user._id })
-      .populate("postedBy", "_id name");
+      .populate("postedBy", "_id name")
+      .sort("-createdAt")
     res.json({ myPost: posts });
   } catch (error) {
     console.error(error);

@@ -36,8 +36,9 @@ const formDataSchema = new mongoose.Schema({
   postedBy: {
     type: ObjectId,
     ref: "user",
-  },
-});
+  }
+
+},{timestamps : true});
 
 const formData = new mongoose.model("formData", formDataSchema, "formData");
 

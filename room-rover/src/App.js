@@ -11,10 +11,11 @@ import Code from "./Components/Forgot/Code";
 import Newpass from "./Components/Forgot/Newpass";
 import Upload from "./Components/Upload/Upload";
 import Detail from "./Components/Details/Detail";
-import Post from "./Components/Post/Post"
+import Post from "./Components/Post/Post";
 import { AppProvider } from "./Components/AppContext";
 import UpdateForm from "./Components/Dashboard/UpdateForm";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import UserProfile from "./Components/UserProfile/UserProfile";
 import "./App.css";
 function App() {
   return (
@@ -36,9 +37,7 @@ function App() {
             <Route path="/product/:productId" element={<Detail />} />
             <Route exact path="/Post" element={<Post />} />
             <Route exact path="/Update/:id" element={<UpdateForm />} />
-
-
-
+            <Route exact path="/UserProfile" element={<UserProfile />} />
           </Routes>
         </Router>
       </AppProvider>

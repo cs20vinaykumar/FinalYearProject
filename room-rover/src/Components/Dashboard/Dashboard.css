@@ -73,3 +73,16 @@ headinv {
   top: 15px;
   color: #063566;
 }
+
+
+.map{
+  position: absolute;
+  right: 25px;
+  top: 220px;
+
+  height: 350px;
+  width: 30%;
+background-image: url('E:\FinalYearProject\room-rover\Images\khi_map2.gif');
+}
+
+

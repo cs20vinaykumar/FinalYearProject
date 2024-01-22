@@ -7,6 +7,15 @@ export default function Navbar(props) {
   const [activeLink, setActiveLink] = useState(null);
   const [buttonPopup, setButtonPopup] = useState(false);
   const isLoggedIn = localStorage.getItem("token");
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleDrop = () => {
+    setIsOpen(false);
+  };
 
   const handleLinkClick = (link) => {
     console.log("Clicked on link:", link);
@@ -18,10 +27,12 @@ export default function Navbar(props) {
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
+    setIsOpen(false);
   };
 
   const handleLogoClick = () => {
     const token = localStorage.getItem("token");
+
     if (token) {
       navigate("/ ");
     } else {
@@ -59,6 +70,12 @@ export default function Navbar(props) {
                       <i className="fa-solid fa-arrow-right fa-2xs icon2-2"></i>
                     </div>
                   </li>
+                  <li>
+                    <Link to="/Dashboard">
+                      {" "}
+                      <button className="btn btn-success"> Home </button>
+                    </Link>
+                  </li>
 
                   <li>
                     <Link to="/Upload">
@@ -71,17 +88,48 @@ export default function Navbar(props) {
                       </button>{" "}
                     </Link>
                   </li>
-
                   <li>
-                    <Link to="/Post">
-                      <button className="btn btn-dark">My post</button>
-                    </Link>
-                  </li>
+                    <div className="dropdown nvbar-drop">
+                      <button
+                        onClick={toggleDropdown}
+                        className="btn btn-primary "
+                      >
+                        VinayKumar <i class="fa-solid fa-caret-down"></i>
+                      </button>
+                      {isOpen && (
+                        <ul className="dropdown-list">
+                          <li>
+                            <Link to="/UserProfile">
+                              <button
+                                className="btn btn-success buton"
+                                onClick={handleDrop}
+                              >
+                                Profile
+                              </button>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link to="/Post">
+                              <button
+                                className="btn btn-success buton"
+                                onClick={handleDrop}
+                              >
+                                My post
+                              </button>
+                            </Link>
+                          </li>
 
-                  <li>
-                    <button className="btn btn-primary" onClick={handleLogout}>
-                      Logout
-                    </button>
+                          <li>
+                            <button
+                              className="btn btn-primary buton"
+                              onClick={handleLogout}
+                            >
+                              Logout
+                            </button>
+                          </li>
+                        </ul>
+                      )}
+                    </div>
                   </li>
                 </>
               )}

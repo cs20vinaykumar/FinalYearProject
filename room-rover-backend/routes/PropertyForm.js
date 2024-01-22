@@ -29,7 +29,7 @@ uploadForm.post("/", upload.single("file"), async (req, res) => {
   
     });
 
-    await formDataEntry.save();
+    await formDataEntry.save()
     res
       .status(200)
       .send({ success: true, message: "Form submitted successfully" });

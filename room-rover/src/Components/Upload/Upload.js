@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState  } from "react";
 import "./Upload.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -34,6 +34,7 @@ function Upload(props) {
   const [propertyType, setPropertyType] = useState("");
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
+  const navigate = useNavigate()
   // const [contactOption, setContactOption] = useState("owner");
 
   const validateCnic = (cnic) => {
@@ -154,7 +155,9 @@ function Upload(props) {
           cnic,
           phoneNumber,
         });
-        alert("Form submitted successfully:", response.data.message);
+        alert("post Created  successfully:", response.data.message);
+        navigate("/Dashboard")
+        props.setTrigger(false)
 
         setErrors({});
       } else {

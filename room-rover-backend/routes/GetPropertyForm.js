@@ -7,6 +7,7 @@ GetForm.get("/", async (req, res) => {
   try {
     const data = await formData.find()
     .populate("postedBy", "_id name")
+    .sort("-createdAt")
     res.status(200).json(data);
   } catch (error) {
     console.error(err);

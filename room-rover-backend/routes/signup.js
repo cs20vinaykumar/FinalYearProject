@@ -9,6 +9,15 @@ dotenv.config();
 
 routers.post("/", async (req, res) => {
   const { name, lname, email, number, password, gender } = req.body;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(.{6,})$/;
+
+  if (!passwordRegex.test(password)) {
+    return res.send({
+      message: "Password must be at least 6 characters long and include at least one uppercase letter, one digit, and one special character.",
+    });
+
+  }
+  
   try {
     const existingUser = await User.findOne({ email: email });
     if (existingUser) {
@@ -37,7 +46,7 @@ routers.post("/", async (req, res) => {
 
       await otpData.save();
 
-      res.send({ message: "OTP Sent TO Your Email" });
+      res.send({ message: "OTP Sent TO Your Email", name: name });
       await sendOTPEmail(email, otpCode);
     }
   } catch (err) {
