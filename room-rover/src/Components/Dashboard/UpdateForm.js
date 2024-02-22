@@ -66,10 +66,22 @@ const UpdateForm = () => {
     setRent(result.pricing.rent);
     setText(result.description);
     setFile(result.file);
+    setFromDate(result.dateRange.fromDate);
+    setToDate(result.dateRange.toDate);
     setname(result.contactForm.name);
     setEmail(result.contactForm.email);
     setCnic(result.contactForm.cnic);
-    setPhoneNumber(result.phoneNumber);
+    setPhoneNumber(result.contactForm.phoneNumber);
+    setFurnished(result.amenities.furnished);
+    setKitchenAvailability(result.amenities.kitchenAvailability);
+    setParkingAvailability(result.amenities.parkingAvailability);
+    setWaterGas(result.amenities.waterGas);
+    setBed(result.amenities.Bed);
+    setInternet(result.amenities.Internet);
+    setAir(result.amenities.Air);
+    setLaundry(result.amenities.Laundry);
+
+    console.log("Property Type from API:", result.amenities);
     console.log("Property Type from API:", result.propertyType);
   };
 
@@ -117,16 +129,29 @@ const UpdateForm = () => {
             },
 
             availability,
-            fromDate,
-            toDate,
-            deposite,
-            rent,
+            dateRange: {
+              fromDate,
+              toDate,
+            },
+            pricing: {
+              rent,
+              deposite,
+            },
+
             description,
             Name,
             email,
             phoneNumber,
             cnic,
             file,
+            furnished,
+            kitchenAvailability,
+            parkingAvailability,
+            waterGas,
+            Bed,
+            Internet,
+            Air,
+            Laundry,
           }),
           headers: {
             "Content-Type": "application/json",

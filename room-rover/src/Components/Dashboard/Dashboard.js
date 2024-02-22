@@ -157,7 +157,7 @@ export default function Dashboard() {
       </div>
 
       <div className="map">
-       <img src="E:\FinalYearProject\room-rover\Images\khi_map2.gif" alt="" />
+
       </div>
     </>
   );

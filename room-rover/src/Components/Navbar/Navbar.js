@@ -94,7 +94,7 @@ export default function Navbar(props) {
                         onClick={toggleDropdown}
                         className="btn btn-primary "
                       >
-                        VinayKumar <i class="fa-solid fa-caret-down"></i>
+                        <i class="fa-solid fa-bars"></i>
                       </button>
                       {isOpen && (
                         <ul className="dropdown-list">
