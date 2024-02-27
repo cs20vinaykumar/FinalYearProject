@@ -56,6 +56,7 @@ const UpdateForm = () => {
     );
     result = await result.json();
     console.warn(params);
+    
     setTitle(result.title);
     setLocation(result.location);
     setPropertyType(result.propertyType);

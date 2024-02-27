@@ -38,6 +38,7 @@ function App() {
             <Route exact path="/Post" element={<Post />} />
             <Route exact path="/Update/:id" element={<UpdateForm />} />
             <Route exact path="/UserProfile" element={<UserProfile />} />
+
           </Routes>
         </Router>
       </AppProvider>

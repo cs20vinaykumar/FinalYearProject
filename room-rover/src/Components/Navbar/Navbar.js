@@ -3,6 +3,7 @@ import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import Upload from "../Upload/Upload";
 
+
 export default function Navbar(props) {
   const [activeLink, setActiveLink] = useState(null);
   const [buttonPopup, setButtonPopup] = useState(false);
@@ -100,7 +101,7 @@ export default function Navbar(props) {
                         <ul className="dropdown-list">
                           <li>
                             <Link to="/UserProfile">
-                              <button
+                                                  <button
                                 className="btn btn-success buton"
                                 onClick={handleDrop}
                               >

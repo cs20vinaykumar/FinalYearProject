@@ -35,9 +35,7 @@ const Detail = () => {
 
   return (
     <>
-      {/* <h1>{product.title}</h1>
-      <p>{product.description}</p>
-      <p>{product.amenities}</p> */}
+  
 
       <div className="main-seeDetails">
         <h1 className="head-1">

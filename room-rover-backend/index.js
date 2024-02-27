@@ -15,6 +15,7 @@ import UpdateForm from "./routes/UpdatePropertyForm.js";
 import authMiddleware from "../room-rover-backend/middleWare/requiredLogin.js"
 import myPost from "./routes/mypost.js";
 import GetSignup from "./routes/getSingup.js";
+import updateProfile from "./routes/UpdateProfile.js";
 
 
 const app = express();
@@ -62,8 +63,8 @@ app.use("/UpdatePropertyForm", UpdateForm)
 // onlyLoginUserPosts
 app.use("/mypost",authMiddleware, myPost)
 
-// GetSignup Api
-app.use("/GetSignup", authMiddleware, GetSignup)
+
+app.use("/updateProfile", authMiddleware, updateProfile)
 
 
 

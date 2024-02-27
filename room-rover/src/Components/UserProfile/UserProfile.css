@@ -57,3 +57,10 @@ width: 100px;
 }
 
 
+.alert-container{
+  position: absolute;
+  left: 50%;
+  bottom: 62%;
+  
+}
+
