@@ -1,25 +1,51 @@
-/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
 export default function Dashboard() {
-  const [Products, setProducts] = useState("");
+  const [originalProducts, setOriginalProducts] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await axios.get("http://localhost:4000/GetPropertyForm", {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/GetPropertyForm", {
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      setProducts(data);
-    };
+      setOriginalProducts(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
-    fetchData();
-  }, []);
 
-  return (
+
+  const searchHandle = async (event) => {
+    const key = event.target.value.trim();
+    if (key === "") {
+      setSearchResults([]);
+    } else {
+      try {
+        const response = await axios.get(`http://localhost:4000/Search/${key}`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setSearchResults(response.data);
+      } catch (error) {
+        console.error("Error fetching search results:", error);
+      }
+    }
+  };
+
+  const productsToDisplay = searchResults.length > 0 ? searchResults : originalProducts;
+   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light filters">
         <div className="container-fluid">
@@ -108,6 +134,20 @@ export default function Dashboard() {
                   <span className="sr-only">(current)</span>
                 </a>
               </li>
+
+              <li>
+                <div className="search-barr">
+                  <i className="fa-solid fa-location-dot fa-2xs icon-1"></i>
+                  <input
+                    type="text"
+                    name="eingabe"
+                    className="input-text-2 searchbarr"
+                    placeholder="Enter City Name"
+                    onChange={searchHandle}
+                  />
+                  {/* <i className="fa-solid fa-arrow-right fa-2xs icon2-2"></i> */}
+                </div>
+              </li>
             </ul>
           </div>
         </div>
@@ -121,44 +161,41 @@ export default function Dashboard() {
       {/* ------------------------------------------------------ */}
       <div className="main">
         <div className="grid-container">
-          {Products &&
-            Products.data.map((Product) => (
-              <div
-                key={Product._id}
-                className="card"
-                style={{ width: "20rem" }}
-              >
-                <img
-                  className="card-img-top image"
-                  src={`http://localhost:4000/Images/${Product.file}`}
-                  alt={Product.altText || "Product Image"}
-                />
-                <div className="card-body" key={Product._id}>
-                  <h5 className="card-title">{Product.title}</h5>
-                  <h5 className="card-title">
-                    <b>{Product.location}</b>
-                  </h5>
-                  <p className="card-text">
-                    {Product.propertyType.room || Product.propertyType.flat}
-                  </p>
-                  <p className="card-text">
-                    Rent <b>{Product.pricing && Product.pricing.rent}</b>
-                  </p>
-                  <Link
-                    to={`/product/${Product._id}`}
-                    className="btn btn-primary btnSee "
-                  >
-                    See Details
-                  </Link>{" "}
-                </div>
+          {productsToDisplay.map((Product) => (
+            <div
+              key={Product._id}
+              className="card"
+              style={{ width: "20rem" }}
+            >
+              <img
+                className="card-img-top image"
+                src={`http://localhost:4000/Images/${Product.file}`}
+                alt={Product.altText || "Product Image"}
+              />
+              <div className="card-body" key={Product._id}>
+                <h5 className="card-title">{Product.title}</h5>
+                <h5 className="card-title">
+                  <b>{Product.location}</b>
+                </h5>
+                <p className="card-text">
+                  {Product.propertyType.room || Product.propertyType.flat}
+                </p>
+                <p className="card-text">
+                  Rent <b>{Product.pricing && Product.pricing.rent}</b>
+                </p>
+                <Link
+                  to={`/product/${Product._id}`}
+                  className="btn btn-primary btnSee"
+                >
+                  See Details
+                </Link>{" "}
               </div>
-            ))}
+            </div>
+          ))}
+
         </div>
       </div>
-
-      <div className="map">
-
-      </div>
+      <div className="map"></div>
     </>
   );
 }

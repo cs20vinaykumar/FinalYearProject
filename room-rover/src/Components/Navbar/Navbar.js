@@ -3,12 +3,12 @@ import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import Upload from "../Upload/Upload";
 
-
 export default function Navbar(props) {
   const [activeLink, setActiveLink] = useState(null);
   const [buttonPopup, setButtonPopup] = useState(false);
   const isLoggedIn = localStorage.getItem("token");
   const [isOpen, setIsOpen] = useState(false);
+  
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -41,6 +41,9 @@ export default function Navbar(props) {
     }
   };
 
+
+
+
   return (
     <>
       <div id="header-one">
@@ -59,7 +62,7 @@ export default function Navbar(props) {
             <ul>
               {isLoggedIn && (
                 <>
-                  <li>
+                  {/* <li>
                     <div className="search-bar">
                       <i className="fa-solid fa-location-dot fa-2xs icon-1"></i>
                       <input
@@ -67,10 +70,11 @@ export default function Navbar(props) {
                         name="eingabe"
                         className="input-text-2 searchbar"
                         placeholder="Enter City Name"
+                        // onChange={searchHandle}
                       />
                       <i className="fa-solid fa-arrow-right fa-2xs icon2-2"></i>
                     </div>
-                  </li>
+                  </li> */}
                   <li>
                     <Link to="/Dashboard">
                       {" "}
@@ -89,6 +93,15 @@ export default function Navbar(props) {
                       </button>{" "}
                     </Link>
                   </li>
+                  {/* 
+                  <li>
+                    <Link to="/Accounts">
+                      <button className="btn btn-success">
+                        Accounts
+                      </button>
+                    </Link>
+                  </li> */}
+
                   <li>
                     <div className="dropdown nvbar-drop">
                       <button
@@ -101,7 +114,7 @@ export default function Navbar(props) {
                         <ul className="dropdown-list">
                           <li>
                             <Link to="/UserProfile">
-                                                  <button
+                              <button
                                 className="btn btn-success buton"
                                 onClick={handleDrop}
                               >

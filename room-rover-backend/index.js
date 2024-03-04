@@ -9,13 +9,12 @@ import resetPassword from "./routes/resetPassword.js";
 import EmailVerify from "./routes/EmailVerify.js";
 import uploadForm from "./routes/PropertyForm.js";
 import GetForm from "./routes/GetPropertyForm.js";
-// import profile from "./routes/Profile.js";
 import DeleteForm from "./routes/DeletePropertyForm.js";
 import UpdateForm from "./routes/UpdatePropertyForm.js";
 import authMiddleware from "../room-rover-backend/middleWare/requiredLogin.js"
 import myPost from "./routes/mypost.js";
-import GetSignup from "./routes/getSingup.js";
 import updateProfile from "./routes/UpdateProfile.js";
+import searchFilter from "./routes/SearchFilter.js";
 
 
 const app = express();
@@ -63,8 +62,12 @@ app.use("/UpdatePropertyForm", UpdateForm)
 // onlyLoginUserPosts
 app.use("/mypost",authMiddleware, myPost)
 
-
+// Api for Profile
 app.use("/updateProfile", authMiddleware, updateProfile)
+
+
+//Api for search filter 
+app.use("/Search", authMiddleware, searchFilter)
 
 
 

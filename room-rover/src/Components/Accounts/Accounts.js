@@ -1,10 +1,11 @@
 import React from 'react'
 
-export default function Accounts() {
+const Accounts = () => {
   return (
     <div>
-        <h1>Accounts compoenents</h1>
-      
+      okay
     </div>
   )
 }
+
+export default Accounts

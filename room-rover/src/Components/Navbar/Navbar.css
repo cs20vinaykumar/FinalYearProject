@@ -79,7 +79,7 @@ nav-head ul li a:hover::after {
 .active {
   color: #00ed64;
 }
-.search-bar .icon-1 {
+/* .search-bar .icon-1 {
   position: absolute;
   top: 63%;
   left: 10px;
@@ -107,7 +107,8 @@ nav-head ul li a:hover::after {
   transform: translateY(-50%);
   height: 10px;
   font-size: 18px;
-}
+  
+} */
 
 .nvbar-drop {
   position: relative;
