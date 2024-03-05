@@ -9,16 +9,22 @@ const resetPassword = express.Router();
 
 resetPassword.post("/", async (req, res) => {
   const { email, newPassword, confirmPassword } = req.body;
-
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(.{6,})$/;
   if (!email || !newPassword || !confirmPassword) {
     return res.json({
       message: "Please fill in all fields.",
     });
   }
 
-  try {
+  if (!passwordRegex.test(newPassword)) {
+    return res.json({
+      message:
+        "Password must be at least 6 characters long and include at least one uppercase letter, one digit, and one special character.",
+    });
+  }
 
-        // Check if passwords match
+  try {
+    // Check if passwords match
     if (newPassword !== confirmPassword) {
       return res.json({
         success: false,

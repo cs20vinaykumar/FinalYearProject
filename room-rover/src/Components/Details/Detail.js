@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./Detail.css";
+import { Link } from "react-router-dom";
 
 const Detail = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,26 +31,46 @@ const Detail = () => {
     fetchData();
   }, [productId]);
 
+  const goToPrevSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? product.file.length - 1 : prevIndex - 1
+    );
+  };
+
+  const goToNextSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === product.file.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
   if (!product) {
     return <div>Loading...</div>;
   }
-
   return (
     <>
-  
-
       <div className="main-seeDetails">
         <h1 className="head-1">
           {product.title} {product.location}
-        </h1>{" "}
+        </h1>
         <br />
         <div className="DetailImageBox">
+          {product.file.length > 1 && (
+            <button className="prev" onClick={goToPrevSlide}>
+              {"<"}
+            </button>
+          )}
           <img
             className="card-img-top"
-            src={`http://localhost:4000/Images/${product.file}`}
-            alt={product.altText || "Product Image"}
+            src={`http://localhost:4000/Images/${product.file[currentIndex]}`}
+            alt={`Product ${currentIndex + 1}`}
           />
-        </div>{" "}
+          {product.file.length > 1 && (
+            <button className="next" onClick={goToNextSlide}>
+              {">"}
+            </button>
+          )}
+        </div>
+        <br />
         <br />
         <p className="rental-p">
           Monthly Rent &nbsp; &nbsp; | &nbsp; &nbsp; Security Deposite &nbsp;
@@ -60,7 +82,9 @@ const Detail = () => {
         </p>
         <br />
         <div className="Details-button">
-          <button className=" btn btn-dark btn-text ">Book Now</button> &nbsp;
+          <Link to="/BookingDetails">
+            <button className=" btn btn-dark btn-text ">Book Now</button> &nbsp;
+          </Link>
           &nbsp; <br />
           <br />
           <button className=" btn btn-dark btn-text ">

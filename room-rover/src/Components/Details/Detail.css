@@ -5,7 +5,7 @@
 .DetailImageBox {
   width: 50%;
   height: 70vh;
-   margin: auto;
+  margin: auto;
 }
 
 .rental-p {
@@ -41,6 +41,146 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.date{
- margin: auto;
+.date {
+  margin: auto;
+}
+
+.image-container {
+  position: relative;
+}
+
+.left-icon,
+.right-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: white;
+  font-size: 24px;
+}
+
+.left-icon {
+  left: 10px; /* Adjust the value as needed */
+}
+
+.right-icon {
+  right: 10px; /* Adjust the value as needed */
+}
+
+.DetailImageBox {
+  position: relative;
+}
+
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.prev {
+  left: 25px;
+}
+
+.next {
+  right: 25px;
+}
+
+.prev,
+.next {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.prev:hover,
+.next:hover {
+  background-color: #0056b3;
+}
+
+.DetailImageBox {
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.DetailImageBox img {
+  width: 100%;
+  height: auto;
+}
+
+.main-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.main-seeDetails {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.detail-image-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.detail-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+.rental-info {
+  margin-bottom: 20px;
+}
+
+.rental-p {
+  margin-bottom: 5px;
+}
+
+.details-button-container {
+  margin-bottom: 20px;
+}
+
+.btn {
+  margin-right: 10px;
+}
+
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.green-1 {
+  color: green;
 }

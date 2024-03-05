@@ -68,6 +68,7 @@ const Newpass = () => {
               >
                 Continue
               </button>
+              <br /><br />
 
               <p className="tomato-red">{message}</p>
 

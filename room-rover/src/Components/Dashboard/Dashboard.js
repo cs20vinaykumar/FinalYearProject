@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import FormatPrice from "../Helper/FormatPrice";
 
 export default function Dashboard() {
   const [originalProducts, setOriginalProducts] = useState([]);
@@ -13,18 +14,19 @@ export default function Dashboard() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/GetPropertyForm", {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.get(
+        "http://localhost:4000/GetPropertyForm",
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       setOriginalProducts(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-
-
 
   const searchHandle = async (event) => {
     const key = event.target.value.trim();
@@ -32,11 +34,14 @@ export default function Dashboard() {
       setSearchResults([]);
     } else {
       try {
-        const response = await axios.get(`http://localhost:4000/Search/${key}`, {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        const response = await axios.get(
+          `http://localhost:4000/Search/${key}`,
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
         setSearchResults(response.data);
       } catch (error) {
         console.error("Error fetching search results:", error);
@@ -44,8 +49,9 @@ export default function Dashboard() {
     }
   };
 
-  const productsToDisplay = searchResults.length > 0 ? searchResults : originalProducts;
-   return (
+  const productsToDisplay =
+    searchResults.length > 0 ? searchResults : originalProducts;
+  return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light filters">
         <div className="container-fluid">
@@ -162,14 +168,10 @@ export default function Dashboard() {
       <div className="main">
         <div className="grid-container">
           {productsToDisplay.map((Product) => (
-            <div
-              key={Product._id}
-              className="card"
-              style={{ width: "20rem" }}
-            >
+            <div key={Product._id} className="card" style={{ width: "20rem" }}>
               <img
                 className="card-img-top image"
-                src={`http://localhost:4000/Images/${Product.file}`}
+                src={`http://localhost:4000/Images/${Product.file[0]}`}
                 alt={Product.altText || "Product Image"}
               />
               <div className="card-body" key={Product._id}>
@@ -181,7 +183,12 @@ export default function Dashboard() {
                   {Product.propertyType.room || Product.propertyType.flat}
                 </p>
                 <p className="card-text">
-                  Rent <b>{Product.pricing && Product.pricing.rent}</b>
+                  {/* Rent <b>{Product.pricing && Product.pricing.rent}</b> */}
+                  {
+                    <FormatPrice
+                      price={Product.pricing && Product.pricing.rent}
+                    />
+                  }
                 </p>
                 <Link
                   to={`/product/${Product._id}`}
@@ -192,7 +199,6 @@ export default function Dashboard() {
               </div>
             </div>
           ))}
-
         </div>
       </div>
       <div className="map"></div>

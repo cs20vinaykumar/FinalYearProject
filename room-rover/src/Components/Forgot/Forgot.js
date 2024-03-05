@@ -60,7 +60,7 @@ export default function Forgot() {
             <div className="email">
               <h5>Email</h5>
               <input
-                type="text"
+                type="email"
                 className={`email-input ${!isEmailValid ? "invalid" : ""}`}
                 value={email}
                 onChange={handleEmailChange}
@@ -73,7 +73,7 @@ export default function Forgot() {
                 {" "}
                 Continue
               </button>
-              {/* </Link> */}
+              {/* </Link> */} <br />
               <p className="tomato-red">{message}</p>
             </div>
             <p>

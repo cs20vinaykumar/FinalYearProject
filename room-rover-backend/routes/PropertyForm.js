@@ -20,16 +20,17 @@ const upload = multer({
   storage: storage,
 });
 
-uploadForm.post("/", upload.single("file"), async (req, res) => {
+uploadForm.post("/", upload.array("file", 10), async (req, res) => {
   try {
+    const { files } = req;
+    const fileNames = files.map((file) => file.filename);
     const formDataEntry = new formData({
       ...req.body,
-      file: req.file.filename, // Save only the filename
-      postedBy:req.user
-  
+      file: fileNames, // Save only the filename
+      postedBy: req.user,
     });
 
-    await formDataEntry.save()
+    await formDataEntry.save();
     res
       .status(200)
       .send({ success: true, message: "Form submitted successfully" });

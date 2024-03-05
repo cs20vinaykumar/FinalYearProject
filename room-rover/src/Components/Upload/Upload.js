@@ -30,7 +30,7 @@ function Upload(props) {
   const [deposite, setDeposite] = useState("");
   const [rent, setRent] = useState("");
   const [errors, setErrors] = useState({});
-  const [file, setFile] = useState();
+  const [file, setFile] = useState([]);
   const [propertyType, setPropertyType] = useState("");
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
@@ -60,6 +60,16 @@ function Upload(props) {
     setToDate(date);
   };
 
+
+const handleFileChange =  (event) =>{
+const newFiles = event.target.files;
+const updatedFiles = [...file];
+for (let i=0; i<newFiles.length; i++){
+  updatedFiles.push(newFiles[i])
+}
+setFile (updatedFiles);
+  }
+  
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -123,7 +133,9 @@ function Upload(props) {
       formData.append("contactForm.email", email);
       formData.append("contactForm.cnic", cnic);
       formData.append("contactForm.phoneNumber", phoneNumber);
-      formData.append("file", file);
+      for (let i = 0; i < file.length; i++) {
+        formData.append("file", file[i]);
+      }
       console.log("formData:", formData);
       const token = localStorage.getItem("token");
       const response = await axios.post(
@@ -530,8 +542,11 @@ function Upload(props) {
           </div>
           {/* --------------------Upload Pictures------------------------- */}
           <div>
-            <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+            <input type="file" onChange={handleFileChange}multiple />
           </div>
+          {file.map((file, index) => (
+              <li key={index}>{file.name}</li>
+            ))}
           <br />
           <span className="span-p">Upload Pictures of your flat or room</span>
           <br />
