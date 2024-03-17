@@ -112,12 +112,49 @@ input {
   padding: 8px;
 }
 
-.head-contact{
+.head-contact {
   display: flex;
 }
 
-.head-input{
+.head-input {
   width: 50%;
 }
 
+.time-slots {
+  margin-bottom: 20px;
+}
 
+.time-slot-container {
+  margin-bottom: 20px;
+}
+
+.time-slot {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.time-slot-fields {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.field {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.time-slot-field {
+  width: 100%;
+}
+
+.time-slot-button {
+  width: 200px;
+  margin: auto;
+}
+.time-slot-fields label {
+  text-align: left;
+}

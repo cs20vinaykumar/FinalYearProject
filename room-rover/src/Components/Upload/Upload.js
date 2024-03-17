@@ -35,6 +35,10 @@ function Upload(props) {
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
   const navigate = useNavigate();
+  const [timeSlots, setTimeSlots] = useState([
+    { date: "", startTime: "", endTime: "" },
+  ]);
+
   // const [contactOption, setContactOption] = useState("owner");
 
   const validateCnic = (cnic) => {
@@ -47,23 +51,31 @@ function Upload(props) {
     setFlat("");
   };
 
+  const handleAddTimeSlot = () => {
+    const newTimeSlot = {
+      date: "", // Initialize with an empty string or any default value
+      startTime: "", // Initialize with an empty string or any default value
+      endTime: "", // Initialize with an empty string or any default value
+    };
+    setTimeSlots([...timeSlots, newTimeSlot]);
+  };
+
+  const handleTimeSlotChange = (index, field, value) => {
+    const updatedTimeSlots = [...timeSlots];
+    updatedTimeSlots[index][field] = value;
+    setTimeSlots(updatedTimeSlots);
+  };
+
+  const handleRemoveTimeSlot = (index) => {
+    const updatedTimeSlots = timeSlots.filter((_, i) => i !== index);
+    setTimeSlots(updatedTimeSlots);
+  };
+
   // const handleContactOptionChange = (event) => {
   //   setContactOption(event.target.value);
   // };
-  // const formattedFromDate = fromDate
-  //   ? fromDate.toLocaleDateString("en-US", {
-  //       month: "long",
-  //       day: "numeric",
-  //       year: "numeric",
-  //     })
-  //   : "";
-  // const formattedToDate = toDate
-  //   ? toDate.toLocaleDateString("en-US", {
-  //       month: "long",
-  //       day: "numeric",
-  //       year: "numeric",
-  //     })
-  //   : "";
+  // const formattedFromDate = fromDate ? fromDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '';
+  // const formattedToDate = toDate ? toDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '';
   const handleFromDateChange = (date) => {
     setFromDate(date);
   };
@@ -147,7 +159,17 @@ function Upload(props) {
       for (let i = 0; i < file.length; i++) {
         formData.append("file", file[i]);
       }
+      formData.append("timeSlots", JSON.stringify(timeSlots));
+
+      // Append time slots data
+      timeSlots.forEach((slot, index) => {
+        formData.append(`timeSlots[${index}].date`, slot.date);
+        formData.append(`timeSlots[${index}].startTime`, slot.startTime);
+        formData.append(`timeSlots[${index}].endTime`, slot.endTime);
+      });
+      console.log("Time Slots:", timeSlots);
       console.log("formData:", formData);
+
       const token = localStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:4000/PropertyForm",
@@ -179,7 +201,7 @@ function Upload(props) {
           phoneNumber,
         });
         alert("post Created  successfully:", response.data.message);
-        navigate("/Agreement");
+        navigate("/Dashboard");
         props.setTrigger(false);
 
         setErrors({});
@@ -379,8 +401,6 @@ function Upload(props) {
               {errors.availabilityType && (
                 <p style={{ color: "red" }}>{errors.availabilityType}</p>
               )}
-              <span>For temporary selection: 1 month to 6 months lease.</span>
-              <span>For permanent selection: 6 months or greater lease.</span>
             </FormControl>
           </div>
           <br />
@@ -418,7 +438,7 @@ function Upload(props) {
               <TextField
                 id="outlined-controlled"
                 label="Deposite"
-                type="text"
+                type="number"
                 value={deposite}
                 onChange={(event) => setDeposite(event.target.value)}
                 error={!!errors.deposite}
@@ -429,7 +449,7 @@ function Upload(props) {
               <TextField
                 id="outlined-uncontrolled"
                 label="Rent"
-                type="text"
+                type="number"
                 value={rent}
                 onChange={(event) => setRent(event.target.value)}
                 error={!!errors.rent}
@@ -639,7 +659,7 @@ function Upload(props) {
             </Box>
               </Box>
             )}
-          </div>  */}
+          </div> */}
           {/* --------------------Contact form------------------------- */}
           <div>
             <h4>Contact Form</h4>
@@ -674,7 +694,7 @@ function Upload(props) {
               />
               <br />
               <TextField
-                type="text"
+                type="Number"
                 label="Phone Number"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
@@ -683,7 +703,79 @@ function Upload(props) {
               />
             </Box>
           </div>
-          {/* ------------------------------------------ */}
+          <br />
+          <br />
+          {/* ----------------------------------------------- */}
+         
+          <div className="time-slots">
+            <h4>Available Time Slots</h4>
+            <span>
+              Select your available time slots for property visits. Add or
+              remove slots as needed
+            </span>
+          </div>
+          {timeSlots.map((timeSlot, index) => (
+            <div key={index} className="time-slot">
+              <div className="time-slot-fields">
+                <div className="field">
+                  <label>Date for Slot {index + 1}</label>
+                  <TextField
+                    type="date"
+                    value={timeSlot.date}
+                    onChange={(e) =>
+                      handleTimeSlotChange(index, "date", e.target.value)
+                    }
+                    className="time-slot-field"
+                  />
+                </div>
+                <div className="field">
+                  <label>Start Time for Slot {index + 1}</label>
+                  <TextField
+                    type="time"
+                    value={timeSlot.startTime}
+                    onChange={(e) =>
+                      handleTimeSlotChange(index, "startTime", e.target.value)
+                    }
+                    className="time-slot-field"
+                  />
+                </div>
+                <div className="field">
+                  <label>End Time for Slot {index + 1}</label>
+                  <TextField
+                    type="time"
+                    value={timeSlot.endTime}
+                    onChange={(e) =>
+                      handleTimeSlotChange(index, "endTime", e.target.value)
+                    }
+                    className="time-slot-field"
+                  />
+                </div>
+              </div>{" "}
+              <br />
+              <Button
+                onClick={handleAddTimeSlot}
+                variant="contained"
+                color="primary"
+                className="time-slot-button"
+              >
+                Add Time Slot
+              </Button>{" "}
+              <br />
+              {timeSlots.length > 1 && (
+                <Button
+                  onClick={() => handleRemoveTimeSlot(index)}
+                  variant="contained"
+                  color="secondary"
+                  className="time-slot-button"
+                >
+                  Remove Time Slot
+                </Button>
+              )}
+            </div>
+          ))}
+          <br />
+          <br />
+          {/* ------------------------------------------------------------------- */}
           <br />
           <Button type="submit" variant="contained" color="primary">
             Submit
