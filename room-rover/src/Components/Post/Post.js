@@ -93,11 +93,21 @@ export default function Post() {
                         <button className="btn btn-success">Update</button>
                       </Link>
                     </Dropdown.Item>
+                    <Dropdown.Item>
+                      <Link >
+                        <button className="btn btn-success">View Booking</button>
+                      </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      <Link>
+                        <button className="btn btn-success">View Request Visit</button>
+                      </Link>
+                    </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
                 <img
                   className="card-img-top image"
-                  src={`http://localhost:4000/Images/${product.file}`}
+                  src={`http://localhost:4000/Images/${product.file[0]}`}
                   alt={product.altText || "Product Image"}
                 />
                 <div className="card-body" key={product._id}>

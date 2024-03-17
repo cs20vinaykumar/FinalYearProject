@@ -18,6 +18,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import UserProfile from "./Components/UserProfile/UserProfile";
 import Accounts from "../src/Components/Accounts/Accounts"
 import "./App.css";
+import Agreement from "./Components/Agreement/Agreement";
 function App() {
   return (
     <>
@@ -40,6 +41,8 @@ function App() {
             <Route exact path="/Update/:id" element={<UpdateForm />} />
             <Route exact path="/UserProfile" element={<UserProfile />} />
             <Route exact path="/Accounts" element={<Accounts />} />
+            <Route exact path="/Agreement" element={<Agreement />} />
+
 
 
           </Routes>

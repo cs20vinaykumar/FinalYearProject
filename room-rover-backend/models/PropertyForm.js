@@ -23,7 +23,7 @@ const formDataSchema = new mongoose.Schema({
 
   file: [{
     type: String,
-    // require: true,
+    require: true,
   }],
 
   contactForm: {

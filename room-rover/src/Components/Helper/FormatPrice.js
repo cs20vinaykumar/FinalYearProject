@@ -2,7 +2,7 @@ const FormatPrice = ({price})=>{
 return Intl.NumberFormat("en-PK", {
     style: "currency",
     currency: "PKR",
-    maximumFractionDigits:2
+    maximumFractionDigits:0
 }).format(price / 100)
 }
 

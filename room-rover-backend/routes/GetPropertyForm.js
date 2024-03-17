@@ -6,7 +6,7 @@ const GetForm = express.Router();
 GetForm.get("/", async (req, res) => {
   try {
     const data = await formData.find()
-    .populate("postedBy", "_id name")
+    .populate("postedBy", "_id name lname email number")
     .sort("-createdAt")
     res.status(200).json(data);
   } catch (error) {

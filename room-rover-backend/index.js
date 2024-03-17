@@ -15,6 +15,8 @@ import authMiddleware from "../room-rover-backend/middleWare/requiredLogin.js"
 import myPost from "./routes/mypost.js";
 import updateProfile from "./routes/UpdateProfile.js";
 import searchFilter from "./routes/SearchFilter.js";
+import Agreement from "../room-rover-backend/routes/Agreement.js"
+// import searchUser from "./routes/SearchUser.js";
 
 
 const app = express();
@@ -68,6 +70,13 @@ app.use("/updateProfile", authMiddleware, updateProfile)
 
 //Api for search filter 
 app.use("/Search", authMiddleware, searchFilter)
+
+//Api for search filter 
+// app.use("/UserSearch", authMiddleware,  searchUser)
+
+
+//Api for Agreement Form
+app.use("/Agreement", authMiddleware, Agreement)
 
 
 

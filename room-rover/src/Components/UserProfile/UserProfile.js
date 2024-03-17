@@ -47,11 +47,11 @@ const UserProfile = () => {
       );
       const responseData = updateUserProfile.data;
       setSubmitMessage(responseData.message);
-         setShowAlert(true);
-     
+      setShowAlert(true);
+      
       setTimeout(() => {
         window.location.reload();
-      }, 3000);
+      }, 10);
     } catch (error) {
       console.error("Error updating user profile", error);
     }

@@ -70,6 +70,17 @@ const Detail = () => {
             </button>
           )}
         </div>
+        {product.file.length > 1 && (
+          <div className="dots-container">
+            {product.file.map((_, index) => (
+              <span
+                key={index}
+                className={index === currentIndex ? "dot active" : "dot"}
+                onClick={() => setCurrentIndex(index)}
+              ></span>
+            ))}
+          </div>
+        )}
         <br />
         <br />
         <p className="rental-p">
@@ -81,6 +92,15 @@ const Detail = () => {
           {product.pricing.deposite} &nbsp; &nbsp;{" "}
         </p>
         <br />
+        <div className="posted-by">
+          
+  <h2> <i class="fa-solid fa-user"></i> Posted By</h2>
+  <div className="posted-details">
+    <p><strong>Name:</strong> {product.postedBy.name} {product.postedBy.lname}</p>
+    <p><strong>Number:</strong> 0{product.postedBy.number}</p>
+    <p><strong>Email:</strong> {product.postedBy.email}</p>
+  </div>
+</div>
         <div className="Details-button">
           <Link to="/BookingDetails">
             <button className=" btn btn-dark btn-text ">Book Now</button> &nbsp;
@@ -91,27 +111,52 @@ const Detail = () => {
             Request for visit
           </button>{" "}
         </div>{" "}
+
+ 
         <br />
         <br />
-        <div className="avaibility">
-          <strong className="head-des">Availability</strong>:
-          <p>
-            This is an {product.availability} Vacancy from{" "}
-            {product.dateRange.fromDate} to {product.dateRange.toDate}
-          </p>
+        <br />
+        <br />
+        {/* JSX */}
+        <div className="main-description">
+          <div className="description-2">
+            <strong className="head-des">Utilities And Amenities</strong>
+            <ul id="amenitiesList" className="amenities-columns">
+              {product.amenities.map((amenity, index) =>
+                amenity.split(",").map((segment, segmentIndex) => (
+                  <li key={index + "-" + segmentIndex}>
+                    {segment
+                      .trim()
+                      .split(" ")
+                      .map((word, wordIndex) => (
+                        <span key={wordIndex}>{word}</span>
+                      ))}
+                  </li>
+                ))
+              )}
+            </ul>
+          </div>
+
+          <div className="avaibility">
+            <strong className="head-des">Availability</strong>:
+            <p>
+              <li>
+                This is an <strong>{product.availability}</strong> Vacancy from{" "}
+                <strong>{product.dateRange.fromDate}</strong> to{" "}
+                <strong>{product.dateRange.toDate}</strong>
+              </li>
+            </p>
+          </div>
         </div>
+        <br />
+        <br />
         <br />
         <strong className="head-des">Description</strong>: <br />
-        <div className="description-1">{product.description}</div>
-        <br />
-        <div className=" head-des ">
-          <h4 className="">
-            <strong>Utilities And Amenities</strong>
-          </h4>
-          {product.amenities.slice(0, 2).map((amenity, index) => (
-            <p key={index}>{amenity}</p>
-          ))}
+        <div className="head-des-container">
+          <div className="description-1">{product.description}</div>
         </div>
+        <br />
+        <br />
       </div>
 
       {/* ------------------------------footer----------------------------------------------- */}

@@ -1,4 +1,4 @@
-import React, { useState  } from "react";
+import React, { useState } from "react";
 import "./Upload.css";
 import { Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
@@ -34,7 +34,7 @@ function Upload(props) {
   const [propertyType, setPropertyType] = useState("");
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // const [contactOption, setContactOption] = useState("owner");
 
   const validateCnic = (cnic) => {
@@ -50,8 +50,20 @@ function Upload(props) {
   // const handleContactOptionChange = (event) => {
   //   setContactOption(event.target.value);
   // };
-  // const formattedFromDate = fromDate ? fromDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '';
-  // const formattedToDate = toDate ? toDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '';
+  // const formattedFromDate = fromDate
+  //   ? fromDate.toLocaleDateString("en-US", {
+  //       month: "long",
+  //       day: "numeric",
+  //       year: "numeric",
+  //     })
+  //   : "";
+  // const formattedToDate = toDate
+  //   ? toDate.toLocaleDateString("en-US", {
+  //       month: "long",
+  //       day: "numeric",
+  //       year: "numeric",
+  //     })
+  //   : "";
   const handleFromDateChange = (date) => {
     setFromDate(date);
   };
@@ -60,16 +72,15 @@ function Upload(props) {
     setToDate(date);
   };
 
+  const handleFileChange = (event) => {
+    const newFiles = event.target.files;
+    const updatedFiles = [...file];
+    for (let i = 0; i < newFiles.length; i++) {
+      updatedFiles.push(newFiles[i]);
+    }
+    setFile(updatedFiles);
+  };
 
-const handleFileChange =  (event) =>{
-const newFiles = event.target.files;
-const updatedFiles = [...file];
-for (let i=0; i<newFiles.length; i++){
-  updatedFiles.push(newFiles[i])
-}
-setFile (updatedFiles);
-  }
-  
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -168,8 +179,8 @@ setFile (updatedFiles);
           phoneNumber,
         });
         alert("post Created  successfully:", response.data.message);
-        navigate("/Dashboard")
-        props.setTrigger(false)
+        navigate("/Agreement");
+        props.setTrigger(false);
 
         setErrors({});
       } else {
@@ -368,6 +379,8 @@ setFile (updatedFiles);
               {errors.availabilityType && (
                 <p style={{ color: "red" }}>{errors.availabilityType}</p>
               )}
+              <span>For temporary selection: 1 month to 6 months lease.</span>
+              <span>For permanent selection: 6 months or greater lease.</span>
             </FormControl>
           </div>
           <br />
@@ -405,7 +418,7 @@ setFile (updatedFiles);
               <TextField
                 id="outlined-controlled"
                 label="Deposite"
-                type="number"
+                type="text"
                 value={deposite}
                 onChange={(event) => setDeposite(event.target.value)}
                 error={!!errors.deposite}
@@ -416,7 +429,7 @@ setFile (updatedFiles);
               <TextField
                 id="outlined-uncontrolled"
                 label="Rent"
-                type="number"
+                type="text"
                 value={rent}
                 onChange={(event) => setRent(event.target.value)}
                 error={!!errors.rent}
@@ -542,11 +555,11 @@ setFile (updatedFiles);
           </div>
           {/* --------------------Upload Pictures------------------------- */}
           <div>
-            <input type="file" onChange={handleFileChange}multiple />
+            <input type="file" onChange={handleFileChange} multiple />
           </div>
           {file.map((file, index) => (
-              <li key={index}>{file.name}</li>
-            ))}
+            <li key={index}>{file.name}</li>
+          ))}
           <br />
           <span className="span-p">Upload Pictures of your flat or room</span>
           <br />
@@ -626,9 +639,7 @@ setFile (updatedFiles);
             </Box>
               </Box>
             )}
-          </div> */}
-
-
+          </div>  */}
           {/* --------------------Contact form------------------------- */}
           <div>
             <h4>Contact Form</h4>
@@ -663,7 +674,7 @@ setFile (updatedFiles);
               />
               <br />
               <TextField
-                type="Number"
+                type="text"
                 label="Phone Number"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
@@ -672,7 +683,6 @@ setFile (updatedFiles);
               />
             </Box>
           </div>
-
           {/* ------------------------------------------ */}
           <br />
           <Button type="submit" variant="contained" color="primary">

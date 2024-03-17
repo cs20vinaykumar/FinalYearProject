@@ -7,7 +7,7 @@ searchFilter.get("/:key", async (req, res) => {
   try {
     const result = await propertyForm.find({
       $or: [
-        { location: { $regex: req.params.key, $options: "i" } },
+        // { location: { $regex: req.params.key, $options: "i" } },
         { "propertyType.room": { $regex: req.params.key, $options: "i" } },
         { "propertyType.flat": { $regex: req.params.key, $options: "i" } },
       ],

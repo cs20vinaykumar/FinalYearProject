@@ -59,7 +59,8 @@ const UpdateForm = () => {
 
     setTitle(result.title);
     setLocation(result.location);
-    setPropertyType(result.propertyType);
+    setPropertyType(result.propertyType.room);
+    setPropertyType(result.propertyType.flat);
     setAvailability(result.availability);
     setFromDate(result.formData);
     setToDate(result.toDate);

@@ -93,14 +93,14 @@ export default function Navbar(props) {
                       </button>{" "}
                     </Link>
                   </li>
-                  {/* 
+                  
                   <li>
                     <Link to="/Accounts">
                       <button className="btn btn-success">
-                        Accounts
+                        My Booking
                       </button>
                     </Link>
-                  </li> */}
+                  </li>
 
                   <li>
                     <div className="dropdown nvbar-drop">
@@ -145,6 +145,9 @@ export default function Navbar(props) {
                       )}
                     </div>
                   </li>
+
+
+
                 </>
               )}
 

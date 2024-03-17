@@ -85,7 +85,7 @@ headinv {
 }
 
 .search-barr {
-  margin-left: 140%;
+  margin-left: 80%;
   margin-top: 2px;
   position: relative;
 }
@@ -111,11 +111,94 @@ headinv {
 .search-barr .input-text:focus {
   background-color: #ccc;
 }
-.search-barr .icon2-2 {
+
+.dropdown-menu {
+  display: none;
   position: absolute;
-  top: 65%;
-  left: 120%;
-  transform: translateY(-50%);
-  height: 10px;
-  font-size: 18px;
+  z-index: 1000;
+  top: 100%;
+  left: 0;
+  float: left;
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  margin: 0.125rem 0 0;
+  font-size: 1rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.dropdown-menu.active {
+  display: block;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 0.25rem 1.5rem;
+  clear: both;
+  font-weight: 400;
+  color: #212529;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+  text-decoration: none;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  color: #1e2125;
+  text-decoration: none;
+  /* background-color: #f8f9fa; */
+  background-color: #b0b1b2;
+}
+
+.sub-dropdown {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  z-index: 1001;
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  margin: -0.125rem 0 0;
+  font-size: 1rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+}
+
+.dropdown-item:hover .sub-dropdown {
+  display: block;
+}
+
+.price-range-filter {
+  display: none;
+  position: absolute;
+  left: 0;
+  background-color: #fff; 
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.price-range-filter.show {
+  display: block;
+}
+
+@media (min-width: 992px) {
+  .price-range-filter {
+    position: static;
+    border: none;
+    padding: 0;
+  }
 }
