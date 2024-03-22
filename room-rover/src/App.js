@@ -1,4 +1,5 @@
 import React from "react";
+import "./App.css";
 import Navbar from "./Components/Navbar/Navbar";
 import Signup from "./Components/signup/Signup";
 import EmailVerify from "./Components/signup/EmailVerify";
@@ -11,14 +12,18 @@ import Code from "./Components/Forgot/Code";
 import Newpass from "./Components/Forgot/Newpass";
 import Upload from "./Components/Upload/Upload";
 import Detail from "./Components/Details/Detail";
-import Post from "./Components/Post/Post";
+import Post from "../src/Components/OwnerSide/Post/Post"
 import { AppProvider } from "./Components/AppContext";
 import UpdateForm from "./Components/Dashboard/UpdateForm";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import UserProfile from "./Components/UserProfile/UserProfile";
-import Accounts from "../src/Components/Accounts/Accounts"
-import "./App.css";
 import Agreement from "./Components/Agreement/Agreement";
+import Payment from "../src/Components/BookingDetails/Payment/Payment";
+import Terms from "./Components/BookingDetails/TermsAndCondition/Terms";
+import TenantAgreement from "./Components/BookingDetails/TenantAgreement/TenantAgreement";
+import ViewBooking from "./Components/OwnerSide/ViewBooking/ViewBooking";
+import RequestVisit from "./Components/RequestVisit/RequestVisit";
+
 function App() {
   return (
     <>
@@ -40,10 +45,16 @@ function App() {
             <Route exact path="/Post" element={<Post />} />
             <Route exact path="/Update/:id" element={<UpdateForm />} />
             <Route exact path="/UserProfile" element={<UserProfile />} />
-            <Route exact path="/Accounts" element={<Accounts />} />
             <Route exact path="/Agreement" element={<Agreement />} />
-
-
+            <Route
+              exact
+              path="/TenantAgreement"
+              element={<TenantAgreement />}
+            />
+            <Route exact path="/TermsAndCondition" element={<Terms />} />
+            <Route exact path="/payment/:productId" element={<Payment />} />
+            <Route exact path="/viewBooking" element={<ViewBooking />} />
+            <Route exact path="/RequestVisit/:productId" element={<RequestVisit />} />
 
           </Routes>
         </Router>

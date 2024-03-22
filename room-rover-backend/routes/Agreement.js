@@ -17,11 +17,14 @@ const upload = multer({ storage: storage });
 
 Agreement.post("/", upload.single("image"), async (req, res) => {
   try {
-    const { bulletPoints } = req.body;
+    const { bulletPoints, ownerName, ownerLName } = req.body;
     const image = req.file.path;
+  
     const agreement = new AgreementForm({
       bulletPoints,
       image,
+      ownerName,
+      ownerLName,
       postedBy: req.user,
     });
     console.log(agreement);

@@ -20,7 +20,7 @@ const Detail = () => {
             },
           }
         );
-        const products = response.data; // Assuming response.data is an array of products
+        const products = response.data;
         const foundProduct = products.find((p) => p._id === productId);
         setProduct(foundProduct);
       } catch (error) {
@@ -93,26 +93,33 @@ const Detail = () => {
         </p>
         <br />
         <div className="posted-by">
-          
-  <h2> <i class="fa-solid fa-user"></i> Posted By</h2>
-  <div className="posted-details">
-    <p><strong>Name:</strong> {product.postedBy.name} {product.postedBy.lname}</p>
-    <p><strong>Number:</strong> 0{product.postedBy.number}</p>
-    <p><strong>Email:</strong> {product.postedBy.email}</p>
-  </div>
-</div>
+          <h2>
+            {" "}
+            <i class="fa-solid fa-user"></i> Posted By
+          </h2>
+          <div className="posted-details">
+            <p>
+              <strong>Name:</strong> {product.postedBy.name}{" "}
+              {product.postedBy.lname}
+            </p>
+            <p>
+              <strong>Number:</strong> 0{product.postedBy.number}
+            </p>
+            <p>
+              <strong>Email:</strong> {product.postedBy.email}
+            </p>
+          </div>
+        </div>
         <div className="Details-button">
-          <Link to="/BookingDetails">
+          <Link to={`/Payment/${product._id}`}>
             <button className=" btn btn-dark btn-text ">Book Now</button> &nbsp;
           </Link>
           &nbsp; <br />
           <br />
-          <button className=" btn btn-dark btn-text ">
+          <Link to={`/RequestVisit/${product._id}`}><button className=" btn btn-dark btn-text ">
             Request for visit
-          </button>{" "}
+          </button></Link>{" "}
         </div>{" "}
-
- 
         <br />
         <br />
         <br />

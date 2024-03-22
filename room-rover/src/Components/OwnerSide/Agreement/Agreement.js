@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import "./Agreement.css";
@@ -8,13 +8,40 @@ const Agreement = (props) => {
   const [bulletPoints, setBulletPoints] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [image, setImage] = useState(null);
+  const [userName, setUserName] = useState("");
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get("http://localhost:4000/updateProfile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response.data) {
+          setUserName(response.data); // Assuming name is the field you want to display
+        }
+      } catch (error) {
+        console.log("Error fetching user profile:", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+
+  
+
 
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
       formData.append("bulletPoints", JSON.stringify(bulletPoints));
       formData.append("image", image);
+      formData.append("ownerName", userName.name);
+      formData.append("ownerLName", userName.lname);
       const token = localStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:4000/Agreement",
@@ -64,6 +91,14 @@ const Agreement = (props) => {
           style={{ maxHeight: "500px", overflowY: "auto" }}
         >
           <h2>Agreement Form</h2>
+          <span>
+            This rental <strong > ("Agreement")</strong> is entered into between{" "}
+            <strong> {userName.name} {userName.lname}</strong> hereinafter referred to as the
+            "Landlord", and <strong> [Tenant's Name],</strong> hereinafter
+            referred to as the "Tenant"
+          </span>{" "}
+          <br />
+          <br />
           <span className="span-p">
             Write all the clauses in the Agreement form
           </span>

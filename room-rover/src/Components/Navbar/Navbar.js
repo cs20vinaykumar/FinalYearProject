@@ -95,7 +95,7 @@ export default function Navbar(props) {
                   </li>
                   
                   <li>
-                    <Link to="/Accounts">
+                    <Link to="/Booking">
                       <button className="btn btn-success">
                         My Booking
                       </button>

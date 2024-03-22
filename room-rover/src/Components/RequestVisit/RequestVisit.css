@@ -1,0 +1,30 @@
+.request-visit-container {
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  max-width: 600px; 
+  margin: 70px auto; 
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.time-slot-button {
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.time-slot-button.selected {
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.request-button {
+  margin-top: 20px;
+  width: 100%;
+}

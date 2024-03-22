@@ -94,7 +94,7 @@ export default function Post() {
                       </Link>
                     </Dropdown.Item>
                     <Dropdown.Item>
-                      <Link >
+                      <Link to="/viewBooking" >
                         <button className="btn btn-success">View Booking</button>
                       </Link>
                     </Dropdown.Item>

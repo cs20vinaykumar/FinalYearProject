@@ -25,10 +25,12 @@ uploadForm.post("/", upload.array("file", 10), async (req, res) => {
     const { files } = req;
     const timeSlots = JSON.parse(req.body.timeSlots);
     const fileNames = files.map((file) => file.filename);
+    const accountDetails = JSON.parse(req.body.accountDetails);
     const formDataEntry = new formData({
       ...req.body,
       file: fileNames, // Save only the filename
       timeSlots: timeSlots,
+      accountDetails: accountDetails,
       postedBy: req.user,
     });
 

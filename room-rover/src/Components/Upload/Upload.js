@@ -14,6 +14,8 @@ import FormLabel from "@mui/material/FormLabel";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 
 function Upload(props) {
@@ -38,6 +40,31 @@ function Upload(props) {
   const [timeSlots, setTimeSlots] = useState([
     { date: "", startTime: "", endTime: "" },
   ]);
+  // const [accountHolder, setAccountHolder] = useState("");
+  // const [accountNumber, setAccountNumber] = useState("");
+  // const [bank, setBank] = useState("");
+
+  const [accountDetails, setAccountDetails] = useState([
+    { accountHolder: "", accountNumber: "", bank: "" },
+  ]);
+  const addAccount = () => {
+    setAccountDetails([
+      ...accountDetails,
+      { accountHolder: "", accountNumber: "", bank: "" },
+    ]);
+  };
+
+  const removeAccount = (index) => {
+    const updatedAccounts = [...accountDetails];
+    updatedAccounts.splice(index, 1);
+    setAccountDetails(updatedAccounts);
+  };
+
+  const handleAccountChange = (index, field, value) => {
+    const updatedAccounts = [...accountDetails];
+    updatedAccounts[index][field] = value;
+    setAccountDetails(updatedAccounts);
+  };
 
   // const [contactOption, setContactOption] = useState("owner");
 
@@ -156,6 +183,19 @@ function Upload(props) {
       formData.append("contactForm.email", email);
       formData.append("contactForm.cnic", cnic);
       formData.append("contactForm.phoneNumber", phoneNumber);
+      formData.append("accountDetails", JSON.stringify(accountDetails));
+      for (let i = 1; i < accountDetails.length; i++) {
+        formData.append(
+          `accountDetails[${i}].accountHolder`,
+          accountDetails[i].accountHolder
+        );
+        formData.append(
+          `accountDetails[${i}].accountNumber`,
+          accountDetails[i].accountNumber
+        );
+        formData.append(`accountDetails[${i}].bank`, accountDetails[i].bank);
+      }
+
       for (let i = 0; i < file.length; i++) {
         formData.append("file", file[i]);
       }
@@ -706,7 +746,6 @@ function Upload(props) {
           <br />
           <br />
           {/* ----------------------------------------------- */}
-         
           <div className="time-slots">
             <h4>Available Time Slots</h4>
             <span>
@@ -774,6 +813,60 @@ function Upload(props) {
             </div>
           ))}
           <br />
+          <br />
+          {/* --------------------Account Details------------------------- */}
+          <div>
+            <h4>Account Details</h4>
+            {accountDetails.map((account, index) => (
+              <Box
+                key={index}
+                display="flex"
+                flexDirection="column"
+                justifyContent="space-between"
+              >
+                <TextField
+                  label="Account Holder"
+                  value={account.accountHolder}
+                  onChange={(e) =>
+                    handleAccountChange(index, "accountHolder", e.target.value)
+                  }
+                  error={!!errors.accountHolder}
+                  helperText={errors.accountHolder}
+                />
+                <TextField
+                  label="Account Number"
+                  value={account.accountNumber}
+                  onChange={(e) =>
+                    handleAccountChange(index, "accountNumber", e.target.value)
+                  }
+                  error={!!errors.accountNumber}
+                  helperText={errors.accountNumber}
+                />
+                <Select
+                  value={account.bank}
+                  onChange={(e) =>
+                    handleAccountChange(index, "bank", e.target.value)
+                  }
+                  error={!!errors.bank}
+                  required
+                >
+                  <MenuItem value="">Select Bank</MenuItem>
+                  <MenuItem value={"Bank Alhabib"}>Bank Al habib</MenuItem>
+                  <MenuItem value={"Easypaisa"}>Easypaisa</MenuItem>
+                  <MenuItem value={"JazzCash"}>JazzCash</MenuItem>
+                  <MenuItem value={"HBL"}>HBL</MenuItem>
+                </Select>
+                {accountDetails.length > 1 && (
+                  <IconButton onClick={() => removeAccount(index)}>
+                    <DeleteIcon />
+                  </IconButton>
+                )}
+              </Box>
+            ))}
+            <Button variant="contained" color="primary" onClick={addAccount}>
+              Add Account
+            </Button>
+          </div>
           <br />
           {/* ------------------------------------------------------------------- */}
           <br />

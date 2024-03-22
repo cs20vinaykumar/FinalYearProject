@@ -16,6 +16,10 @@ import myPost from "./routes/mypost.js";
 import updateProfile from "./routes/UpdateProfile.js";
 import searchFilter from "./routes/SearchFilter.js";
 import Agreement from "../room-rover-backend/routes/Agreement.js"
+import GetAgreementData from "./routes/GetAgreementData.js";
+import booking from "./routes/Booking.js";
+import timeSlots from "./routes/GetTimeSlot.js";
+import RequestVisit from "../room-rover-backend/routes/RequestVisit.js"
 // import searchUser from "./routes/SearchUser.js";
 
 
@@ -55,6 +59,11 @@ app.use("/EmailVerify", EmailVerify);
 app.use("/PropertyForm",authMiddleware,  uploadForm); 
 //
 app.use("/GetPropertyForm", authMiddleware, GetForm);
+app.use("/GetTimeSlot", authMiddleware, timeSlots);
+
+
+
+
 //
 app.use("/DeletePropertyForm", DeleteForm);
 //
@@ -77,6 +86,19 @@ app.use("/Search", authMiddleware, searchFilter)
 
 //Api for Agreement Form
 app.use("/Agreement", authMiddleware, Agreement)
+
+
+//Api for Get Agreement Form
+app.use("/GetAgreementData", authMiddleware, GetAgreementData)
+
+
+app.use("/booking", authMiddleware, booking)
+
+
+app.use("/PostRquest", authMiddleware, RequestVisit)
+
+
+
 
 
 

@@ -36,9 +36,20 @@ const formDataSchema = new mongoose.Schema(
       phoneNumber: Number,
     },
 
+    accountDetails: [
+      {
+        accountHolder: String,
+        accountNumber: String,
+        bank: {
+          type: String,
+          enum: ["Bank Alhabib", "Easypaisa", "JazzCash", "HBL"],
+          required: true,
+        },
+      },
+    ],
     timeSlots: [
       {
-        date: Date, 
+        date: Date,
         startTime: String,
         endTime: String,
       },
