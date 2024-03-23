@@ -241,7 +241,7 @@ function Upload(props) {
           phoneNumber,
         });
         alert("post Created  successfully:", response.data.message);
-        navigate("/Dashboard");
+        navigate("/Agreement");
         props.setTrigger(false);
 
         setErrors({});

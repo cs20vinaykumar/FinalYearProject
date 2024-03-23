@@ -17,7 +17,7 @@ import { AppProvider } from "./Components/AppContext";
 import UpdateForm from "./Components/Dashboard/UpdateForm";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import UserProfile from "./Components/UserProfile/UserProfile";
-import Agreement from "./Components/Agreement/Agreement";
+import Agreement  from "../src/Components/OwnerSide/Agreement/Agreement"
 import Payment from "../src/Components/BookingDetails/Payment/Payment";
 import Terms from "./Components/BookingDetails/TermsAndCondition/Terms";
 import TenantAgreement from "./Components/BookingDetails/TenantAgreement/TenantAgreement";
