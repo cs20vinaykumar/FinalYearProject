@@ -110,3 +110,27 @@ hr {
   border-width: 5px;
   width: 10%;
 }
+
+.image-preview {
+  max-width: 200px;
+  max-height: 200px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.image-preview img {
+  width: 100%;
+  height: auto;
+}
+
+hr {
+  margin: auto;
+  background-color: white;
+  border-style: none;
+  border-top-style: dotted;
+  border-color: black;
+  border-width: 5px;
+  width: 10%;
+}

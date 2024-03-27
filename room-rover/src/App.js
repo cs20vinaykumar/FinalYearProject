@@ -46,15 +46,12 @@ function App() {
             <Route exact path="/Update/:id" element={<UpdateForm />} />
             <Route exact path="/UserProfile" element={<UserProfile />} />
             <Route exact path="/Agreement" element={<Agreement />} />
-            <Route
-              exact
-              path="/TenantAgreement"
-              element={<TenantAgreement />}
-            />
             <Route exact path="/TermsAndCondition" element={<Terms />} />
             <Route exact path="/payment/:productId" element={<Payment />} />
             <Route exact path="/viewBooking" element={<ViewBooking />} />
             <Route exact path="/RequestVisit/:productId" element={<RequestVisit />} />
+            <Route exact path="/TenantAgreement/:productId" element={<TenantAgreement />} />
+
 
           </Routes>
         </Router>

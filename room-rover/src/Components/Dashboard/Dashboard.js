@@ -60,7 +60,7 @@ export default function Dashboard() {
       }
     }
   };
-
+  // ----------------Filter Functions--------------------------------------------
   const togglePriceRangeFilter = () => {
     setShowPriceRangeFilter(!showPriceRangeFilter);
   };
@@ -78,9 +78,9 @@ export default function Dashboard() {
   };
 
   const handleClear = () => {
-    setSearchResults([]); // Clear search results
-    setSelectedLocation(""); // Clear selected location
-    setSelectedLocationHeader("Location"); // Clear selected location for the header
+    setSearchResults([]);
+    setSelectedLocation("");
+    setSelectedLocationHeader("Location");
     setIsFiltered(false);
     setSelectedType("");
     setSelectedTypeHeader("Type");
@@ -123,10 +123,12 @@ export default function Dashboard() {
 
   const handleMinPriceChange = (event) => {
     setMinPrice(event.target.value);
+    setIsFiltered(true);
   };
 
   const handleMaxPriceChange = (event) => {
     setMaxPrice(event.target.value);
+    setIsFiltered(true);
   };
 
   return (
@@ -329,7 +331,7 @@ export default function Dashboard() {
                   </Link>
                 )}
               </li>
-              {/* ---------------------------------------------------------- */}
+              {/* --------------------SEARCH BAR-------------------------------------- */}
               <li>
                 <div className="search-barr">
                   <i className="fa-solid fa-location-dot fa-2xs icon-1"></i>

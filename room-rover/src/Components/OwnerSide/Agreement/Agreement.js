@@ -22,7 +22,7 @@ const Agreement = (props) => {
           },
         });
         if (response.data) {
-          setUserName(response.data); // Assuming name is the field you want to display
+          setUserName(response.data); 
         }
       } catch (error) {
         console.log("Error fetching user profile:", error);

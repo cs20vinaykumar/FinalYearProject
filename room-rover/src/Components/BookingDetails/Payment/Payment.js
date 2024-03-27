@@ -4,7 +4,6 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
-
 const Payment = () => {
   const { productId } = useParams();
   const [bookingDone, setBookingDone] = useState(false);
@@ -14,20 +13,20 @@ const Payment = () => {
 
   const getUserId = () => {
     const token = localStorage.getItem("token");
-    console.log("Token from local storage:", token); 
+    console.log("Token from local storage:", token);
 
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        console.log("Decoded token:", decodedToken); 
-        return decodedToken.userID; 
+        console.log("Decoded token:", decodedToken);
+        return decodedToken.userID;
       } catch (error) {
         console.error("Error decoding token:", error);
-        return null; 
+        return null;
       }
     } else {
       console.error("Token not found.");
-      return null; 
+      return null;
     }
   };
 
@@ -39,22 +38,22 @@ const Payment = () => {
   const handleBookingDone = async () => {
     try {
       const userId = getUserId();
-      console.log("User ID from token:", userId); 
+      console.log("User ID from token:", userId);
 
       if (!userId) {
         console.error("User ID is not available.");
         return;
       }
 
-      const payload = {
-        userId: userId,
-        productId: productId,
-        status: "waiting",
-      };
-      console.log("Payload to be sent:", payload);
+      const formData = new FormData();
+      formData.append("userId", userId);
+      formData.append("productId", productId);
+      formData.append("status", "waiting");
+      formData.append("image", image); // Append the image file to the form data
 
-      await axios.post("http://localhost:4000/booking", payload, {
+      await axios.post("http://localhost:4000/booking", formData, {
         headers: {
+          "Content-Type": "multipart/form-data", // Set content type to multipart form data
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
@@ -68,14 +67,11 @@ const Payment = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:4000/GetPropertyForm",
-          {
-            headers: {
-              authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+        const response = await axios.get("http://localhost:4000/GetPropertyForm", {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
         const products = response.data;
         const foundProduct = products.find((p) => p._id === productId);
         setProduct(foundProduct);
@@ -105,43 +101,27 @@ const Payment = () => {
       </div>
 
       <div className="payment-instructions">
-        <p className="instruction greeen blink ">
-          After Payment, take a screenshot and upload it here.
-        </p>
-        <p className="instruction green blink ">
-          The owner will confirm within 2 hours.
-        </p>
+        <p className="instruction greeen blink ">After Payment, take a screenshot and upload it here.</p>
+        <p className="instruction green blink ">Wait Until Owner Confirms Your Booking</p>
       </div>
       <div className="upload-section">
-        <input
-          type="file"
-          name="image"
-          value={image}
-          accept="image/*"
-          onChange={handleImageUpload}
-        />{" "}
+        <input type="file" name="image" accept="image/*" onChange={handleImageUpload} />{" "}
       </div>
+      {image && (
+        <div className="image-preview">
+          <img src={URL.createObjectURL(image)} alt="Preview" />
+        </div>
+      )}
       <div className="button-container">
-        <button
-          onClick={handleBookingDone}
-          className="booking-button  btn-done"
-        >
+        <button onClick={handleBookingDone} className="booking-button btn-done">
           Done Booking
         </button>
       </div>
       {bookingDone && <div className="booking-message">{bookingStatus}</div>}
-
-   </div>
+    </div>
   );
 };
 
-
-
-
-
-
-
-// Function to get the ordinal suffix for a number (e.g., 1st, 2nd, 3rd, etc.)
 function ordinalSuffix(num) {
   const suffixes = ["th", "st", "nd", "rd"];
   const v = num % 100;

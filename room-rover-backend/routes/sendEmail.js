@@ -5,7 +5,7 @@ import nodemailer from "nodemailer";
 
 import dotenv from "dotenv";
 
-dotenv.config(); // connect a env file to inex.js
+dotenv.config(); 
 
 const otpVerify = express.Router();
 

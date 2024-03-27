@@ -4,16 +4,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import "./RequestVisit.css";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
 
 export default function RequestVisit() {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
-  const [openAlert, setOpenAlert] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,17 +50,13 @@ export default function RequestVisit() {
             },
           }
         );
-        console.log("Visit request submitted successfully");
-        setOpenAlert(true);
+        alert("Visit request submitted successfully");
+
         navigate("/Dashboard");
       } catch (error) {
         console.error("Error submitting visit request:", error);
       }
     }
-  };
-
-  const handleCloseAlert = () => {
-    setOpenAlert(false);
   };
 
   return (
@@ -103,21 +94,6 @@ export default function RequestVisit() {
       >
         Request Visit
       </Button>
-      {/* Alert Dialog */}
-      <Dialog open={openAlert} onClose={handleCloseAlert}>
-        <DialogTitle>Visit Request Submitted</DialogTitle>
-        <DialogContent>
-          <span>
-            Your visit request has been submitted successfully. The owner will
-            contact you shortly.
-          </span>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseAlert} autoFocus>
-            OK
-          </Button>
-        </DialogActions>
-      </Dialog>
     </div>
   );
 }

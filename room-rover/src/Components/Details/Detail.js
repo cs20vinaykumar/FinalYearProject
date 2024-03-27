@@ -116,9 +116,11 @@ const Detail = () => {
           </Link>
           &nbsp; <br />
           <br />
-          <Link to={`/RequestVisit/${product._id}`}><button className=" btn btn-dark btn-text ">
-            Request for visit
-          </button></Link>{" "}
+          <Link to={`/RequestVisit/${product._id}`}>
+            <button className=" btn btn-dark btn-text ">
+              Request for visit
+            </button>
+          </Link>{" "}
         </div>{" "}
         <br />
         <br />

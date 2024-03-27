@@ -247,15 +247,6 @@
   background-color: #717171;
 }
 
-
-
-
-
-
-
-
-
-
 .posted-by {
   margin-top: 20px;
   float: right;
@@ -272,15 +263,13 @@
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 5px;
-  
 }
 
 .posted-details p {
   margin: 5px 0;
-  white-space: nowrap; 
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; 
-
+  text-overflow: ellipsis;
 }
 
 .posted-details p strong {

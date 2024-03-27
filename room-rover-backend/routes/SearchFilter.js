@@ -1,4 +1,4 @@
-import express from "express";
+import express from "express"
 import propertyForm from "../models/PropertyForm.js";
 
 const searchFilter = express.Router();
@@ -10,7 +10,7 @@ searchFilter.get("/:key", async (req, res) => {
         // { location: { $regex: req.params.key, $options: "i" } },
         { "propertyType.room": { $regex: req.params.key, $options: "i" } },
         { "propertyType.flat": { $regex: req.params.key, $options: "i" } },
-      ],
+        ],
     });
     res.send(result);
   } catch (error) {
