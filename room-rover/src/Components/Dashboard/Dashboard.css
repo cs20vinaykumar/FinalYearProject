@@ -195,10 +195,11 @@ headinv {
   display: block;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 600px) {
   .price-range-filter {
     position: static;
     border: none;
     padding: 0;
+    
   }
 }

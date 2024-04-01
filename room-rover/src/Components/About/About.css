@@ -1,8 +1,3 @@
-/* .bg-bdy{
-  height: 100vh;
-  width: 100vw;
-  background-color: white;
-} */
 #about {
   margin: 50px 30px;
 }
@@ -16,8 +11,6 @@
 .left-about {
   flex-basis: 35%;
   background-image: url("E:\FinalYearProject\room-rover\Images\images.jpg");
-  /* background-repeat: no-repeat; */
-  /* background-attachment: fixed; */
   background-position: center;
   background-size: cover;
   height: 500px;
@@ -50,10 +43,27 @@
   justify-content: space-evenly;
   flex-wrap: wrap;
 }
-
+.left-about {
+  flex-basis: 35%;
+  background-image: url("E:\FinalYearProject\room-rover\Images\images.jpg");
+  background-position: center;
+  background-size: cover;
+  height: 500px;
+  background-color: #d9d9d9;
+  border-radius: 10px;
+}
 .left-about-2 {
   flex-basis: 35%;
   background-image: url("E:\FinalYearProject\room-rover\Images\Rectangle 164.png");
+  background-position: center;
+  background-size: cover;
+  height: 500px;
+  background-color: #d9d9d9;
+  border-radius: 10px;
+}
+.left-about-3 {
+  flex-basis: 35%;
+  background-image: url("E:\FinalYearProject\room-rover\Images\Rectangle 162.png");
   /* background-repeat: no-repeat; */
   /* background-attachment: fixed; */
   background-position: center;
@@ -74,18 +84,6 @@
   flex-wrap: wrap;
 }
 
-.left-about-3 {
-  flex-basis: 35%;
-  background-image: url("E:\FinalYearProject\room-rover\Images\Rectangle 162.png");
-  /* background-repeat: no-repeat; */
-  /* background-attachment: fixed; */
-  background-position: center;
-  background-size: cover;
-  height: 500px;
-  background-color: #d9d9d9;
-  border-radius: 10px;
-}
-
 .right-about-3 {
   flex-basis: 30%;
 }
@@ -100,4 +98,45 @@
 .text-container-about-2 {
   height: 350px;
   width: 90%;
+}
+
+@media only screen and (max-width: 600px) {
+  .about-section-1,
+  .about-section-2,
+  .about-section-3 {
+    flex-direction: column;
+  }
+
+  .left-about,
+  .left-about-2,
+  .left-about-3,
+  .right-about,
+  .right-about-2,
+  .right-about-3 {
+    flex: none;
+    width: 100%;
+    padding: 10px;
+  }
+}
+
+/* Styles for footer */
+footer {
+  background-color: #f4f4f4;
+  padding: 20px;
+  text-align: center;
+}
+
+#footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.class-same {
+  margin: 10px;
+}
+
+.green-1 {
+  color: green;
 }

@@ -1,5 +1,7 @@
 body {
   width: 100vw;
+  margin: 0;
+  padding: 0;
 }
 .firstsection {
   display: flex;
@@ -38,7 +40,6 @@ span {
 .rightsection {
   background-image: url("E:\FinalYearProject\room-rover\src\Components\Homepage\Bgroom.png");
   background-repeat: no-repeat;
-  /* background-attachment: fixed; */
   background-position: center;
   background-size: cover;
   height: 80%;
@@ -146,13 +147,11 @@ span {
 .cities-list {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  /* height: 220px; */
   grid-gap: 40px;
   margin-top: 80px;
 }
 
 .cities-list div {
-  /* background: #262626; */
   padding: 40px;
   cursor: pointer;
   font-weight: 300;
@@ -227,7 +226,7 @@ span {
 
 #footer {
   height: 300px;
-  width: 100vw;
+  width: 97vw;
   background-color: #292828ef;
   display: flex;
   justify-content: space-evenly;
@@ -254,4 +253,149 @@ span {
 
 .green-1 {
   color: #00ed64;
+}
+
+@media only screen and (max-width: 600px) {
+  .rightsection {
+    background-image: url("E:\FinalYearProject\room-rover\src\Components\Homepage\Bgroom.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 60%;
+    border-radius: 20px;
+    max-width: 50%;
+  }
+
+  .firstsection > div {
+    margin-top: -50%;
+    margin-left: 20px;
+    font-size: 22px;
+    flex-basis: 50%;
+  }
+  #Cities {
+    margin-left: -5px;
+  }
+  #Find {
+    margin: -135px 0px;
+  }
+
+  .subtitle {
+    margin-left: 15px;
+  }
+
+  .secsub {
+    margin-left: 10px;
+    margin-top: 20px;
+  }
+  .cities-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+    margin-top: 80px;
+  }
+  .cities-list div {
+    padding: 40px;
+    cursor: pointer;
+    font-weight: 150;
+    font-size: 13px;
+    border-radius: 10px;
+    width: 110px;
+    height: 100px;
+  }
+  .midDiv {
+    position: relative;
+  }
+  .box-left {
+    flex-basis: 45%;
+    background-image: url("E:\FinalYearProject\room-rover\Images\Rectangle 17.png");
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
+    background-position: center;
+    /* background-size: cover; */
+    height: 55%;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .box-right {
+    flex-basis: 45%;
+    background-image: url("E:\FinalYearProject\room-rover\Images\Rectangle 16.png");
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
+    background-position: center;
+    /* background-size: cover; */
+    height: 55%;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .midDiv .btnB {
+    position: absolute;
+    top: 56%;
+    left: 65%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 15%;
+    font-size: large;
+  }
+  .midDiv .btnc {
+    height: 15%;
+  }
+
+  .secondsection {
+    margin-top: -70px;
+  }
+
+  .midDiv .btnB {
+    position: absolute;
+    top: 88%;
+    left: 65%;
+    transform: translate(-50%, -50%);
+    width: 65%;
+    height: 15%;
+    font-size: 13px;
+  }
+
+  .midDiv .btnc {
+    position: absolute;
+    top: 61%;
+    left: 80%;
+    height: 28px;
+    text-align: center;
+    width: 80%;
+  }
+
+  .search-bar {
+    height: 8vh;
+    border: 0px;
+    background-color: #fff;
+    position: absolute;
+    top: 20%;
+    display: none;
+  }
+  #footer {
+    height: 200px;
+    width: 102vw;
+    background-color: #292828ef;
+    margin-left: -18px;
+  }
+
+  .class-1 {
+    flex-basis: 25%;
+  }
+  .class-2 {
+    flex-basis: 25%;
+  }
+  .class-3 {
+    flex-basis: 25%;
+  }
+  .class-4 {
+    flex-basis: 25%;
+  }
+
+  .class-same {
+    margin-top: 70px;
+    color: white;
+    font-size: 13px;
+  }
 }

@@ -8,7 +8,15 @@ export default function Navbar(props) {
   const [buttonPopup, setButtonPopup] = useState(false);
   const isLoggedIn = localStorage.getItem("token");
   const [isOpen, setIsOpen] = useState(false);
-  
+  const [openHamb, setOpenHamb] = useState(false);
+
+  const openMenu = () => {
+    setOpenHamb(true);
+  };
+
+  const closeMenu = () => {
+    setOpenHamb(false);
+  };
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -21,6 +29,7 @@ export default function Navbar(props) {
   const handleLinkClick = (link) => {
     console.log("Clicked on link:", link);
     setActiveLink(link);
+    setOpenHamb(false);
   };
 
   const navigate = useNavigate();
@@ -41,9 +50,6 @@ export default function Navbar(props) {
     }
   };
 
-
-
-
   return (
     <>
       <div id="header-one">
@@ -59,22 +65,9 @@ export default function Navbar(props) {
           </div>
 
           <div className="right-text">
-            <ul>
+            <ul id="sidemenu" style={{ right: openHamb ? "0" : "-200px" }}>
               {isLoggedIn && (
                 <>
-                  {/* <li>
-                    <div className="search-bar">
-                      <i className="fa-solid fa-location-dot fa-2xs icon-1"></i>
-                      <input
-                        type="text"
-                        name="eingabe"
-                        className="input-text-2 searchbar"
-                        placeholder="Enter City Name"
-                        // onChange={searchHandle}
-                      />
-                      <i className="fa-solid fa-arrow-right fa-2xs icon2-2"></i>
-                    </div>
-                  </li> */}
                   <li>
                     <Link to="/Dashboard">
                       {" "}
@@ -93,12 +86,10 @@ export default function Navbar(props) {
                       </button>{" "}
                     </Link>
                   </li>
-                  
+
                   <li>
                     <Link to="/Booking">
-                      <button className="btn btn-success">
-                        My Booking
-                      </button>
+                      <button className="btn btn-success">My Booking</button>
                     </Link>
                   </li>
 
@@ -108,7 +99,7 @@ export default function Navbar(props) {
                         onClick={toggleDropdown}
                         className="btn btn-primary "
                       >
-                        <i class="fa-solid fa-bars"></i>
+                        <i class="fa-solid fa fa-user"></i>
                       </button>
                       {isOpen && (
                         <ul className="dropdown-list">
@@ -145,9 +136,6 @@ export default function Navbar(props) {
                       )}
                     </div>
                   </li>
-
-
-
                 </>
               )}
 
@@ -191,7 +179,9 @@ export default function Navbar(props) {
                   </li>
                 </>
               )}
+              <i class="fas fa-times" onClick={closeMenu}></i>
             </ul>
+            <i class="fas fa-bars openbtn" onClick={openMenu}></i>
           </div>
         </nav-head>
       </div>

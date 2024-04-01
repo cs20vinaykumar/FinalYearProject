@@ -70,10 +70,6 @@ label {
   bottom: 140px;
 }
 
-/* .female-radio{
-    margin-left: -70px;
-} */
-
 .male {
   display: inline-block;
   font-weight: 600;
@@ -81,4 +77,28 @@ label {
 
 .form-class {
   margin-left: -100px;
+}
+
+.radio-group {
+  display: flex;
+  align-items: center;
+}
+
+.radio-group label {
+  margin-right: 10px; /* Adjust margin as needed */
+}
+@media only screen and (max-width: 600px) {
+  .radio-group {
+    position: absolute;
+    top: 600px;
+    left: 0;
+  }
+
+  .radio-group label {
+    margin-right: 0;
+    margin-bottom: 5px;
+  }
+  .female {
+    width: 25vw;
+  }
 }

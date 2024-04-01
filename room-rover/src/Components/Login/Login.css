@@ -13,9 +13,10 @@
 .signup {
   position: relative;
   padding: 75px;
-  background: rgba(255, 255, 255, 0.992);
+  /* background: rgba(255, 255, 255, 0.992); */
+  background: rgb(206, 229, 239);
   backdrop-filter: blur(20px);
-  border: 1px solid #fff;
+  border: 1px solid hsl(0, 0%, 100%);
   border-radius: 45px;
   /* width: 310px; */
   display: flex;
@@ -45,7 +46,7 @@
 }
 
 .inputs {
-  width: 40%;
+  width: 50%;
   border-radius: 5px;
   border: none;
   border-bottom: 1px solid black;
@@ -72,23 +73,6 @@ label {
   margin-left: -100px;
 }
 
-/* .image {
-  background-image: url("E:\FinalYearProject\room-rover\Images\Group 16.png");
-  background-size: cover;
-  width: 150px;
-  height: 220px;
-}
-
-#svgimg {
-  position: absolute;
-  top: 60%;
-  right: 0%;
-  z-index: 1;
-  animation-name: svgpic;
-   animation-duration: 5s;
-  animation-iteration-count: 1; 
-} */
-
 .rember {
   display: inline-block;
 }
@@ -113,30 +97,55 @@ label {
   font-weight: 500;
 }
 
-/* @keyframes svgpic {
-  0% {
-    top: 0%;
-    right: 0%;
-  }
-
-  50% {
-    top: 25%;
-    right: 1%;
-  }
-
-  100% {
-    top: 60%;
-    right: 0%;
-  }
-} */
-
-
-.icon3{
+.icon3 {
   margin-left: -22px;
   cursor: pointer;
 }
 
-.login-forgot{
+.login-forgot {
   text-decoration: none;
   color: #fff;
+}
+@media only screen and (max-width: 600px) {
+  .main-content {
+    width: auto;
+    margin-top: 70px;
+  }
+
+  .signup {
+    width: 100vw;
+    height: 700px;
+    border-radius: 0;
+    margin-top: 0;
+  }
+
+  .inputs {
+    width: 100vw;
+  }
+
+  .form-group {
+    margin: 20px;
+    display: flex;
+    align-items: center;
+  }
+
+  .labels {
+    margin: 15px 20px;
+    font-size: 1rem;
+    width: 20vw;
+    flex: 0 0 20vw;
+  }
+
+  .icon3 {
+    margin-left: -30px;
+  }
+
+  .text-color {
+    width: 61vw;
+  }
+
+  .btn {
+    margin-left: -35px;
+    width: 80vw;
+  }
 }

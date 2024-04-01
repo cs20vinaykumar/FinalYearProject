@@ -100,15 +100,6 @@ export default function Login(props) {
 
                 <i class="fa-solid fa-eye icon3" onClick={handleClick}></i>
               </div>
-
-              {/* <div className="form-group passwords"> */}
-                {/* <div className="labels rember">
-                  Rember me ? <input type="checkbox" className="inpus" />{" "}
-                </div> */}
-                {/* <div className="forgot">
-                  <Link to="/Login/Forgot">Forgot Password ?</Link>
-                </div> */}
-              {/* </div> */}
             </form>
             <br />
             <br />

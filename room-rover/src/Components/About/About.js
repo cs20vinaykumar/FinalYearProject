@@ -73,7 +73,8 @@ export default function About() {
             <div className="text-container-about-1">
               We create opportunity for everyone to Find A Perfect Place for
               Accommodation
-            </div>
+            </div>{" "}
+            <br /> <br />
             <div className="text-container-about-2">
               We believe finding your new apartment is more than just a move.
               But today’s rental experience is broken. It’s outdated,

@@ -24,8 +24,7 @@ export default function Homepage() {
         <section className="firstsection">
           <div className="leftsection">
             Rooms for <span className="purple"> rent</span> <br />
-            {/* <div>and I am a passionate</div> */}
-            <span id="element"></span> <br /> <br />
+              <span id="element"></span> <br /> <br />
             <div className="search-bar">
               <i className="fa-solid fa-location-dot fa-2xs icon"></i>
               <input
@@ -39,7 +38,7 @@ export default function Homepage() {
           </div>
 
           <div className="rightsection">
-            <img src="" alt="" />
+            <div className="image"></div>
           </div>
         </section>
 
@@ -47,7 +46,7 @@ export default function Homepage() {
 
         {
           <div id="Find">
-            <h2 className="subtitle">
+            <h2 className="subtitle secsub">
               {" "}
               <span id="element">Looking for a tenant or a roommate</span>
             </h2>
