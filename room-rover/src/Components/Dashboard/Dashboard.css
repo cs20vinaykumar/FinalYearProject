@@ -74,7 +74,7 @@ headinv {
   color: #063566;
 }
 
-.map {
+/* .map {
   position: absolute;
   right: 25px;
   top: 220px;
@@ -82,7 +82,7 @@ headinv {
   height: 350px;
   width: 30%;
   background-image: url("E:\FinalYearProject\room-rover\Images\khi_map2.gif");
-}
+} */
 
 .search-barr {
   margin-left: 80%;
@@ -186,7 +186,7 @@ headinv {
   display: none;
   position: absolute;
   left: 0;
-  background-color: #fff; 
+  background-color: #fff;
   padding: 10px;
   border: 1px solid #ddd;
 }
@@ -195,11 +195,80 @@ headinv {
   display: block;
 }
 
-@media (min-width: 600px) {
+@media only screen and (max-width: 600px) {
+  .filters {
+    z-index: 1;
+  }
+  .navbar-nav {
+    background-color: #333;
+    color: white;
+    width: 355px;
+  }
+
+  .sub-dropdown {
+    margin-left: -155px;
+    width: 48vw;
+    margin-top: 80px;
+  }
+
+  .dropdown-item {
+    width: 25vw;
+    margin-left: -32px;
+  }
+
+  .dropdown-item-media {
+    margin-left: 20px;
+  }
+  .dropdown-menu {
+    margin-left: -23px;
+  }
+
+  .search-barr .input-text-2 {
+    display: none;
+  }
+
   .price-range-filter {
     position: static;
     border: none;
     padding: 0;
-    
+  }
+
+  .icon-1 {
+    display: none;
+  }
+
+  .btn-details-mdeia {
+    width: 50%;
+    margin-left: 65px;
+  }
+
+  /* .lakeer-media {
+    width: 171px;
+    position: absolute;
+    left: 185px;
+  } */
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .navbar {
+    background-color: #f8f9fa;
+    color: #333;
+  }
+
+  .nav-item {
+    padding: 10px 5px;
+  }
+
+  .dropdown-menu {
+    position: static;
+    width: 100%;
+    box-shadow: none;
+  }
+
+  .dropdown-item {
+    padding: 10px 15px;
   }
 }

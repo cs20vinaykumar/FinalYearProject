@@ -121,6 +121,24 @@ ul li {
 .right-text .fas {
   display: none;
 }
+.hamburger-icon {
+  display: none; /* Hide by default on larger screens */
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out; /* Transition for hamburger icon */
+}
+
+/* Navigation Menu */
+.nav-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  transition: transform 0.3s ease-in-out; /* Transition for navigation menu */
+}
+
+.nav-item {
+  margin-right: 20px;
+}
 
 @media only screen and (max-width: 600px) {
   .right-text .fas {
@@ -133,17 +151,6 @@ ul li {
     margin-top: 20px;
   }
 
-  .right-text ul {
-    background-color: #ff004f;
-    position: fixed;
-    top: 0;
-    right: -170px;
-    width: 170px;
-    height: 100vh;
-    padding-top: 50px;
-    z-index: 2;
-  }
-
   .right-text ul,
   li {
     display: block;
@@ -154,5 +161,62 @@ ul li {
     top: 25px;
     left: 25px;
     cursor: pointer;
+  }
+
+  /* Side Menu */
+  #sidemenu {
+    transition: right 0.3s ease-in-out;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 300px;
+    height: 100vh;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    overflow-y: auto;
+  }
+
+  #sidemenu.open {
+    right: 0;
+  }
+
+  /* Menu Items */
+  #sidemenu li {
+    margin-bottom: 20px;
+  }
+
+  #sidemenu a,
+  #sidemenu button {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: color 0.3s ease;
+    width: 72vw;
+  }
+
+  #sidemenu a:hover,
+  #sidemenu button:hover {
+    color: #00ed64;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #fff;
+    font-size: 2em;
+    cursor: pointer;
+  }
+
+  .dropdown-list {
+    margin-left: -30px;
+    width: 1px;
+  }
+
+  .btn-media-nav {
+    width: 50px;
   }
 }

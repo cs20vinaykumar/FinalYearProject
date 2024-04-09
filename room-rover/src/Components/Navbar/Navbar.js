@@ -38,6 +38,7 @@ export default function Navbar(props) {
     localStorage.removeItem("token");
     navigate("/");
     setIsOpen(false);
+    setOpenHamb(false);
   };
 
   const handleLogoClick = () => {
@@ -65,18 +66,28 @@ export default function Navbar(props) {
           </div>
 
           <div className="right-text">
-            <ul id="sidemenu" style={{ right: openHamb ? "0" : "-200px" }}>
+            <ul id="sidemenu" style={{ right: openHamb ? "5px" : "-405px" }}>
               {isLoggedIn && (
                 <>
+                  {" "}
+                  <br />
                   <li>
-                    <Link to="/Dashboard">
+                    <Link
+                      to="/Dashboard"
+                      onClick={() => handleLinkClick("Home")}
+                    >
                       {" "}
-                      <button className="btn btn-success"> Home </button>
+                      <button className="btn btn-success btn-media-login">
+                        {" "}
+                        Home{" "}
+                      </button>
                     </Link>
                   </li>
-
                   <li>
-                    <Link to="/Upload">
+                    <Link
+                      to="/Upload"
+                      onClick={() => handleLinkClick("List a Place")}
+                    >
                       {" "}
                       <button
                         className="btn btn-success btn-post"
@@ -86,13 +97,14 @@ export default function Navbar(props) {
                       </button>{" "}
                     </Link>
                   </li>
-
                   <li>
-                    <Link to="/Booking">
+                    <Link
+                      to="/Booking"
+                      onClick={() => handleLinkClick("My Booking")}
+                    >
                       <button className="btn btn-success">My Booking</button>
                     </Link>
                   </li>
-
                   <li>
                     <div className="dropdown nvbar-drop">
                       <button
@@ -104,9 +116,12 @@ export default function Navbar(props) {
                       {isOpen && (
                         <ul className="dropdown-list">
                           <li>
-                            <Link to="/UserProfile">
+                            <Link
+                              to="/UserProfile"
+                              onClick={() => handleLinkClick("Profile")}
+                            >
                               <button
-                                className="btn btn-success buton"
+                                className="btn btn-success buton btn-subdropdown-media"
                                 onClick={handleDrop}
                               >
                                 Profile
@@ -114,9 +129,12 @@ export default function Navbar(props) {
                             </Link>
                           </li>
                           <li>
-                            <Link to="/Post">
+                            <Link
+                              to="/Post"
+                              onClick={() => handleLinkClick("My Post")}
+                            >
                               <button
-                                className="btn btn-success buton"
+                                className="btn btn-success buton btn-subdropdown-media"
                                 onClick={handleDrop}
                               >
                                 My post
@@ -126,7 +144,7 @@ export default function Navbar(props) {
 
                           <li>
                             <button
-                              className="btn btn-primary buton"
+                              className="btn btn-primary buton btn-subdropdown-media"
                               onClick={handleLogout}
                             >
                               Logout
@@ -141,6 +159,7 @@ export default function Navbar(props) {
 
               {!isLoggedIn && (
                 <>
+                  <br />
                   <li>
                     <Link
                       to="/"

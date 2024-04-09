@@ -156,6 +156,7 @@ export default function Dashboard() {
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
+                  style={{ color: "white" }}
                 >
                   {selectedLocationHeader}
                 </Link>
@@ -198,6 +199,7 @@ export default function Dashboard() {
                   role="button"
                   aria-expanded={showDropdown ? "true" : "false"}
                   onClick={() => setShowDropdown(!showDropdown)}
+                  style={{ color: "white" }}
                 >
                   {selectedTypeHeader}
                 </Link>
@@ -206,7 +208,7 @@ export default function Dashboard() {
                   aria-labelledby="navbarDropdownMenuLink"
                 >
                   <li
-                    className="dropdown-item"
+                    className="dropdown-item dropdown-item-media "
                     onMouseEnter={() => setShowFlatSubDropdown(true)}
                     onMouseLeave={() => setShowFlatSubDropdown(false)}
                   >
@@ -257,7 +259,7 @@ export default function Dashboard() {
                     )}
                   </li>
                   <li
-                    className="dropdown-item"
+                    className="dropdown-item dropdown-item-media"
                     onMouseEnter={() => setShowRoomSubDropdown(true)}
                     onMouseLeave={() => setShowRoomSubDropdown(false)}
                   >
@@ -294,6 +296,7 @@ export default function Dashboard() {
                   role="button"
                   aria-expanded={showPriceRangeFilter ? "true" : "false"}
                   onClick={togglePriceRangeFilter}
+                  style={{ color: "white" }}
                 >
                   Price Range
                 </Link>
@@ -327,7 +330,7 @@ export default function Dashboard() {
                     onClick={handleClear}
                   >
                     <i className="fa-regular fa-circle-xmark"></i>{" "}
-                    <span>Clear Filter</span>
+                    <span style={{ color: "white" }}>Clear Filter</span>
                   </Link>
                 )}
               </li>
@@ -350,7 +353,7 @@ export default function Dashboard() {
       </nav>
       <div className="dashboard">
         <legend>dashboard</legend>
-        <hr className="lakeer" />
+        <hr className="lakeer lakeer-media" />
         {/* <headinv>Welcome to Room Rover</headinv> */}
       </div>
       <br /> <br />
@@ -382,7 +385,7 @@ export default function Dashboard() {
                 </p>
                 <Link
                   to={`/product/${Product._id}`}
-                  className="btn btn-primary btnSee"
+                  className="btn btn-primary btnSee btn-details-mdeia"
                 >
                   See Details
                 </Link>{" "}

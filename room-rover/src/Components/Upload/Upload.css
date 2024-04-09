@@ -158,3 +158,43 @@ input {
 .time-slot-fields label {
   text-align: left;
 }
+
+@media (max-width: 600px) {
+  .time-slot {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+  }
+
+  .time-slot-fields {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .field {
+    flex: 0 0 48%;
+    margin-bottom: 10px;
+  }
+
+  .time-slot-button {
+    width: 100%;
+  }
+
+  .upload-btn-media {
+    max-width: 90px;
+    height: 50px;
+    top: 600px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  .popup-inner {
+    position: relative;
+    padding: 32px;
+    width: 100%;
+    max-width: 350px;
+    height: 100vh;
+    max-height: 900px;
+    background-color: #fff;
+  }
+}

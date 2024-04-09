@@ -875,7 +875,7 @@ function Upload(props) {
           </Button>
           <Link to="/Dashboard">
             <button
-              className="close-btn btn btn-success"
+              className="close-btn btn btn-success upload-btn-media"
               onClick={() => props.setTrigger(false)}
             >
               Close

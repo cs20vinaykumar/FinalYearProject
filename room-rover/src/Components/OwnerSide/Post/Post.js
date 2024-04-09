@@ -76,6 +76,7 @@ export default function Post() {
                 <Dropdown className="dropdow">
                   <Dropdown.Toggle
                     variant="success"
+                    className="toggle-media"
                     id="dropdown-basic"
                   ></Dropdown.Toggle>
 
@@ -83,24 +84,30 @@ export default function Post() {
                     <Dropdown.Item>
                       <button
                         onClick={() => handleDeleteClick(product._id)}
-                        className="btn btn-dark"
+                        className="btn btn-dark btn-media"
                       >
                         delete
                       </button>
                     </Dropdown.Item>
                     <Dropdown.Item>
                       <Link to={`/Update/${product._id}`}>
-                        <button className="btn btn-success">Update</button>
+                        <button className="btn btn-success btn-media">
+                          Update
+                        </button>
                       </Link>
                     </Dropdown.Item>
                     <Dropdown.Item>
-                      <Link to="/viewBooking" >
-                        <button className="btn btn-success">View Booking</button>
+                      <Link to="/viewBooking">
+                        <button className="btn btn-success btn-media">
+                          View Booking
+                        </button>
                       </Link>
                     </Dropdown.Item>
                     <Dropdown.Item>
                       <Link>
-                        <button className="btn btn-success">View Request Visit</button>
+                        <button className="btn btn-success btn-media">
+                          View Request Visit
+                        </button>
                       </Link>
                     </Dropdown.Item>
                   </Dropdown.Menu>
@@ -123,7 +130,7 @@ export default function Post() {
                   </p>
                   <Link
                     to={`/product/${product._id}`}
-                    className="btn btn-primary btnSee "
+                    className="btn btn-primary btnSee btn-details-mdeia "
                   >
                     See Details
                   </Link>{" "}
