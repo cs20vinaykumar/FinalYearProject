@@ -23,6 +23,8 @@ import Terms from "./Components/BookingDetails/TermsAndCondition/Terms";
 import TenantAgreement from "./Components/BookingDetails/TenantAgreement/TenantAgreement";
 import ViewBooking from "./Components/OwnerSide/ViewBooking/ViewBooking";
 import RequestVisit from "./Components/RequestVisit/RequestVisit";
+import Cart from "./Components/Cart/Cart";
+
 
 function App() {
   return (
@@ -51,6 +53,7 @@ function App() {
             <Route exact path="/viewBooking" element={<ViewBooking />} />
             <Route exact path="/RequestVisit/:productId" element={<RequestVisit />} />
             <Route exact path="/TenantAgreement/:productId" element={<TenantAgreement />} />
+            <Route exact path="/Booking" element={<Cart />} />
 
 
           </Routes>

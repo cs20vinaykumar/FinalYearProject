@@ -116,6 +116,9 @@ ul li {
 .buton {
   margin: 0;
 }
+.fa-cart-shopping{
+  margin-top: 10px;
+}
 
 /* --------------------------------css for small scree-------------------------------- */
 .right-text .fas {

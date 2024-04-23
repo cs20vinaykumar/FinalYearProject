@@ -13,11 +13,11 @@ export default function Signup() {
     number: "",
     password: "",
     gender: "",
+    userType: ""
   });
 
   const hanldechange = (e) => {
-    // console.log(e.target)
-    const { name, value } = e.target;
+       const { name, value } = e.target;
 
     setUser({
       ...user,
@@ -26,9 +26,9 @@ export default function Signup() {
   };
 
   const register = async () => {
-    const { name, lname, email, number, password, gender } = user;
+    const { name, lname, email, number, password, gender, userType } = user;
 
-    if (name && lname && email && number && password && gender) {
+    if (name && lname && email && number && password && gender && userType) {
       try {
         const response = await axios.post("http://localhost:4000/Signup", user);
         setMessage(response.data.message);
@@ -156,6 +156,19 @@ export default function Signup() {
                     onChange={hanldechange}
                   />
                 </div>
+              </div>
+              <div className="form-group">
+                <label className="labels">User Type:</label>
+                <select
+                 name="userType"
+                 value={user.userType}
+                 className="inputs"
+                 onChange={hanldechange}
+                >
+                 <option value="">Select User Type</option>
+                 <option value="tenant">Tenant</option>
+                 <option value="owner">Owner</option>
+                </select>
               </div>
             </form>
             <button className="btn btn-primary my-3" onClick={register}>

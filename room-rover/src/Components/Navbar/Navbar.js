@@ -103,6 +103,8 @@ export default function Navbar(props) {
                       onClick={() => handleLinkClick("My Booking")}
                     >
                       <button className="btn btn-success">My Booking</button>
+                  
+                      {/* <i class="fa-solid fa-cart-shopping"></i> */}
                     </Link>
                   </li>
                   <li>
@@ -111,7 +113,7 @@ export default function Navbar(props) {
                         onClick={toggleDropdown}
                         className="btn btn-primary "
                       >
-                        <i class="fa-solid fa fa-user"></i>
+                        <i className="fa-solid fa fa-user"></i>
                       </button>
                       {isOpen && (
                         <ul className="dropdown-list">
@@ -198,9 +200,9 @@ export default function Navbar(props) {
                   </li>
                 </>
               )}
-              <i class="fas fa-times" onClick={closeMenu}></i>
+              <i className="fas fa-times" onClick={closeMenu}></i>
             </ul>
-            <i class="fas fa-bars openbtn" onClick={openMenu}></i>
+            <i className="fas fa-bars openbtn" onClick={openMenu}></i>
           </div>
         </nav-head>
       </div>

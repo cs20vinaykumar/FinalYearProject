@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 // import FormatPrice from "../Helper/FormatPrice";
 
-export default function Dashboard() {
+function Dashboard(props) {
   const [originalProducts, setOriginalProducts] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
@@ -19,9 +20,11 @@ export default function Dashboard() {
   const [showPriceRangeFilter, setShowPriceRangeFilter] = useState(false);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
+  const [userLocation, setUserLocation] = useState(null); 
 
   useEffect(() => {
     fetchData();
+    getUserLocation();
   }, []);
 
   const fetchData = async () => {
@@ -131,6 +134,23 @@ export default function Dashboard() {
     setIsFiltered(true);
   };
 
+
+  // -------------------Google Map------------------------------
+  const getUserLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setUserLocation({ lat: latitude, lng: longitude });
+        },
+        (error) => {
+          console.error("Error getting user location:", error);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  };
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light filters">
@@ -156,7 +176,6 @@ export default function Dashboard() {
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
-                  style={{ color: "white" }}
                 >
                   {selectedLocationHeader}
                 </Link>
@@ -199,7 +218,6 @@ export default function Dashboard() {
                   role="button"
                   aria-expanded={showDropdown ? "true" : "false"}
                   onClick={() => setShowDropdown(!showDropdown)}
-                  style={{ color: "white" }}
                 >
                   {selectedTypeHeader}
                 </Link>
@@ -296,7 +314,6 @@ export default function Dashboard() {
                   role="button"
                   aria-expanded={showPriceRangeFilter ? "true" : "false"}
                   onClick={togglePriceRangeFilter}
-                  style={{ color: "white" }}
                 >
                   Price Range
                 </Link>
@@ -330,7 +347,7 @@ export default function Dashboard() {
                     onClick={handleClear}
                   >
                     <i className="fa-regular fa-circle-xmark"></i>{" "}
-                    <span style={{ color: "white" }}>Clear Filter</span>
+                    <span>Clear Filter</span>
                   </Link>
                 )}
               </li>
@@ -354,7 +371,7 @@ export default function Dashboard() {
       <div className="dashboard">
         <legend>dashboard</legend>
         <hr className="lakeer lakeer-media" />
-        {/* <headinv>Welcome to Room Rover</headinv> */}
+        < div className="headinv">Welcome to Room Rover </div>
       </div>
       <br /> <br />
       <div className="main">
@@ -369,7 +386,7 @@ export default function Dashboard() {
               <div className="card-body" key={Product._id}>
                 <h5 className="card-title">{Product.title}</h5>
                 <h5 className="card-title">
-                  <b>{Product.location}</b>
+                  <b>{Product.area}, {Product.location}</b> 
                 </h5>
                 <p className="card-text">
                   {Product.propertyType.room || Product.propertyType.flat}
@@ -394,7 +411,19 @@ export default function Dashboard() {
           ))}
         </div>
       </div>
-      <div className="map"></div>
+      <div className="map">
+        <Map
+          google={props.google}
+          initialCenter={{ lat: 24.8607, lng: 67.0011 }}
+          zoom={14}
+        >
+           {userLocation && <Marker position={userLocation} />}
+        
+        </Map>
+      </div>
     </>
   );
 }
+export default GoogleApiWrapper({
+  apiKey: "AIzaSyC4Q15J0gP0wpLVzuqvG7GvMe4xBBQGptE",
+})(Dashboard);

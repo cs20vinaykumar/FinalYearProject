@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./Payment.css";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
-const Payment = () => {
+const Payment = ({ booking }) => {
   const { productId } = useParams();
   const [bookingDone, setBookingDone] = useState(false);
   const [image, setImage] = useState(null);
   const [product, setProduct] = useState(null);
   const [bookingStatus, setBookingStatus] = useState("");
+
+  const navigate = useNavigate();
 
   const getUserId = () => {
     const token = localStorage.getItem("token");
@@ -58,7 +60,7 @@ const Payment = () => {
         },
       });
       setBookingDone(true);
-      setBookingStatus("Booking initiated. Please wait for confirmation.");
+      setBookingStatus("Payemnt initiated. Please wait for confirmation.");
     } catch (error) {
       console.error("Error booking:", error);
     }
@@ -67,11 +69,14 @@ const Payment = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/GetPropertyForm", {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        const response = await axios.get(
+          "http://localhost:4000/GetPropertyForm",
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
         const products = response.data;
         const foundProduct = products.find((p) => p._id === productId);
         setProduct(foundProduct);
@@ -83,42 +88,170 @@ const Payment = () => {
     fetchData();
   }, [productId]);
 
-  return (
-    <div className="payment-container">
-      <div className="payment-box">
-        <h3 className="payment-title">Account Details</h3>
-        {product?.accountDetails?.map((account, index) => (
-          <div key={index} className="account-info">
-            <h4>{`${index + 1}${ordinalSuffix(index + 1)} account:`}</h4> <br />
-            <div className="info-label">Account Holder:</div>
-            <div className="info-value">{account.accountHolder}</div>
-            <div className="info-label">Account Number:</div>
-            <div className="info-value">{account.accountNumber}</div>
-            <div className="info-label">Bank:</div>
-            <div className="info-value">{account.bank}</div> <br /> <hr />
-          </div>
-        ))}
-      </div>
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userId = getUserId();
+        const response = await axios.get(
+          `http://localhost:4000/booking/check?userId=${userId}&productId=${productId}`,
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
 
-      <div className="payment-instructions">
-        <p className="instruction greeen blink ">After Payment, take a screenshot and upload it here.</p>
-        <p className="instruction green blink ">Wait Until Owner Confirms Your Booking</p>
-      </div>
-      <div className="upload-section">
-        <input type="file" name="image" accept="image/*" onChange={handleImageUpload} />{" "}
-      </div>
-      {image && (
-        <div className="image-preview">
-          <img src={URL.createObjectURL(image)} alt="Preview" />
+        if (response.data.bookingExists) {
+          setBookingDone(true);
+          setBookingStatus("You have already booked this post.");
+        }
+      } catch (error) {
+        console.error("Error fetching booking status:", error);
+      }
+    };
+
+    fetchData();
+  }, [productId]);
+
+  const handleCancelBooking = async (userId, productId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to cancel this booking?"
+    );
+
+    if (!confirmDelete) {
+      return; // If user cancels, do nothing
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+      const userId = getUserId();
+
+      if (!token) {
+        console.error("Token not found.");
+        return;
+      }
+
+      const response = await axios.delete(
+        `http://localhost:4000/booking/${userId}/${productId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("Booking deleted successfully");
+
+        alert("Booking deleted successfully");
+        navigate("/Dashboard");
+      } else {
+        console.error("Failed to delete booking");
+
+        alert("Failed to delete booking");
+      }
+    } catch (error) {
+      console.error("Error deleting booking:", error);
+
+      alert("Error deleting booking. Please try again later.");
+    }
+  };
+
+  return (
+    <>
+      <div className="container">
+        <div className="payment-container">
+          <div className="payment-box">
+            <h3 className="payment-title">Account Details</h3>
+            {product?.accountDetails?.map((account, index) => (
+              <div key={index} className="account-info">
+                <h4>{`${index + 1}${ordinalSuffix(index + 1)} account:`}</h4>{" "}
+                <br />
+                <div className="info-label">Account Holder:</div>
+                <div className="info-value">{account.accountHolder}</div>
+                <div className="info-label">Account Number:</div>
+                <div className="info-value">{account.accountNumber}</div>
+                <div className="info-label">Bank:</div>
+                <div className="info-value">{account.bank}</div> <br /> <hr />
+              </div>
+            ))}
+          </div>
+
+          <div className="payment-instructions">
+            <p className="instruction greeen blink ">
+              After Payment, take a screenshot and upload it here.
+            </p>
+            <p className="instruction green blink ">
+              Wait Until Owner Confirms Your Booking
+            </p>
+          </div>
+          <div className="upload-section">
+            <input
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={handleImageUpload}
+            />{" "}
+          </div>
+          {image && (
+            <div className="image-preview">
+              <img src={URL.createObjectURL(image)} alt="Preview" />
+            </div>
+          )}
+          <div className="button-container">
+            {!bookingDone ? (
+              <button
+                onClick={handleBookingDone}
+                className="booking-button btn-done"
+              >
+                Done Payment
+              </button>
+            ) : bookingStatus ===
+              "Payemnt initiated. Please wait for confirmation." ? ( // Check only in the waiting stage
+              <>
+                <div className="booking-message">{bookingStatus}</div>
+              </>
+            ) : (
+              <div className="booking-message">{bookingStatus}</div>
+            )}
+          </div>
+        </div>{" "}
+        <br />
+        <div className="package-summary">
+          <h3>Package Summary</h3>
+          <div className="subtotal">
+            <h4 style={{ color: "gray", fontWeight: "200", fontSize: "22px" }}>
+              Subtotal
+            </h4>
+            <h4 style={{ fontSize: "22px" }}>Rs.{product?.pricing?.rent}</h4>
+          </div>
+          <div className="platform-charges">
+            <h4 style={{ color: "gray", fontWeight: "200", fontSize: "22px" }}>
+              Platform Charges
+            </h4>
+            <h4 style={{ fontSize: "22px" }}>Free</h4>
+          </div>
+          <div className="total-price">
+            <h4 style={{ color: "gray", fontWeight: "200", fontSize: "22px" }}>
+              Total
+            </h4>
+            <h4 style={{ fontSize: "22px" }}>Rs. {product?.pricing?.rent}</h4>
+          </div>
+          <hr className="seperator" />
+          {bookingDone && (
+            <button className="waiting-button">Waiting for Approval</button>
+          )}
+          {bookingDone && (
+            <button
+              onClick={() => handleCancelBooking(booking, productId)}
+              className="cancel-booking-button"
+            >
+              Cancel Booking
+            </button>
+          )}
         </div>
-      )}
-      <div className="button-container">
-        <button onClick={handleBookingDone} className="booking-button btn-done">
-          Done Booking
-        </button>
       </div>
-      {bookingDone && <div className="booking-message">{bookingStatus}</div>}
-    </div>
+    </>
   );
 };
 

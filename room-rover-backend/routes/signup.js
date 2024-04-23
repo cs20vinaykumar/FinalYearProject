@@ -8,7 +8,7 @@ import nodemailer from "nodemailer";
 dotenv.config();
 
 routers.post("/", async (req, res) => {
-  const { name, lname, email, number, password, gender } = req.body;
+  const { name, lname, email, number, password, gender, userType } = req.body;
   const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(.{6,})$/;
 
   if (!passwordRegex.test(password)) {
@@ -33,6 +33,7 @@ routers.post("/", async (req, res) => {
         number,
         password: secPass,
         gender,
+        userType
       });
 
       await newUser.save();

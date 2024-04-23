@@ -11,7 +11,7 @@
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 16px; /* Adjust the gap according to your preference */
+  gap: 16px;
 }
 
 .btnSee {
@@ -64,7 +64,7 @@ legend {
   margin: 0 2px !important;
 }
 
-headinv {
+.headinv {
   text-transform: uppercase;
   font-size: 21px;
   font-weight: 600;
@@ -74,15 +74,13 @@ headinv {
   color: #063566;
 }
 
-/* .map {
+.map {
   position: absolute;
   right: 25px;
   top: 220px;
-
-  height: 350px;
+  height: 495px;
   width: 30%;
-  background-image: url("E:\FinalYearProject\room-rover\Images\khi_map2.gif");
-} */
+}
 
 .search-barr {
   margin-left: 80%;
@@ -105,8 +103,6 @@ headinv {
   background-color: #b0abab65;
   padding: 10px 10px 10px 35px;
   border-radius: 8px;
-  /* -webkit-transition: width 0.4s ease-in-out;
-  transition: width 0.4s ease-in-out; */
 }
 .search-barr .input-text:focus {
   background-color: #ccc;
@@ -260,6 +256,10 @@ headinv {
 
   .nav-item {
     padding: 10px 5px;
+  }
+
+  .nav-link {
+    color: white;
   }
 
   .dropdown-menu {

@@ -61,7 +61,7 @@ export default function Post() {
       <div className="dashboard">
         <legend>My Post</legend>
         <hr className="lakeer" />
-        {/* <headinv>Welcome to Room Rover</headinv> */}
+        <div div className="headinv">Here is the post you published.</div>
       </div>
       <br /> <br />
       <div className="main">

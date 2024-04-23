@@ -43,6 +43,23 @@ function Upload(props) {
   // const [accountHolder, setAccountHolder] = useState("");
   // const [accountNumber, setAccountNumber] = useState("");
   // const [bank, setBank] = useState("");
+  const [areas, setAreas] = useState([]);
+  const [area, setArea] = useState("");
+
+  const cityAreas = {
+    Karachi: ["Clifton Block 8", "Clifton Block 9", "Clifton Block 5"],
+    Hyderabad: ["Area A", "Area B", "Area C"],
+    Sukkur: ["Area X", "Area Y", "Area Z"],
+  };
+
+  const handleLocationChange = (event) => {
+    setLocation(event.target.value);
+    setAreas(cityAreas[event.target.value]);
+  };
+
+  const handleAreaChange = (event) => {
+    setArea(event.target.value);
+  };
 
   const [accountDetails, setAccountDetails] = useState([
     { accountHolder: "", accountNumber: "", bank: "" },
@@ -170,6 +187,7 @@ function Upload(props) {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("location", location);
+      formData.append("area", area);
       formData.append("propertyType.flat", flat);
       formData.append("propertyType.room", room);
       formData.append("availability", availability);
@@ -225,6 +243,7 @@ function Upload(props) {
         console.log("Form submitted:", {
           title,
           location,
+          area,
           flat,
           room,
           availability,
@@ -310,37 +329,57 @@ function Upload(props) {
               helperText={errors.title}
               required
             />
-            <span className="span-p">
-              Building Name like Abc Apartment Block / Phase 1
-            </span>
+            <span className="span-p">Building Name like Abc Apartment</span>
           </Box>
           <br />
           {/* --------------------Location------------------------- */}
           <div className="location">
-            <div className="one">
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label" required>
-                  Location
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={location}
-                  label="Location"
-                  onChange={(e) => setLocation(e.target.value)}
-                  error={!!errors.location}
-                  required
-                >
-                  <MenuItem value={"Karachi"}>Karachi</MenuItem>
-                  <MenuItem value={"Hyderabad"}>Hyderabad</MenuItem>
-                  <MenuItem value={"Sukkur"}>Sukkur</MenuItem>
-                </Select>
-                {errors.location && (
-                  <p style={{ color: "red" }}>{errors.location}</p>
-                )}
-              </FormControl>
-            </div>
-          </div>
+  <h4>Location</h4>
+  <span className="span-p">Select your city:</span>
+  <br />
+  <br />
+  <div className="one">
+    <FormControl fullWidth>
+      <InputLabel id="demo-simple-select-label">Location</InputLabel>
+      <Select
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        value={location}
+        label="Location"
+        onChange={handleLocationChange}
+        error={!!errors.location}
+        required
+      >
+        <MenuItem value={"Karachi"}>Karachi</MenuItem>
+        <MenuItem value={"Hyderabad"}>Hyderabad</MenuItem>
+        <MenuItem value={"Sukkur"}>Sukkur</MenuItem>
+      </Select>
+    </FormControl>
+  </div>
+  {areas.length > 0 && (
+    <div className="two">
+         <FormControl fullWidth>
+        <InputLabel id="area-label">Area</InputLabel>
+        <Select
+          labelId="area-label"
+          id="area"
+          value={area}
+          onChange={handleAreaChange}
+        >
+          {areas.map((area, index) => (
+            <MenuItem key={index} value={area}>
+              {area}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </div>
+  )}
+  {errors.location && (
+    <p style={{ color: "red" }}>{errors.location}</p>
+  )}
+</div>
+
           <br /> <br />
           {/* --------------------Property Type------------------------- */}
           {/* --------------------Property Type------------------------- */}

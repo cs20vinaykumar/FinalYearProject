@@ -6,6 +6,7 @@ const formDataSchema = new mongoose.Schema(
   {
     title: String,
     location: String,
+    area: String,
     propertyType: {
       flat: String,
       room: String,
@@ -25,7 +26,7 @@ const formDataSchema = new mongoose.Schema(
     file: [
       {
         type: String,
-        // require: true,
+        require: true,
       },
     ],
 

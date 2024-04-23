@@ -49,125 +49,123 @@ const Detail = () => {
   return (
     <>
       <div className="main-seeDetails">
-        <h1 className="head-1">
-          {product.title} {product.location}
-        </h1>
-        <br />
-        <div className="DetailImageBox">
-          {product.file.length > 1 && (
-            <button className="prev" onClick={goToPrevSlide}>
-              {"<"}
-            </button>
-          )}
-          <img
-            className="card-img-top"
-            src={`http://localhost:4000/Images/${product.file[currentIndex]}`}
-            alt={`Product ${currentIndex + 1}`}
-          />
-          {product.file.length > 1 && (
-            <button className="next" onClick={goToNextSlide}>
-              {">"}
-            </button>
-          )}
-        </div>
-        {product.file.length > 1 && (
-          <div className="dots-container">
-            {product.file.map((_, index) => (
-              <span
-                key={index}
-                className={index === currentIndex ? "dot active" : "dot"}
-                onClick={() => setCurrentIndex(index)}
-              ></span>
-            ))}
-          </div>
-        )}
-        <br />
-        <br />
-        <p className="rental-p">
-          Monthly Rent &nbsp; &nbsp; | &nbsp; &nbsp; Security Deposite &nbsp;
-          &nbsp;{" "}
-        </p>
-        <p className="rental-p">
-          {product.pricing.rent} &nbsp; &nbsp; | &nbsp; &nbsp;{" "}
-          {product.pricing.deposite} &nbsp; &nbsp;{" "}
-        </p>
-        <br />
-        <div className="posted-by">
-          <h2>
-            {" "}
-            <i class="fa-solid fa-user"></i> Posted By
-          </h2>
-          <div className="posted-details">
-            <p>
-              <strong>Name:</strong> {product.postedBy.name}{" "}
-              {product.postedBy.lname}
-            </p>
-            <p>
-              <strong>Number:</strong> 0{product.postedBy.number}
-            </p>
-            <p>
-              <strong>Email:</strong> {product.postedBy.email}
-            </p>
-          </div>
-        </div>
-        <div className="Details-button">
-          <Link to={`/Payment/${product._id}`}>
-            <button className=" btn btn-dark btn-text ">Book Now</button> &nbsp;
-          </Link>
-          &nbsp; <br />
+        <div id="left-side">
+          <div className="DetailImageBox">
+            {product.file.length > 1 && (
+              <button className="prev" onClick={goToPrevSlide}>
+                {"<"}
+              </button>
+            )}
+            <img
+              className="card-img-top-details"
+              src={`http://localhost:4000/Images/${product.file[currentIndex]}`}
+              alt={`Product ${currentIndex + 1}`}
+            />
+            {product.file.length > 1 && (
+              <button className="next" onClick={goToNextSlide}>
+                {">"}
+              </button>
+            )}
+          </div>{" "}
           <br />
-          <Link to={`/RequestVisit/${product._id}`}>
-            <button className=" btn btn-dark btn-text ">
-              Request for visit
-            </button>
-          </Link>{" "}
-        </div>{" "}
-        <br />
-        <br />
-        <br />
-        <br />
-        {/* JSX */}
-        <div className="main-description">
-          <div className="description-2">
-            <strong className="head-des">Utilities And Amenities</strong>
-            <ul id="amenitiesList" className="amenities-columns">
-              {product.amenities.map((amenity, index) =>
-                amenity.split(",").map((segment, segmentIndex) => (
-                  <li key={index + "-" + segmentIndex}>
-                    {segment
-                      .trim()
-                      .split(" ")
-                      .map((word, wordIndex) => (
-                        <span key={wordIndex}>{word}</span>
-                      ))}
-                  </li>
-                ))
-              )}
-            </ul>
-          </div>
+          {product.file.length > 1 && (
+            <div className="dots-container">
+              {product.file.map((_, index) => (
+                <span
+                  key={index}
+                  className={index === currentIndex ? "dot active" : "dot"}
+                  onClick={() => setCurrentIndex(index)}
+                ></span>
+              ))}
+            </div>
+          )}
+        </div>
+        <div id="right-side">
+          <div className="posted-by">
+            <h2>
+              {" "}
+              <i class="fa-solid fa-user"></i> Posted By
+            </h2>
+            <div className="posted-details">
+              <p>
+                <strong>Name:</strong> {product.postedBy.name}{" "}
+                {product.postedBy.lname}
+              </p>
+              <p>
+                <strong>Number:</strong> 0{product.postedBy.number}
+              </p>
+              <p>
+                <strong>Email:</strong> {product.postedBy.email}
+              </p>
+            </div>
+          </div>{" "}
+          <br />
+          <div className="head-1">
+            {product.title},<br />
+            {product.area},{product.location}. <br />
+          </div>{" "}
+          <br /> <br /> <hr className="h-line" /> <br />
+          <div className="pricing">
+            <p>Rent: PKR {product.pricing.rent}</p>
+            <p>Deposite: PKR {product.pricing.deposite}</p>
+          </div>{" "}
+          <hr className="h-line" />
+          <br /> <br />
+          <div className="Details-button">
+            <Link to={`/Payment/${product._id}`}>
+              <button className=" btn btn-dark btn-text ">Book Now</button>
+            </Link>
+            <br />
+            <br />
+            <Link to={`/RequestVisit/${product._id}`}>
+              <button className=" btn btn-dark btn-text ">
+                Request for visit
+              </button>
+            </Link>{" "}
+          </div>{" "}
+        </div>
+        <div id="bottom-side">
+          <div className="main-description">
+            <div className="description-2">
+              <strong className="head-des">Utilities And Amenities</strong>
+              <ul id="amenitiesList" className="amenities-columns">
+                {product.amenities.map((amenity, index) =>
+                  amenity.split(",").map((segment, segmentIndex) => (
+                    <li key={index + "-" + segmentIndex}>
+                      {segment
+                        .trim()
+                        .split(" ")
+                        .map((word, wordIndex) => (
+                          <span key={wordIndex}>{word}</span>
+                        ))}
+                    </li>
+                  ))
+                )}
+              </ul>
+            </div>
 
-          <div className="avaibility">
-            <strong className="head-des">Availability</strong>:
-            <p>
-              <li>
-                This is an <strong>{product.availability}</strong> Vacancy from{" "}
-                <strong>{product.dateRange.fromDate}</strong> to{" "}
-                <strong>{product.dateRange.toDate}</strong>
-              </li>
-            </p>
+            <div className="avaibility">
+              <strong className="head-des">Availability</strong>:
+              <p>
+                <li>
+                  This is an <strong>{product.availability}</strong> Vacancy
+                  from <strong>{product.dateRange.fromDate}</strong> to{" "}
+                  <strong>{product.dateRange.toDate}</strong>
+                </li>
+              </p>
+            </div>
           </div>
+          <br />
+          <br />
+          <br />
+          <strong className="head-des">Description</strong>: <br />
+          <div className="head-des-container">
+            <div className="description-1">{product.description}</div>
+          </div>
+          <br />
+          <br />
         </div>
-        <br />
-        <br />
-        <br />
-        <strong className="head-des">Description</strong>: <br />
-        <div className="head-des-container">
-          <div className="description-1">{product.description}</div>
-        </div>
-        <br />
-        <br />
       </div>
-
       {/* ------------------------------footer----------------------------------------------- */}
       <footer className="footer">
         <div id="footer">
