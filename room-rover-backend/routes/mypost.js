@@ -16,4 +16,18 @@ myPost.get("/", async (req, res) => {
   }
 });
 
+
+
+myPost.get("/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId; // Extract user ID from URL parameters
+    let posts = await formData
+      .find({ postedBy: userId })
+      .sort("-createdAt");
+    res.json({ myPost: posts });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 export default myPost;

@@ -61,7 +61,9 @@ export default function Post() {
       <div className="dashboard">
         <legend>My Post</legend>
         <hr className="lakeer" />
-        <div div className="headinv">Here is the post you published.</div>
+        <div div className="headinv">
+          Here is the post you published.
+        </div>
       </div>
       <br /> <br />
       <div className="main">
@@ -96,13 +98,7 @@ export default function Post() {
                         </button>
                       </Link>
                     </Dropdown.Item>
-                    <Dropdown.Item>
-                      <Link to="/viewBooking">
-                        <button className="btn btn-success btn-media">
-                          View Booking
-                        </button>
-                      </Link>
-                    </Dropdown.Item>
+                    <Dropdown.Item></Dropdown.Item>
                     <Dropdown.Item>
                       <Link>
                         <button className="btn btn-success btn-media">
@@ -131,9 +127,15 @@ export default function Post() {
                   <Link
                     to={`/product/${product._id}`}
                     className="btn btn-primary btnSee btn-details-mdeia "
+                    style={{ marginLeft: "20px" }}
                   >
                     See Details
                   </Link>{" "}
+                  <Link to={`/booking/product/${product._id}`}>
+                    <button className="btn btn-success btn-media">
+                      View Booking
+                    </button>
+                  </Link>
                 </div>
               </div>
             ))}

@@ -1,69 +1,103 @@
-import "./ViewBooking.css"
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
+import "./ViewBooking.css"
 
+const ViewBookings = () => {
+  const { productId } = useParams();
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
 
-export default function ViewBooking() {
-    const [bookings, setBookings] = useState([]);
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/booking/product/${productId}`,
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        setBookings(response.data);
+        setLoading(false); // Set loading to false after fetching data
+      } catch (error) {
+        console.error("Error fetching bookings:", error);
+        setLoading(false); // Set loading to false in case of error
+      }
+    };
 
-    useEffect(() => {
-      // Fetch bookings associated with the owner's property
-      const fetchBookings = async () => {
-        try {
-          const response = await axios.get("/api/bookings");
-          setBookings(response.data);
-        } catch (error) {
-          console.error("Error fetching bookings:", error);
+    fetchBookings();
+  }, [productId]);
+
+  const handleApprove = async (bookingId) => {
+    try {
+      await axios.put(
+        `http://localhost:4000/booking/${bookingId}/status`,
+        { status: "approved" }, // Change status to "accepted"
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
-      };
-  
-      fetchBookings();
-    }, []);
-  
-    const handleConfirmBooking = async (bookingId) => {
-      try {
-        await axios.put(`/api/bookings/${bookingId}`, { status: "confirmed" });
-        // Update booking status locally
-        setBookings(prevBookings =>
-          prevBookings.map(booking =>
-            booking._id === bookingId ? { ...booking, status: "confirmed" } : booking
-          )
-        );
-      } catch (error) {
-        console.error("Error confirming booking:", error);
-      }
-    };
-  
-    const handleRejectBooking = async (bookingId) => {
-      try {
-        await axios.put(`/api/bookings/${bookingId}`, { status: "rejected" });
-        // Update booking status locally
-        setBookings(prevBookings =>
-          prevBookings.map(booking =>
-            booking._id === bookingId ? { ...booking, status: "rejected" } : booking
-          )
-        );
-      } catch (error) {
-        console.error("Error rejecting booking:", error);
-      }
-    };
+      );
+      // Refresh bookings after approval
+      setBookings();
+      window.location.reload();
+    } catch (error) {
+      console.error("Error approving booking:", error);
+    }
+  };
+
+  const handleReject = async (bookingId) => {
+    try {
+      await axios.put(
+        `http://localhost:4000/booking/${bookingId}/status`,
+        { status: "rejected" },
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      setBookings();
+      window.location.reload();
+    } catch (error) {
+      console.error("Error rejecting booking:", error);
+    }
+  };
+
   return (
-<div>
-      <h2>View Bookings</h2>
-      <ul>
-        {bookings.map(booking => (
-          <li key={booking._id}>
-            <div>User: {booking.userId}</div>
-            <div>Status: {booking.status}</div>
-            {booking.status === "waiting" && (
-              <div>
-                <button onClick={() => handleConfirmBooking(booking._id)}>Confirm</button>
-                <button onClick={() => handleRejectBooking(booking._id)}>Reject</button>
-              </div>
-            )}
-          </li>
-        ))}
-      </ul>
+    <div className="booking-container">
+      <h2>Accept it or Reject Booking</h2> <br />
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="booking-list">
+          {bookings?.map((post) => (
+            <div key={post.bookingId} className="booking-card">
+              <p>ID: {post._id}</p>
+              <p>Name: {post.name}</p>
+              <p>Email: {post.email}</p>
+              <p>CNIC: {post.cnic}</p>
+              <p>Number: {post.number}</p>
+              <p className={`status ${post.status}`}>Status: {post.status}</p>
+              {post.status === "waiting" && (
+                <div className="button-group">
+                  <button onClick={() => handleApprove(post.bookingId)}>
+                    Approve
+                  </button>{" "}
+                  <button onClick={() => handleReject(post.bookingId)}>
+                    Reject
+                  </button>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
+export default ViewBookings;

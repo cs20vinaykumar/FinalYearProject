@@ -10,6 +10,7 @@ const Payment = ({ booking }) => {
   const [image, setImage] = useState(null);
   const [product, setProduct] = useState(null);
   const [bookingStatus, setBookingStatus] = useState("");
+  const [status, setStatus] = useState("");
 
   const navigate = useNavigate();
 
@@ -47,20 +48,27 @@ const Payment = ({ booking }) => {
         return;
       }
 
-      const formData = new FormData();
-      formData.append("userId", userId);
-      formData.append("productId", productId);
-      formData.append("status", "waiting");
-      formData.append("image", image); // Append the image file to the form data
+      if (userId === product.postedBy._id) {
+        alert("Owner cannot book their own post.");
+        return;
+      } else {
+        const formData = new FormData();
+        formData.append("userId", userId);
+        formData.append("productId", productId);
+        formData.append("status", "waiting");
+        formData.append("image", image); // Append the image file to the form data
 
-      await axios.post("http://localhost:4000/booking", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data", // Set content type to multipart form data
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      setBookingDone(true);
-      setBookingStatus("Payemnt initiated. Please wait for confirmation.");
+        await axios.post("http://localhost:4000/booking", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data", // Set content type to multipart form data
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setBookingDone(true);
+        alert("Payemnt initiated. Please wait for confirmation.");
+        window.location.reload();
+        
+      }
     } catch (error) {
       console.error("Error booking:", error);
     }
@@ -103,7 +111,7 @@ const Payment = ({ booking }) => {
 
         if (response.data.bookingExists) {
           setBookingDone(true);
-          setBookingStatus("You have already booked this post.");
+          setBookingStatus("You have booked this post.");
         }
       } catch (error) {
         console.error("Error fetching booking status:", error);
@@ -131,14 +139,15 @@ const Payment = ({ booking }) => {
         return;
       }
 
-      const response = await axios.delete(
-        `http://localhost:4000/booking/${userId}/${productId}`,
+      const response = await axios.get(
+        `http://localhost:4000/booking/check?userId=${userId}&productId=${productId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
+      
 
       if (response.status === 200) {
         console.log("Booking deleted successfully");
@@ -156,6 +165,27 @@ const Payment = ({ booking }) => {
       alert("Error deleting booking. Please try again later.");
     }
   };
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/booking/GetStatus/${productId}`,
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        const statusData = response.data;
+        setStatus(statusData);
+      } catch (error) {
+        console.error("Error fetching bookings:", error);
+      }
+    };
+
+    fetchBookings();
+  }, [productId]);
 
   return (
     <>
@@ -198,23 +228,58 @@ const Payment = ({ booking }) => {
               <img src={URL.createObjectURL(image)} alt="Preview" />
             </div>
           )}
-          <div className="button-container">
-            {!bookingDone ? (
-              <button
-                onClick={handleBookingDone}
-                className="booking-button btn-done"
-              >
-                Done Payment
-              </button>
-            ) : bookingStatus ===
-              "Payemnt initiated. Please wait for confirmation." ? ( // Check only in the waiting stage
-              <>
-                <div className="booking-message">{bookingStatus}</div>
-              </>
-            ) : (
-              <div className="booking-message">{bookingStatus}</div>
+{!bookingDone && (
+  <button
+    onClick={handleBookingDone}
+    className="booking-button btn-done"
+  >
+    Initiate Payment
+  </button>
+)}
+
+{bookingDone && status && (
+  <div className="booking-message">
+    {status.status === "approved" && (
+      <p>Your booking has been confirmed. Enjoy your stay!</p>
+    )}
+    {status.status === "rejected" && (
+      <p>Your booking has been Cancelled. Sorry for inconvenience</p>
+    )}
+    {status.status === "waiting" && (
+      <p>{bookingStatus}</p>
+    )}
+  </div>
+)}
+
+{!bookingDone && (
+  <div className="button-container">
+    {bookingDone && (
+      <button className="waiting-button">
+        {status && (
+          <div>
+            {status.status === "waiting" && (
+              <p>Wait for owner approval</p>
             )}
+            {status.status === "approved" && (
+              <p>Booking confirmed. Enjoy your stay!</p>
+            )}
+            {status.status === "cancelled" && <p>Booking cancelled</p>}
           </div>
+        )}
+      </button>
+    )}
+
+    {bookingDone && (
+      <button
+        onClick={() => handleCancelBooking(booking, productId)}
+        className="cancel-booking-button"
+      >
+        Cancel Booking
+      </button>
+    )}
+  </div>
+)}
+
         </div>{" "}
         <br />
         <div className="package-summary">
@@ -239,8 +304,21 @@ const Payment = ({ booking }) => {
           </div>
           <hr className="seperator" />
           {bookingDone && (
-            <button className="waiting-button">Waiting for Approval</button>
+            <button className="waiting-button">
+              {status && (
+                <div>
+                  {status.status === "waiting" && (
+                    <p>Wait for owner approval</p>
+                  )}
+                  {status.status === "approved" && (
+                    <p>Booking confirmed. Enjoy your stay!</p>
+                  )}
+                  {status.status === "cancelled" && <p>Booking cancelled</p>}
+                </div>
+              )}
+            </button>
           )}
+
           {bookingDone && (
             <button
               onClick={() => handleCancelBooking(booking, productId)}

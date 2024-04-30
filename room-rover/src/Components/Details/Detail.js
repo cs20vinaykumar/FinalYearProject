@@ -89,7 +89,6 @@ const Detail = () => {
             <div className="posted-details">
               <p>
                 <strong>Name:</strong> {product.postedBy.name}{" "}
-                {product.postedBy.lname}
               </p>
               <p>
                 <strong>Number:</strong> 0{product.postedBy.number}
@@ -106,7 +105,7 @@ const Detail = () => {
           </div>{" "}
           <br /> <br /> <hr className="h-line" /> <br />
           <div className="pricing">
-            <p>Rent: PKR {product.pricing.rent}</p>
+            <p id="p-one">Rent: PKR {product.pricing.rent}</p>
             <p>Deposite: PKR {product.pricing.deposite}</p>
           </div>{" "}
           <hr className="h-line" />
@@ -158,8 +157,11 @@ const Detail = () => {
           <br />
           <br />
           <br />
-          <strong className="head-des">Description</strong>: <br />
           <div className="head-des-container">
+            <strong className="head-des" id="description">
+              Description
+            </strong>
+            : <br />
             <div className="description-1">{product.description}</div>
           </div>
           <br />

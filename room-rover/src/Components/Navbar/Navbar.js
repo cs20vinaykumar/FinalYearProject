@@ -3,7 +3,7 @@ import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import Upload from "../Upload/Upload";
 
-export default function Navbar(props) {
+export default function Navbar() {
   const [activeLink, setActiveLink] = useState(null);
   const [buttonPopup, setButtonPopup] = useState(false);
   const isLoggedIn = localStorage.getItem("token");
@@ -103,7 +103,7 @@ export default function Navbar(props) {
                       onClick={() => handleLinkClick("My Booking")}
                     >
                       <button className="btn btn-success">My Booking</button>
-                  
+
                       {/* <i class="fa-solid fa-cart-shopping"></i> */}
                     </Link>
                   </li>

@@ -28,22 +28,19 @@ export default function Login(props) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          
         },
         body: JSON.stringify(user),
       });
-  
+
       const data = await response.json();
-  
+
       setMessage(data.message);
-  
+
       if (data.message === "Login Successful") {
         const token = data.token;
 
-        localStorage.setItem('token', token);
-  
+        localStorage.setItem("token", token);
 
-  
         setTimeout(() => {
           navigate("/Dashboard");
         }, 2000);
@@ -52,8 +49,6 @@ export default function Login(props) {
       console.error("Login error:", error);
     }
   };
-  
- 
 
   const handleClick = () => {
     setPassword(!password);
@@ -61,7 +56,7 @@ export default function Login(props) {
 
   return (
     <>
-      <div className="main-container">
+      <div className="main-container vh-100 gradient-custom">
         <div className="main-content">
           <div className="signup">
             <div className="image" id="svgimg"></div>
@@ -105,11 +100,13 @@ export default function Login(props) {
             <br />
             <button className="btn btn-primary" onClick={login}>
               Login
-            </button> <br />
-           <button className="btn btn-primary">
-           <Link to="/Login/Forgot" className="login-forgot">Forgot Password ?
-           </Link> </button>
-            
+            </button>{" "}
+            <br />
+            <button className="btn btn-primary">
+              <Link to="/Login/Forgot" className="login-forgot">
+                Forgot Password ?
+              </Link>{" "}
+            </button>
             <br />
             <p className="tomato-red">{message}</p>
             <br />

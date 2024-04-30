@@ -260,7 +260,7 @@ function Upload(props) {
           phoneNumber,
         });
         alert("post Created  successfully:", response.data.message);
-        navigate("/Agreement");
+        navigate("/Dashboard");
         props.setTrigger(false);
 
         setErrors({});
@@ -334,52 +334,51 @@ function Upload(props) {
           <br />
           {/* --------------------Location------------------------- */}
           <div className="location">
-  <h4>Location</h4>
-  <span className="span-p">Select your city:</span>
-  <br />
-  <br />
-  <div className="one">
-    <FormControl fullWidth>
-      <InputLabel id="demo-simple-select-label">Location</InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={location}
-        label="Location"
-        onChange={handleLocationChange}
-        error={!!errors.location}
-        required
-      >
-        <MenuItem value={"Karachi"}>Karachi</MenuItem>
-        <MenuItem value={"Hyderabad"}>Hyderabad</MenuItem>
-        <MenuItem value={"Sukkur"}>Sukkur</MenuItem>
-      </Select>
-    </FormControl>
-  </div>
-  {areas.length > 0 && (
-    <div className="two">
-         <FormControl fullWidth>
-        <InputLabel id="area-label">Area</InputLabel>
-        <Select
-          labelId="area-label"
-          id="area"
-          value={area}
-          onChange={handleAreaChange}
-        >
-          {areas.map((area, index) => (
-            <MenuItem key={index} value={area}>
-              {area}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </div>
-  )}
-  {errors.location && (
-    <p style={{ color: "red" }}>{errors.location}</p>
-  )}
-</div>
-
+            <h4>Location</h4>
+            <span className="span-p">Select your city:</span>
+            <br />
+            <br />
+            <div className="one">
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Location</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={location}
+                  label="Location"
+                  onChange={handleLocationChange}
+                  error={!!errors.location}
+                  required
+                >
+                  <MenuItem value={"Karachi"}>Karachi</MenuItem>
+                  <MenuItem value={"Hyderabad"}>Hyderabad</MenuItem>
+                  <MenuItem value={"Sukkur"}>Sukkur</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            {areas.length > 0 && (
+              <div className="two">
+                <FormControl fullWidth>
+                  <InputLabel id="area-label">Area</InputLabel>
+                  <Select
+                    labelId="area-label"
+                    id="area"
+                    value={area}
+                    onChange={handleAreaChange}
+                  >
+                    {areas.map((area, index) => (
+                      <MenuItem key={index} value={area}>
+                        {area}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
+            )}
+            {errors.location && (
+              <p style={{ color: "red" }}>{errors.location}</p>
+            )}
+          </div>
           <br /> <br />
           {/* --------------------Property Type------------------------- */}
           {/* --------------------Property Type------------------------- */}
@@ -866,6 +865,7 @@ function Upload(props) {
                 <TextField
                   label="Account Holder"
                   value={account.accountHolder}
+                  type="text"
                   onChange={(e) =>
                     handleAccountChange(index, "accountHolder", e.target.value)
                   }
@@ -875,6 +875,7 @@ function Upload(props) {
                 <TextField
                   label="Account Number"
                   value={account.accountNumber}
+                  type="number"
                   onChange={(e) =>
                     handleAccountChange(index, "accountNumber", e.target.value)
                   }

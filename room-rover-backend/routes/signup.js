@@ -8,16 +8,16 @@ import nodemailer from "nodemailer";
 dotenv.config();
 
 routers.post("/", async (req, res) => {
-  const { name, lname, email, number, password, gender, userType } = req.body;
+  const { name, email, number, password, cnic, gender, userType } = req.body;
   const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(.{6,})$/;
 
   if (!passwordRegex.test(password)) {
     return res.send({
-      message: "Password must be at least 6 characters long and include at least one uppercase letter, one digit, and one special character.",
+      message:
+        "Password must be at least 6 characters long and include at least one uppercase letter, one digit, and one special character.",
     });
-
   }
-  
+
   try {
     const existingUser = await User.findOne({ email: email });
     if (existingUser) {
@@ -28,12 +28,12 @@ routers.post("/", async (req, res) => {
 
       const newUser = new User({
         name,
-        lname,
         email,
         number,
         password: secPass,
+        cnic,
         gender,
-        userType
+        userType,
       });
 
       await newUser.save();
@@ -81,5 +81,31 @@ const sendOTPEmail = async (email, otpCode) => {
     throw new Error("Error sending email");
   }
 };
+
+routers.get("/", async (req, res) => {
+  try {
+    // Fetch all users from the database
+    const users = await User.find();
+
+    // Send the users as a response
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    // Send an error response if something goes wrong
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+routers.delete("/users/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    await User.findByIdAndDelete(userId);
+    res.json({ message: "User deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 export default routers;

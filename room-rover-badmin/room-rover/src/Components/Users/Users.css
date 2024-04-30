@@ -1,0 +1,95 @@
+.user-box-container {
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.user-box {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.user-row {
+  display: inline-block;
+  width: 400px; /* Adjust the width as needed */
+  vertical-align: top; /* Align user boxes to the top */
+  margin: 10px; /* Add some margin between user boxes */
+  border-radius: 10px; /* Add border radius to each user box */
+  border: 1px solid #ccc; /* Add border to each user box */
+  padding: 15px; /* Add padding inside each user box */
+  background-color: #fff; /* Set background color of user boxes */
+}
+
+.user-row div {
+  margin-bottom: 10px;
+}
+
+.user-row strong {
+  display: inline-block;
+  width: 120px;
+}
+
+.user-row:hover {
+  background-color: #f0f0f0; /* Change background color on hover */
+}
+
+.total-users {
+  font-size: 20px;
+  margin-bottom: 20px;
+  background-color: #8f2c24; /* Background color for the total users section */
+  color: #fff; /* Text color for the total users section */
+  padding: 10px; /* Add padding to the total users section */
+  border-radius: 10px; /* Add border radius to the total users section */
+  text-align: center;
+}
+
+.button-container {
+  display: flex; /* Arrange buttons horizontally */
+  flex-wrap: wrap; /* Allow buttons to wrap to the next line */
+}
+
+.button-container > * {
+  flex: 1 1 calc(50% - 10px); /* Set each button to take up 50% width with some margin */
+  margin: 5px; /* Add margin between buttons */
+}
+.button-container {
+  display: flex; /* Arrange buttons horizontally */
+  justify-content: space-between; /* Space buttons evenly within container */
+}
+
+/* Button styles */
+button {
+  padding: 10px 20px; /* Add padding to improve button appearance */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Add border radius for rounded corners */
+  background-color: #007bff; /* Set button background color */
+  color: #fff; /* Set text color to white */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+button:hover {
+  background-color: #0056b3; /* Darken background color on hover */
+}
+
+/* Specific button styles */
+.delete-user-btn {
+  background-color: #dc3545; /* Red color for delete button */
+}
+
+.view-posts-btn {
+  background-color: #28a745; /* Green color for view posts button */
+}
+
+.view-bookings-btn {
+  background-color: #ffc107; /* Yellow color for view bookings button */
+}
+
+#book-total-user {
+  width: 350px;
+  height: 40px;
+  font-size: large;
+  margin-top: -13px;
+}
