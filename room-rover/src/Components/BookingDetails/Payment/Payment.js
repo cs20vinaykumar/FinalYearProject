@@ -67,7 +67,6 @@ const Payment = ({ booking }) => {
         setBookingDone(true);
         alert("Payemnt initiated. Please wait for confirmation.");
         window.location.reload();
-        
       }
     } catch (error) {
       console.error("Error booking:", error);
@@ -139,15 +138,14 @@ const Payment = ({ booking }) => {
         return;
       }
 
-      const response = await axios.get(
-        `http://localhost:4000/booking/check?userId=${userId}&productId=${productId}`,
+      const response = await axios.delete(
+        `http://localhost:4000/booking/${userId}/${productId}`,
         {
           headers: {
             authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      
 
       if (response.status === 200) {
         console.log("Booking deleted successfully");
@@ -228,58 +226,57 @@ const Payment = ({ booking }) => {
               <img src={URL.createObjectURL(image)} alt="Preview" />
             </div>
           )}
-{!bookingDone && (
-  <button
-    onClick={handleBookingDone}
-    className="booking-button btn-done"
-  >
-    Initiate Payment
-  </button>
-)}
+          {!bookingDone && (
+            <button
+              onClick={handleBookingDone}
+              className="booking-button btn-done"
+            >
+              Initiate Payment
+            </button>
+          )}
 
-{bookingDone && status && (
-  <div className="booking-message">
-    {status.status === "approved" && (
-      <p>Your booking has been confirmed. Enjoy your stay!</p>
-    )}
-    {status.status === "rejected" && (
-      <p>Your booking has been Cancelled. Sorry for inconvenience</p>
-    )}
-    {status.status === "waiting" && (
-      <p>{bookingStatus}</p>
-    )}
-  </div>
-)}
+          {bookingDone && status && (
+            <div className="booking-message">
+              {status.status === "approved" && (
+                <p>Your booking has been confirmed. Enjoy your stay!</p>
+              )}
+              {status.status === "rejected" && (
+                <p>Your booking has been Cancelled. Sorry for inconvenience</p>
+              )}
+              {status.status === "waiting" && <p>{bookingStatus}</p>}
+            </div>
+          )}
 
-{!bookingDone && (
-  <div className="button-container">
-    {bookingDone && (
-      <button className="waiting-button">
-        {status && (
-          <div>
-            {status.status === "waiting" && (
-              <p>Wait for owner approval</p>
-            )}
-            {status.status === "approved" && (
-              <p>Booking confirmed. Enjoy your stay!</p>
-            )}
-            {status.status === "cancelled" && <p>Booking cancelled</p>}
-          </div>
-        )}
-      </button>
-    )}
+          {!bookingDone && (
+            <div className="button-container">
+              {bookingDone && (
+                <button className="waiting-button">
+                  {status && (
+                    <div>
+                      {status.status === "waiting" && (
+                        <p>Wait for owner approval</p>
+                      )}
+                      {status.status === "approved" && (
+                        <p>Booking confirmed. Enjoy your stay!</p>
+                      )}
+                      {status.status === "cancelled" && (
+                        <p>Booking cancelled</p>
+                      )}
+                    </div>
+                  )}
+                </button>
+              )}
 
-    {bookingDone && (
-      <button
-        onClick={() => handleCancelBooking(booking, productId)}
-        className="cancel-booking-button"
-      >
-        Cancel Booking
-      </button>
-    )}
-  </div>
-)}
-
+              {bookingDone && (
+                <button
+                  onClick={() => handleCancelBooking(booking, productId)}
+                  className="cancel-booking-button"
+                >
+                  Cancel Booking
+                </button>
+              )}
+            </div>
+          )}
         </div>{" "}
         <br />
         <div className="package-summary">

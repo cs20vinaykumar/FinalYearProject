@@ -18,6 +18,7 @@
     "axios": "^1.5.1",
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.2",
+    "chart.js": "^4.4.2",
     "dayjs": "^1.11.10",
     "jwt-decode": "^4.0.0",
     "mdb-react-ui-kit": "^7.0.0",

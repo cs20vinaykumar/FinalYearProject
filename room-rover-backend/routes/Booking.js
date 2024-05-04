@@ -136,30 +136,39 @@ booking.put("/:bookingId/status", async (req, res) => {
 booking.get("/", async (req, res) => {
   try {
     const userId = req.user._id;
+
     const bookings = await Booking.find({ userId })
       .populate("productId")
       .select("status");
 
-    const bookedPosts = bookings.map((booking) => ({
-      _id: booking.productId._id,
-      title: booking.productId.title,
-      location: booking.productId.location,
-      area: booking.productId.area,
-      file: booking.productId.file,
-      pricing: booking.productId.pricing
-        ? {
-            rent: booking.productId.pricing.rent,
-            deposite: booking.productId.pricing.deposite,
-          }
-        : undefined,
-      propertyType: booking.productId.propertyType
-        ? {
-            flat: booking.productId.propertyType.flat,
-            room: booking.productId.propertyType.room,
-          }
-        : undefined,
-      status: booking.status,
-    }));
+    const bookedPosts = bookings
+      .map((booking) => {
+        if (!booking.productId) {
+          return null; // Skip this booking if productId is null
+        }
+
+        return {
+          _id: booking.productId._id,
+          title: booking.productId.title,
+          location: booking.productId.location,
+          area: booking.productId.area,
+          file: booking.productId.file,
+          pricing: booking.productId.pricing
+            ? {
+                rent: booking.productId.pricing.rent,
+                deposite: booking.productId.pricing.deposite,
+              }
+            : undefined,
+          propertyType: booking.productId.propertyType
+            ? {
+                flat: booking.productId.propertyType.flat,
+                room: booking.productId.propertyType.room,
+              }
+            : undefined,
+          status: booking.status,
+        };
+      })
+      .filter((booking) => booking !== null); // Filter out null values
 
     res.json(bookedPosts);
   } catch (error) {

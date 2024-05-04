@@ -9,6 +9,10 @@ import Bookings from "../src/Components/Bookings/Bookings"
 import Users from './Components/Users/Users';
 import UserPost from './Components/UserPost/UserPost';
 import UserBooking from './Components/UserBooking/UserBooking';
+import UserPending from './Components/UserPending/UserPending';
+import Profile from './Components/Profile/Profile';
+import Detail from './Components/Details/Details';
+import Complain from './Components/Complain/Complain';
 
 function App() {
   return (
@@ -24,6 +28,10 @@ function App() {
           <Route exact path="/UserList" element={<Users />} />
           <Route exact path="/UserPosts/:userId" element={<UserPost />} />
           <Route exact path="/UserBooking/:userId" element={<UserBooking />} />
+          <Route exact path="/UserPending" element={<UserPending />} />
+          <Route exact path="/Profile" element={<Profile />} />
+          <Route path="/product/:productId" element={<Detail />} />
+          <Route path="/Complaints" element={<Complain />} />
           </Routes>
         </Router>
 </>

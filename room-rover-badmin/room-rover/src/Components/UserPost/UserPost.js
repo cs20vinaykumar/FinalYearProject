@@ -4,6 +4,7 @@ import "./UserPost.css";
 
 export default function UserPost() {
   const [products, setProducts] = useState([]);
+  const [length, setLength] = useState(0);
   const { userId } = useParams();
   console.log(userId);
 
@@ -16,6 +17,7 @@ export default function UserPost() {
       .then((res) => res.json())
       .then((result) => {
         setProducts(result.myPost);
+        setLength(result.myPost.length)
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -24,14 +26,20 @@ export default function UserPost() {
 
   return (
     <div>
+    <br />
       <div className="dashboard">
-        <legend>User's Post</legend>
-        <hr className="lakeer" />
-        <div div className="headinv">
-          {/* Here is the post you published. */}
+        <legend>Dashboard</legend>
+        <hr className="lakeer lakeer-media" />
+        <div className="headinv">
+          <p className="total-users " id="book-total-user">
+            Total User Posts: {length}
+          </p>
         </div>
       </div>
-      <br /> <br />
+      <br />
+      <br />
+      <br />
+      <br />
       <div className="main">
         <div className="grid-container">
           {products &&

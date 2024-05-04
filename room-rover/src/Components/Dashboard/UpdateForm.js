@@ -13,10 +13,12 @@ import FormLabel from "@mui/material/FormLabel";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const UpdateForm = () => {
-  const [description, setText] = useState("");
-  const [Name, setname] = useState("");
+  const [description, setDescription] = useState("");
+  const [Name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [cnic, setCnic] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -32,9 +34,6 @@ const UpdateForm = () => {
   const [propertyType, setPropertyType] = useState("");
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
-  const params = useParams();
-  const navigate = useNavigate();
-  // ----------------------------------- Ameinities------------------------------
   const [furnished, setFurnished] = useState(false);
   const [kitchenAvailability, setKitchenAvailability] = useState(false);
   const [parkingAvailability, setParkingAvailability] = useState(false);
@@ -43,56 +42,50 @@ const UpdateForm = () => {
   const [Internet, setInternet] = useState(false);
   const [Air, setAir] = useState(false);
   const [Laundry, setLaundry] = useState(false);
+  const [accountDetails, setAccountDetails] = useState([]);
+
+  const [timeSlots, setTimeSlots] = useState([]);
+
+  const params = useParams();
+  const navigate = useNavigate();
+
+  const getProductDetails = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:4000/UpdatePropertyForm/product/${params.id}`
+      );
+      const result = await response.json();
+      setTitle(result.title);
+      setLocation(result.location);
+      setPropertyType(result.propertyType.room ? "room" : "flat");
+      setAvailability(result.availability);
+      setFromDate(result.dateRange.fromDate);
+      setToDate(result.dateRange.toDate);
+      setDeposite(result.pricing.deposite);
+      setRent(result.pricing.rent);
+      setDescription(result.description);
+      setFile(result.file);
+      setName(result.contactForm.name);
+      setEmail(result.contactForm.email);
+      setCnic(result.contactForm.cnic);
+      setPhoneNumber(result.contactForm.phoneNumber);
+      setRoom(result.propertyType.room);
+      setFlat(result.propertyType.flat);
+      setAccountDetails(result.accountDetails);
+      setTimeSlots(result.timeSlots);
+    } catch (error) {
+      console.error("Error:", error.message);
+      alert("Failed to fetch product details.");
+    }
+  };
 
   useEffect(() => {
     getProductDetails();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getProductDetails = async () => {
-    console.warn(params);
-    let result = await fetch(
-      `http://localhost:4000/UpdatePropertyForm/product/${params.id}`
-    );
-    result = await result.json();
-    console.warn(params);
-
-    setTitle(result.title);
-    setLocation(result.location);
-    setPropertyType(result.propertyType.room);
-    setPropertyType(result.propertyType.flat);
-    setAvailability(result.availability);
-    setFromDate(result.formData);
-    setToDate(result.toDate);
-    setDeposite(result.pricing.deposite);
-    setRent(result.pricing.rent);
-    setText(result.description);
-    setFile(result.file);
-    setFromDate(result.dateRange.fromDate);
-    setToDate(result.dateRange.toDate);
-    setname(result.contactForm.name);
-    setEmail(result.contactForm.email);
-    setCnic(result.contactForm.cnic);
-    setPhoneNumber(result.contactForm.phoneNumber);
-    setFurnished(result.amenities.furnished);
-    setKitchenAvailability(result.amenities.kitchenAvailability);
-    setParkingAvailability(result.amenities.parkingAvailability);
-    setWaterGas(result.amenities.waterGas);
-    setBed(result.amenities.Bed);
-    setInternet(result.amenities.Internet);
-    setAir(result.amenities.Air);
-    setLaundry(result.amenities.Laundry);
-
-    console.log("Property Type from API:", result.amenities);
-    console.log("Property Type from API:", result.propertyType);
-  };
-
-  console.log("Current Property Type:", propertyType);
-
   const handlePropertyTypeChange = (event) => {
     const selectedPropertyType = event.target.value;
-    console.log("Property Type Change:", selectedPropertyType);
-
     setPropertyType(selectedPropertyType);
     if (selectedPropertyType === "flat") {
       setRoom("");
@@ -107,8 +100,9 @@ const UpdateForm = () => {
       .split("\n")
       .filter((line) => line.trim() !== "")
       .join("\n");
-    setText(filteredValue);
+    setDescription(filteredValue);
   };
+
   const handleFromDateChange = (date) => {
     setFromDate(date);
   };
@@ -116,9 +110,48 @@ const UpdateForm = () => {
   const handleToDateChange = (date) => {
     setToDate(date);
   };
+
+  const handleTimeSlotChange = (index, field, value) => {
+    const updatedTimeSlots = [...timeSlots];
+    updatedTimeSlots[index][field] = value;
+    setTimeSlots(updatedTimeSlots);
+  };
+
+  const handleAddTimeSlot = () => {
+    const newTimeSlot = {
+      date: "", // Initialize with an empty string or any default value
+      startTime: "", // Initialize with an empty string or any default value
+      endTime: "", // Initialize with an empty string or any default value
+    };
+    setTimeSlots([...timeSlots, newTimeSlot]);
+  };
+
+  const handleRemoveTimeSlot = (index) => {
+    const updatedTimeSlots = timeSlots.filter((_, i) => i !== index);
+    setTimeSlots(updatedTimeSlots);
+  };
+
+  const handleAccountChange = (index, field, value) => {
+    const updatedAccounts = [...accountDetails];
+    updatedAccounts[index][field] = value;
+    setAccountDetails(updatedAccounts);
+  };
+
+  // Define the addAccount function
+  const addAccount = (newAccount) => {
+    setAccountDetails([...accountDetails, newAccount]);
+  };
+
+  // Define the removeAccount function
+  const removeAccount = (index) => {
+    const updatedAccounts = [...accountDetails];
+    updatedAccounts.splice(index, 1);
+    setAccountDetails(updatedAccounts);
+  };
+
   const UpdateFormSubmit = async () => {
     try {
-      let result = await fetch(
+      const result = await fetch(
         `http://localhost:4000/UpdatePropertyForm/product/${params.id}`,
         {
           method: "PUT",
@@ -129,7 +162,6 @@ const UpdateForm = () => {
               room,
               flat,
             },
-
             availability,
             dateRange: {
               fromDate,
@@ -139,21 +171,14 @@ const UpdateForm = () => {
               rent,
               deposite,
             },
-
             description,
             Name,
             email,
             phoneNumber,
             cnic,
             file,
-            furnished,
-            kitchenAvailability,
-            parkingAvailability,
-            waterGas,
-            Bed,
-            Internet,
-            Air,
-            Laundry,
+            accountDetails,
+            timeSlots,
           }),
           headers: {
             "Content-Type": "application/json",
@@ -161,10 +186,12 @@ const UpdateForm = () => {
         }
       );
 
-      result = await result.json();
-      console.warn(result);
-      alert("Form Updated Successfully");
-      navigate("/Post");
+      if (result.ok) {
+        alert("Form Updated Successfully");
+        navigate("/Post");
+      } else {
+        throw new Error("Failed to update form. Please try again.");
+      }
     } catch (error) {
       console.error("Error:", error.message);
       alert("Failed to update form. Please try again.");
@@ -236,7 +263,6 @@ const UpdateForm = () => {
             </div>
             <br /> <br />
             {/* --------------------Property Type------------------------- */}
-            {/* --------------------Property Type------------------------- */}
             <div className="property-type">
               <h4>Property Type</h4>
               <span className="span-p">
@@ -262,6 +288,7 @@ const UpdateForm = () => {
                   </Select>
                 </FormControl>
               </div>
+              {/* Render specific fields based on property type */}
               {propertyType === "flat" && (
                 <div className="one">
                   <FormControl fullWidth>
@@ -487,13 +514,13 @@ const UpdateForm = () => {
             <br />
             {/* --------------------Description------------------------- */}
             <div className="description">
-              <div class="form-group">
-                <label for="exampleFormControlTextarea1">
+              <div className="form-group">
+                <label htmlFor="exampleFormControlTextarea1">
                   {" "}
                   <h5> Add Description</h5>
                 </label>
                 <textarea
-                  class="form-control"
+                  className="form-control"
                   id="exampleFormControlTextarea1"
                   rows="5"
                   value={description}
@@ -518,6 +545,145 @@ const UpdateForm = () => {
             <span className="span-p">Upload Pictures of your flat or room</span>
             <br />
             <br />
+            {/* --------------------Account Details------------------------- */}
+            {/* --------------------Account Details------------------------- */}
+            <div>
+              <h4>Account Details</h4>
+              {accountDetails.map((account, index) => (
+                <Box
+                  key={index}
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="space-between"
+                >
+                  <TextField
+                    label="Account Holder"
+                    value={account.accountHolder}
+                    onChange={(e) =>
+                      handleAccountChange(
+                        index,
+                        "accountHolder",
+                        e.target.value
+                      )
+                    }
+                    error={!!errors.accountHolder}
+                    helperText={errors.accountHolder}
+                  />
+                  <TextField
+                    label="Account Number"
+                    value={account.accountNumber}
+                    onChange={(e) =>
+                      handleAccountChange(
+                        index,
+                        "accountNumber",
+                        e.target.value
+                      )
+                    }
+                    error={!!errors.accountNumber}
+                    helperText={errors.accountNumber}
+                  />
+                  <FormControl fullWidth>
+                    <InputLabel id={`bank-label-${index}`}>Bank</InputLabel>
+                    <Select
+                      labelId={`bank-label-${index}`}
+                      value={account.bank}
+                      onChange={(e) =>
+                        handleAccountChange(index, "bank", e.target.value)
+                      }
+                      error={!!errors.bank}
+                      required
+                    >
+                      <MenuItem value="">Select Bank</MenuItem>
+                      <MenuItem value={"Bank Alhabib"}>Bank Al habib</MenuItem>
+                      <MenuItem value={"Easypaisa"}>Easypaisa</MenuItem>
+                      <MenuItem value={"JazzCash"}>JazzCash</MenuItem>
+                      <MenuItem value={"HBL"}>HBL</MenuItem>
+                    </Select>
+                  </FormControl>
+                  {accountDetails.length > 1 && (
+                    <IconButton onClick={() => removeAccount(index)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  )}
+                </Box>
+              ))}
+              <Button variant="contained" color="primary" onClick={addAccount}>
+                Add Account
+              </Button>
+            </div>
+            <br />
+            <br />
+            {/* --------------------Time Slots------------------------- */}
+            <h4>Time Slots</h4>
+            {/* --------------------Available Time Slots------------------------- */}
+            <div className="time-slots">
+              <h4>Available Time Slots</h4>
+              <span>
+                Select your available time slots for property visits. Add or
+                remove slots as needed
+              </span>
+            </div>
+            {timeSlots.map((timeSlot, index) => (
+              <div key={index} className="time-slot">
+                <div className="time-slot-fields">
+                  <div className="field">
+                    <label>Date for Slot {index + 1}</label>
+                    <TextField
+                      type="date"
+                      value={timeSlot.date}
+                      onChange={(e) =>
+                        handleTimeSlotChange(index, "date", e.target.value)
+                      }
+                      className="time-slot-field"
+                    />
+                  </div>
+                  <div className="field">
+                    <label>Start Time for Slot {index + 1}</label>
+                    <TextField
+                      type="time"
+                      value={timeSlot.startTime}
+                      onChange={(e) =>
+                        handleTimeSlotChange(index, "startTime", e.target.value)
+                      }
+                      className="time-slot-field"
+                    />
+                  </div>
+                  <div className="field">
+                    <label>End Time for Slot {index + 1}</label>
+                    <TextField
+                      type="time"
+                      value={timeSlot.endTime}
+                      onChange={(e) =>
+                        handleTimeSlotChange(index, "endTime", e.target.value)
+                      }
+                      className="time-slot-field"
+                    />
+                  </div>
+                </div>
+                <br />
+                <Button
+                  onClick={handleAddTimeSlot}
+                  variant="contained"
+                  color="primary"
+                  className="time-slot-button"
+                >
+                  Add Time Slot
+                </Button>{" "}
+                <br />
+                {timeSlots.length > 1 && (
+                  <Button
+                    onClick={() => handleRemoveTimeSlot(index)}
+                    variant="contained"
+                    color="secondary"
+                    className="time-slot-button"
+                  >
+                    Remove Time Slot
+                  </Button>
+                )}
+              </div>
+            ))}
+            <br />
+            <br />
             {/* --------------------Contact form------------------------- */}
             <h4>Contact Form</h4>
             <Box
@@ -528,7 +694,7 @@ const UpdateForm = () => {
               <TextField
                 label="Name"
                 value={Name}
-                onChange={(e) => setname(e.target.value)}
+                onChange={(e) => setName(e.target.value)}
                 error={!!errors.name}
                 helperText={errors.name}
               />

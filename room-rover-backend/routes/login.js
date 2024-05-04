@@ -21,8 +21,13 @@ router.post("/", async (req, res) => {
     if (user) {
       const passwordMatch = await bcrypt.compare(password, user.password);
 
+      if (!user.approvedByAdmin) {
+        return res
+          .status(403)
+          .json({ message: "Your account is pending approval by admin" });
+      }
       if (passwordMatch) {
-        const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET); 
+        const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET);
 
         res.send({ message: "Login Successful", user: user, token: token });
       } else {

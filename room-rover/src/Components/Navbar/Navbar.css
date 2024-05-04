@@ -45,6 +45,14 @@ ul li {
 .green {
   color: #00ed64;
 }
+/* .logo-image{
+  background: url('E:\FinalYearProject\room-rover\Images\Logo.png');
+  height: 50px;
+  width: 50px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+} */
 
 nav-head ul li a {
   text-decoration: none;

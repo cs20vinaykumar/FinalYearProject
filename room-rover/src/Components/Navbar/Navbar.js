@@ -60,6 +60,7 @@ export default function Navbar() {
               {" "}
               <Link to="/" className="Logo-1" onClick={handleLogoClick}>
                 {" "}
+               {/* <div className="logo-image" style={{display: "inline-block"}}></div> {" "} */}
                 ROOM<span className="green">ROVER</span>
               </Link>
             </h3>

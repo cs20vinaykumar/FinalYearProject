@@ -20,7 +20,7 @@ function Dashboard(props) {
   const [showPriceRangeFilter, setShowPriceRangeFilter] = useState(false);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const [userLocation, setUserLocation] = useState(null); 
+  const [userLocation, setUserLocation] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -133,7 +133,6 @@ function Dashboard(props) {
     setMaxPrice(event.target.value);
     setIsFiltered(true);
   };
-
 
   // -------------------Google Map------------------------------
   const getUserLocation = () => {
@@ -371,7 +370,7 @@ function Dashboard(props) {
       <div className="dashboard">
         <legend>dashboard</legend>
         <hr className="lakeer lakeer-media" />
-        < div className="headinv">Welcome to Room Rover </div>
+        <div className="headinv">Welcome to Room Rover </div>
       </div>
       <br /> <br />
       <div className="main">
@@ -386,7 +385,9 @@ function Dashboard(props) {
               <div className="card-body" key={Product._id}>
                 <h5 className="card-title">{Product.title}</h5>
                 <h5 className="card-title">
-                  <b>{Product.area}, {Product.location}</b> 
+                  <b>
+                    {Product.area}, {Product.location}
+                  </b>
                 </h5>
                 <p className="card-text">
                   {Product.propertyType.room || Product.propertyType.flat}
@@ -417,8 +418,7 @@ function Dashboard(props) {
           initialCenter={{ lat: 24.8607, lng: 67.0011 }}
           zoom={14}
         >
-           {userLocation && <Marker position={userLocation} />}
-        
+          {userLocation && <Marker position={userLocation} />}
         </Map>
       </div>
     </>

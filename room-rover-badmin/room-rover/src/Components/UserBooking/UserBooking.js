@@ -6,6 +6,7 @@ export default function UserBooking() {
   const [bookedPosts, setBookedPosts] = useState([]);
   const [loading, setLoading] = useState(true); // Add loading state
   const { userId } = useParams();
+  const [length, setLength] = useState(0);
   useEffect(() => {
     const fetchBookings = async () => {
       try {
@@ -18,6 +19,8 @@ export default function UserBooking() {
           }
         );
         setBookedPosts(response.data);
+        setLength(response.data.length)
+        
         setLoading(false); // Set loading to false after fetching data
       } catch (error) {
         console.error("Error fetching bookings:", error);
@@ -30,12 +33,20 @@ export default function UserBooking() {
 
   return (
     <div>
+    <br />
       <div className="dashboard">
-        <legend>Booked Post</legend>
+        <legend>Dashboard</legend>
         <hr className="lakeer lakeer-media" />
-        <div className="headinv">Here are the posts User booked.</div>
+        <div className="headinv">
+          <p className="total-users " id="book-total-user">
+            User Booked Posts: {length}
+          </p>
+        </div>
       </div>
-      <br /> <br />
+      <br />
+      <br />
+      <br />
+      <br />
       <div className="main">
         {loading ? ( // Check if loading
           <div>Loading...</div>

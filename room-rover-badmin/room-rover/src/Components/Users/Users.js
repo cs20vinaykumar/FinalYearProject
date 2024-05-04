@@ -8,10 +8,11 @@ export default function Users() {
   const [totalUsers, setTotalUsers] = useState(0);
 
   useEffect(() => {
-    // Function to fetch all users from the backend
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/Signup");
+        const response = await axios.get(
+          "http://localhost:4000/Signup/true-users"
+        );
         setUsers(response.data);
         setTotalUsers(response.data.length);
       } catch (error) {
@@ -19,7 +20,7 @@ export default function Users() {
       }
     };
 
-    fetchUsers(); // Call the fetchUsers function when the component mounts
+    fetchUsers();
   }, []);
 
   const deleteUser = async (userId) => {
@@ -52,7 +53,7 @@ export default function Users() {
           <div className="headinv">
             {" "}
             <p className="total-users " id="book-total-user">
-              Total Users: {totalUsers}
+              Verifeid Users: {totalUsers}
             </p>
           </div>
         </div>{" "}
@@ -72,7 +73,7 @@ export default function Users() {
                 <strong>Email:</strong> {user.email}
               </div>
               <div>
-                <strong>Phone Number:</strong> {user.number}
+                <strong>Phone Number:</strong> +92-{user.number}
               </div>
               <div>
                 <strong>CNIC:</strong> {user.cnic}

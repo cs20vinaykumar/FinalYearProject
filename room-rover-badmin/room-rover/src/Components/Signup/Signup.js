@@ -7,6 +7,7 @@ export default function Signup() {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [user, setUser] = useState({
+    name: "",
     email: "",
     number: "",
     password: "",
@@ -38,9 +39,23 @@ export default function Signup() {
   return (
     <div className="main-container vh-100 gradient-custom">
       <div className="main-content">
-        <div className="signup">
-          <h4>Create Account</h4>
+        <div className="signup"> <br /><br />
+          <h4>Create Account</h4> <br /><br />
           <form action="" className="form-class">
+          <div className="form-group">
+              <label htmlFor="name" className="labels">
+                Full Name:
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={user.name}
+                id="name"
+                className="inputs"
+                placeholder="Enter Your full Name"
+                onChange={handleChange}
+              />
+            </div>
             <div className="form-group">
               <label htmlFor="email" className="labels">
                 Email Id:

@@ -55,9 +55,8 @@ export default function Cart() {
                   <h5 className="card-title">{Product.title}</h5>
                   <h5 className="card-title">
                     <b>
-                      {Product.area}, {Product.location} 
+                      {Product.area}, {Product.location}
                     </b>
-
                   </h5>
                   <p className="card-text">
                     {Product.propertyType?.room || Product.propertyType?.flat}

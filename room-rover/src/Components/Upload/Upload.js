@@ -47,7 +47,7 @@ function Upload(props) {
   const [area, setArea] = useState("");
 
   const cityAreas = {
-    Karachi: ["Clifton Block 8", "Clifton Block 9", "Clifton Block 5"],
+    Karachi: ["Clifton Block 8", "Clifton Block 9", "Clifton Block 5", "DHA Phase 1", "DHA Phase 5"],
     Hyderabad: ["Area A", "Area B", "Area C"],
     Sukkur: ["Area X", "Area Y", "Area Z"],
   };

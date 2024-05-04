@@ -96,6 +96,7 @@ const Detail = () => {
               <p>
                 <strong>Email:</strong> {product.postedBy.email}
               </p>
+              
             </div>
           </div>{" "}
           <br />
@@ -121,6 +122,7 @@ const Detail = () => {
                 Request for visit
               </button>
             </Link>{" "}
+
           </div>{" "}
         </div>
         <div id="bottom-side">

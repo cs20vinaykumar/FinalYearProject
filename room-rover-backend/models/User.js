@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   cnic: String,
   gender: String,
   userType: String,
+  approvedByAdmin: { type: Boolean, default: false }, 
   posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'formData' }], // Posts made by the user
   bookedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Booking' }] // Posts booked by the user
 

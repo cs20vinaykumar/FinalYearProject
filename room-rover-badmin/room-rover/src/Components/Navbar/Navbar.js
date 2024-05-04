@@ -5,15 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 export default function Navbar() {
   const [activeLink, setActiveLink] = useState(null);
   const isLoggedIn = localStorage.getItem("token");
-  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleDrop = () => {
-    setIsOpen(false);
-  };
 
   const handleLinkClick = (link) => {
     console.log("Clicked on link:", link);
@@ -25,7 +17,6 @@ export default function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
-    setIsOpen(false);
   };
 
   const handleLogoClick = () => {
@@ -68,71 +59,12 @@ export default function Navbar() {
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/UserList"
-                    onClick={() => handleLinkClick("List a Place")}
+                                    <button
+                    className="btn btn-primary buton "
+                    onClick={handleLogout}
                   >
-                    {" "}
-                    <button className="btn btn-success btn-post">
-                      User List
-                    </button>{" "}
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/Bookings">
-                    <button className="btn btn-success">Bookings</button>
-
-                    {/* <i class="fa-solid fa-cart-shopping"></i> */}
-                  </Link>
-                </li>
-                <li>
-                  <div className="dropdown nvbar-drop">
-                    <button
-                      onClick={toggleDropdown}
-                      className="btn btn-primary "
-                    >
-                      <i className="fa-solid fa fa-user"></i>
-                    </button>
-                    {isOpen && (
-                      <ul className="dropdown-list">
-                        <li>
-                          <Link
-                            to="/UserProfile"
-                            onClick={() => handleLinkClick("Profile")}
-                          >
-                            <button
-                              className="btn btn-success buton btn-subdropdown-media"
-                              onClick={handleDrop}
-                            >
-                              Profile
-                            </button>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            to="/Post"
-                            onClick={() => handleLinkClick("My Post")}
-                          >
-                            <button
-                              className="btn btn-success buton btn-subdropdown-media"
-                              onClick={handleDrop}
-                            >
-                              My post
-                            </button>
-                          </Link>
-                        </li>
-
-                        <li>
-                          <button
-                            className="btn btn-primary buton btn-subdropdown-media"
-                            onClick={handleLogout}
-                          >
-                            Logout
-                          </button>
-                        </li>
-                      </ul>
-                    )}
-                  </div>
+                    Logout
+                  </button>
                 </li>
               </>
             )}

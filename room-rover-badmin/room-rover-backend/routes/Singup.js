@@ -4,10 +4,10 @@ const routers = express.Router();
 import bcrypt from "bcrypt";
 
 routers.post("/", async (req, res) => {
-  const { email, number, password } = req.body;
+  const {name, email, number, password } = req.body;
   const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(.{6,})$/;
 
-  if (!email || !number || !password) {
+  if (!name || !email || !number || !password) {
     return res.send({
       message: "Fill all the input feilds.",
     });
@@ -28,6 +28,7 @@ routers.post("/", async (req, res) => {
       const secPass = await bcrypt.hash(req.body.password, salt);
 
       const newUser = new User({
+        name,
         email,
         number,
         password: secPass,
