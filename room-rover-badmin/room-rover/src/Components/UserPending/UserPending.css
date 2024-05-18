@@ -1,0 +1,31 @@
+/* UserPending.css */
+
+
+
+.user-row {
+  /* Styling for each user row */
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.cnic-photos-container {
+  /* Container for CNIC photos */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.cnic-photo {
+  width: 175px;
+  height: 150px;
+  object-fit: cover;
+  cursor: pointer;
+  
+
+}
+
+.cnic-photo:hover {
+  /* Style when hovering over CNIC photo */
+  opacity: 0.8;
+}

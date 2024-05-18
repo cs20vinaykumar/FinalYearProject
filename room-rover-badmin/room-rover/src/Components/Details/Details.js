@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import "./Details.css"
+import "./Details.css";
 import { Link } from "react-router-dom";
 
 const Detail = () => {
@@ -58,7 +58,7 @@ const Detail = () => {
             )}
             <img
               className="card-img-top-details"
-              src={`http://localhost:4000/Images/${product.file[currentIndex]}`}
+              src={`http://localhost:4000/assets/${product.file[currentIndex]}`}
               alt={`Product ${currentIndex + 1}`}
             />
             {product.file.length > 1 && (
@@ -88,13 +88,16 @@ const Detail = () => {
             </h2>
             <div className="posted-details">
               <p>
-                <strong>Name:</strong> {product.postedBy.name}{" "}
+                <strong>Name:</strong> {product?.postedBy?.name}{" "}
               </p>
               <p>
-                <strong>Number:</strong> 0{product.postedBy.number}
+                <strong>Number:</strong> 0{product.postedBy?.number}
               </p>
               <p>
-                <strong>Email:</strong> {product.postedBy.email}
+                <strong>Email:</strong> {product.postedBy?.email}
+              </p>
+              <p>
+                <strong>Booking Status:</strong> <span className="green-one">{product.booking.status === `approved`? `Booked`: product.booking.status }</span> 
               </p>
             </div>
           </div>{" "}
@@ -120,7 +123,7 @@ const Detail = () => {
               <button className=" btn btn-dark btn-text ">
                 Request for visit
               </button>
-            </Link>{" "}
+            </Link>
           </div>{" "}
         </div>
         <div id="bottom-side">

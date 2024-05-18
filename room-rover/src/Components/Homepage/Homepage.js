@@ -66,7 +66,7 @@ export default function Homepage() {
           <h2 className="subtitle">
             <span id="element"> Popular cities in pakistan</span>
           </h2>
-          <div className="container">
+          <div className="">
             <div className="cities-list ">
               <div className="media-1 midDiv">
                 <button className=" btn btn-dark btnB btnc"> Karachi </button>{" "}

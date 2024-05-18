@@ -1,4 +1,5 @@
 import express, { Router } from "express";
+import morgan from "morgan";
 import cors from "cors";
 import connectToMongoDB from "./Database-connection/db.js";
 import router from "./routes/login.js";
@@ -20,6 +21,9 @@ import GetAgreementData from "./routes/GetAgreementData.js";
 import booking from "./routes/Booking.js";
 
 import RequestVisit from "../room-rover-backend/routes/RequestVisit.js";
+import Complaint from "./routes/Complaint.js";
+import cityRouter from "./routes/City.js";
+import path from "path";
 // import searchUser from "./routes/SearchUser.js";
 
 const app = express();
@@ -27,8 +31,10 @@ const port = process.env.PORT || 4000;
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cors());
-app.use(express.static("public"));
+app.use("/assets", express.static(path.join("./public/Images")));
 connectToMongoDB();
+
+app.use(morgan("dev"));
 
 //Routes
 
@@ -84,6 +90,10 @@ app.use("/GetAgreementData", authMiddleware, GetAgreementData);
 app.use("/booking", authMiddleware, booking);
 
 app.use("/PostRquest", authMiddleware, RequestVisit);
+
+app.use("/complaints", authMiddleware, Complaint);
+
+app.use("/Cities", authMiddleware, cityRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);

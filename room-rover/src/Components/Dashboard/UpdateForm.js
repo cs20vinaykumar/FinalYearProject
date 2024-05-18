@@ -18,10 +18,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 const UpdateForm = () => {
   const [description, setDescription] = useState("");
-  const [Name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [cnic, setCnic] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  // const [Name, setName] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [cnic, setCnic] = useState("");
+  // const [phoneNumber, setPhoneNumber] = useState("");
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [room, setRoom] = useState("");
@@ -65,10 +65,10 @@ const UpdateForm = () => {
       setRent(result.pricing.rent);
       setDescription(result.description);
       setFile(result.file);
-      setName(result.contactForm.name);
-      setEmail(result.contactForm.email);
-      setCnic(result.contactForm.cnic);
-      setPhoneNumber(result.contactForm.phoneNumber);
+      // setName(result.contactForm.name);
+      // setEmail(result.contactForm.email);
+      // setCnic(result.contactForm.cnic);
+      // setPhoneNumber(result.contactForm.phoneNumber);
       setRoom(result.propertyType.room);
       setFlat(result.propertyType.flat);
       setAccountDetails(result.accountDetails);
@@ -172,10 +172,10 @@ const UpdateForm = () => {
               deposite,
             },
             description,
-            Name,
-            email,
-            phoneNumber,
-            cnic,
+            // Name,
+            // email,
+            // phoneNumber,
+            // cnic,
             file,
             accountDetails,
             timeSlots,
@@ -409,9 +409,14 @@ const UpdateForm = () => {
                 <TextField
                   id="outlined-uncontrolled"
                   label="Rent"
-                  type="number"
-                  value={rent}
-                  onChange={(event) => setRent(event.target.value)}
+                  type="text"
+                  value={rent.toLocaleString("en-PK")}
+                  onChange={(event) => {
+                    const enteredValue = event.target.value.replace(/,/g, ""); // Remove existing commas
+                    const formattedValue =
+                      parseFloat(enteredValue).toLocaleString("en-PK");
+                    setRent(formattedValue);
+                  }}
                   error={!!errors.rent}
                   helperText={errors.rent}
                   required
@@ -685,7 +690,7 @@ const UpdateForm = () => {
             <br />
             <br />
             {/* --------------------Contact form------------------------- */}
-            <h4>Contact Form</h4>
+            {/* <h4>Contact Form</h4>
             <Box
               display="flex"
               flexDirection="column"
@@ -723,7 +728,7 @@ const UpdateForm = () => {
                 error={!!errors.phoneNumber}
                 helperText={errors.phoneNumber}
               />
-            </Box>
+            </Box> */}
             <br />
             <Button
               type="submit"

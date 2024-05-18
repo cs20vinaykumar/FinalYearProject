@@ -20,10 +20,10 @@ import axios from "axios";
 
 function Upload(props) {
   const [description, setText] = useState("");
-  const [Name, setname] = useState("");
-  const [email, setEmail] = useState("");
-  const [cnic, setCnic] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  // const [Name, setname] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [cnic, setCnic] = useState("");
+  // const [phoneNumber, setPhoneNumber] = useState("");
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [room, setRoom] = useState("");
@@ -47,7 +47,13 @@ function Upload(props) {
   const [area, setArea] = useState("");
 
   const cityAreas = {
-    Karachi: ["Clifton Block 8", "Clifton Block 9", "Clifton Block 5", "DHA Phase 1", "DHA Phase 5"],
+    Karachi: [
+      "Clifton Block 8",
+      "Clifton Block 9",
+      "Clifton Block 5",
+      "DHA Phase 1",
+      "DHA Phase 5",
+    ],
     Hyderabad: ["Area A", "Area B", "Area C"],
     Sukkur: ["Area X", "Area Y", "Area Z"],
   };
@@ -85,10 +91,10 @@ function Upload(props) {
 
   // const [contactOption, setContactOption] = useState("owner");
 
-  const validateCnic = (cnic) => {
-    const cnicRegex = /^\d{13}$/;
-    return cnicRegex.test(cnic);
-  };
+  // const validateCnic = (cnic) => {
+  //   const cnicRegex = /^\d{13}$/;
+  //   return cnicRegex.test(cnic);
+  // };
   const handlePropertyTypeChange = (event) => {
     setPropertyType(event.target.value);
     setRoom("");
@@ -158,22 +164,22 @@ function Upload(props) {
       newErrors.deposite = "Deposite is required";
     }
 
-    if (!rent.trim()) {
-      newErrors.rent = "Rent is required";
-    }
+    // if (!rent.trim()) {
+    //   newErrors.rent = "Rent is required";
+    // }
 
-    if (!Name.trim()) {
-      newErrors.name = "Name is required";
-    }
-    if (!email.trim()) {
-      newErrors.email = "Email is required";
-    }
-    if (!validateCnic(cnic)) {
-      newErrors.cnic = "CNIC must be a 13-digit number";
-    }
-    if (!phoneNumber.trim()) {
-      newErrors.phoneNumber = "Phone Number is required";
-    }
+    // if (!Name.trim()) {
+    //   newErrors.name = "Name is required";
+    // }
+    // if (!email.trim()) {
+    //   newErrors.email = "Email is required";
+    // }
+    // if (!validateCnic(cnic)) {
+    //   newErrors.cnic = "CNIC must be a 13-digit number";
+    // }
+    // if (!phoneNumber.trim()) {
+    //   newErrors.phoneNumber = "Phone Number is required";
+    // }
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -197,10 +203,10 @@ function Upload(props) {
       formData.append("pricing.rent", rent);
       formData.append("amenities", amenities);
       formData.append("description", description);
-      formData.append("contactForm.name", Name);
-      formData.append("contactForm.email", email);
-      formData.append("contactForm.cnic", cnic);
-      formData.append("contactForm.phoneNumber", phoneNumber);
+      // formData.append("contactForm.name", Name);
+      // formData.append("contactForm.email", email);
+      // formData.append("contactForm.cnic", cnic);
+      // formData.append("contactForm.phoneNumber", phoneNumber);
       formData.append("accountDetails", JSON.stringify(accountDetails));
       for (let i = 1; i < accountDetails.length; i++) {
         formData.append(
@@ -254,10 +260,10 @@ function Upload(props) {
           amenities: [amenities],
           description,
           file,
-          Name,
-          email,
-          cnic,
-          phoneNumber,
+          // Name,
+          // email,
+          // cnic,
+          // phoneNumber,
         });
         alert("post Created  successfully:", response.data.message);
         navigate("/Dashboard");
@@ -523,13 +529,17 @@ function Upload(props) {
                 helperText={errors.deposite}
                 required
               />
-
               <TextField
                 id="outlined-uncontrolled"
                 label="Rent"
-                type="number"
-                value={rent}
-                onChange={(event) => setRent(event.target.value)}
+                type="text"
+                value={rent.toLocaleString("en-PK")}
+                onChange={(event) => {
+                  const enteredValue = event.target.value.replace(/,/g, ""); // Remove existing commas
+                  const formattedValue =
+                    parseFloat(enteredValue).toLocaleString("en-PK");
+                  setRent(formattedValue);
+                }}
                 error={!!errors.rent}
                 helperText={errors.rent}
                 required
@@ -739,7 +749,7 @@ function Upload(props) {
             )}
           </div> */}
           {/* --------------------Contact form------------------------- */}
-          <div>
+          {/* <div>
             <h4>Contact Form</h4>
             <Box
               display="flex"
@@ -781,7 +791,7 @@ function Upload(props) {
               />
             </Box>
           </div>
-          <br />
+          <br /> */}
           <br />
           {/* ----------------------------------------------- */}
           <div className="time-slots">
@@ -871,7 +881,8 @@ function Upload(props) {
                   }
                   error={!!errors.accountHolder}
                   helperText={errors.accountHolder}
-                />
+                />{" "}
+                <br />
                 <TextField
                   label="Account Number"
                   value={account.accountNumber}
@@ -881,7 +892,8 @@ function Upload(props) {
                   }
                   error={!!errors.accountNumber}
                   helperText={errors.accountNumber}
-                />
+                />{" "}
+                <br />
                 <Select
                   value={account.bank}
                   onChange={(e) =>
@@ -902,7 +914,8 @@ function Upload(props) {
                   </IconButton>
                 )}
               </Box>
-            ))}
+            ))}{" "}
+            <br />
             <Button variant="contained" color="primary" onClick={addAccount}>
               Add Account
             </Button>

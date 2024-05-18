@@ -1,13 +1,15 @@
+// Detail.js
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
+import Chat from "../Chat/Chat";
 import "./Detail.css";
-import { Link } from "react-router-dom";
 
 const Detail = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,9 +45,14 @@ const Detail = () => {
     );
   };
 
+  const toggleChatModal = () => {
+    setIsChatOpen(!isChatOpen);
+  };
+
   if (!product) {
     return <div>Loading...</div>;
   }
+
   return (
     <>
       <div className="main-seeDetails">
@@ -58,7 +65,7 @@ const Detail = () => {
             )}
             <img
               className="card-img-top-details"
-              src={`http://localhost:4000/Images/${product.file[currentIndex]}`}
+              src={`http://localhost:4000/assets/${product.file[currentIndex]}`}
               alt={`Product ${currentIndex + 1}`}
             />
             {product.file.length > 1 && (
@@ -84,19 +91,21 @@ const Detail = () => {
           <div className="posted-by">
             <h2>
               {" "}
-              <i class="fa-solid fa-user"></i> Posted By
+              <i className="fa-solid fa-user"></i> Posted By
             </h2>
             <div className="posted-details">
               <p>
-                <strong>Name:</strong> {product.postedBy.name}{" "}
+                <strong>Name:</strong> {product?.postedBy?.name}{" "}
               </p>
               <p>
-                <strong>Number:</strong> 0{product.postedBy.number}
+                <strong>Number:</strong> 0{product.postedBy?.number}
               </p>
               <p>
-                <strong>Email:</strong> {product.postedBy.email}
+                <strong>Email:</strong> {product.postedBy?.email}
               </p>
-              
+              {/* <p>
+                <strong>Status:</strong> {product.booking.status}
+              </p> */}
             </div>
           </div>{" "}
           <br />
@@ -113,16 +122,27 @@ const Detail = () => {
           <br /> <br />
           <div className="Details-button">
             <Link to={`/Payment/${product._id}`}>
-              <button className=" btn btn-dark btn-text ">Book Now</button>
+              <button className="btn btn-dark btn-text">Book Now</button>
             </Link>
             <br />
             <br />
             <Link to={`/RequestVisit/${product._id}`}>
-              <button className=" btn btn-dark btn-text ">
+              <button className="btn btn-dark btn-text">
                 Request for visit
               </button>
             </Link>{" "}
-
+            <br />
+            <br />
+            <Link to={`/Complaint/${product._id}`}>
+              <button className="btn btn-dark btn-text">Complaint</button>
+            </Link>
+            <br />
+            <br />
+            {/* <Link to={`/Chat/${product._id}`}> */}
+            <button className="btn btn-dark btn-text" onClick={toggleChatModal}>
+              Chat
+            </button>
+            {/* </Link> */}
           </div>{" "}
         </div>
         <div id="bottom-side">
@@ -170,6 +190,8 @@ const Detail = () => {
           <br />
         </div>
       </div>
+      {/* Chat Modal */}
+      {isChatOpen && <Chat onClose={toggleChatModal} />}
       {/* ------------------------------footer----------------------------------------------- */}
       <footer className="footer">
         <div id="footer">

@@ -28,7 +28,7 @@ uploadForm.post("/", upload.array("file", 10), async (req, res) => {
     const accountDetails = JSON.parse(req.body.accountDetails);
     const formDataEntry = new formData({
       ...req.body,
-      file: fileNames, // Save only the filename
+      file: fileNames, 
       timeSlots: timeSlots,
       accountDetails: accountDetails,
       postedBy: req.user,
@@ -41,6 +41,23 @@ uploadForm.post("/", upload.array("file", 10), async (req, res) => {
   } catch (error) {
     console.error("Error saving form data:", error);
     res.status(500).send({ success: false, error: "Internal Server Error" });
+  }
+});
+
+uploadForm.put("/:productId/booking", async (req, res) => {
+  const { productId } = req.params;
+  const { status } = req.body;
+
+  try {
+    const updatedFormData = await formData.findByIdAndUpdate(
+      productId,
+      { "booking.status": status },
+      { new: true }
+    );
+
+    res.json(updatedFormData);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update booking status" });
   }
 });
 

@@ -8,10 +8,19 @@ const userSchema = new mongoose.Schema({
   cnic: String,
   gender: String,
   userType: String,
-  approvedByAdmin: { type: Boolean, default: false }, 
-  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'formData' }], // Posts made by the user
-  bookedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Booking' }] // Posts booked by the user
-
+  file: [
+    {
+      type: String,
+      require: true,
+    },
+  ],
+  approvedByAdmin: { type: Boolean, default: false },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "formData" }], // Posts made by the user
+  bookedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Booking" }], // Posts booked by the user
 });
 
 const User = new mongoose.model("user", userSchema);

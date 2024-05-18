@@ -91,26 +91,30 @@
 }
 
 .box-number {
-  /* color: brown; */
-  /* color: #00ed64; */
   color: black;
-  font-size: 24px;
+  font-size: 45px;
   margin-top: 10px;
+  margin-right: 5px;
+}
+
+.fa-solid-1 {
+  color: #00ed64;
+}
+.box-number-wrapper {
+  display: flex;
+  align-items: last baseline;
 }
 
 .box h3 {
   margin-top: 45px;
+  font-size: larger;
 }
 
 .Accounts {
   height: 350px;
   width: 400px;
   margin-bottom: 100px;
-  background: linear-gradient(
-    135deg,
-    #ffc107,
-    #ff4081
-  ); 
+  background: linear-gradient(135deg, #ffc107, #ff4081);
   box-shadow: 0 25px 50px rgba(142, 134, 134, 0.727);
   backdrop-filter: blur(15px);
   border-radius: 20px;
@@ -138,6 +142,7 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
+  font-weight: bold;
 }
 
 .content-5 li span:first-child {
@@ -159,4 +164,36 @@
   background-color: yellow;
   border-radius: 2px;
   cursor: pointer;
+}
+
+.post-status {
+  height: 350px;
+  width: 400px;
+  margin-bottom: 100px;
+  margin-left: 650px;
+  background: linear-gradient(135deg, #ffc107, #ff4081);
+  box-shadow: 0 25px 50px rgba(142, 134, 134, 0.727);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  position: absolute;
+  top: 350px;
+  overflow-y: auto;
+}
+
+.content-5 {
+  margin-top: 20px;
+  width: auto;
+  height: auto;
+}
+
+.post-status li strong {
+  font-weight: bold;
+}
+
+.loading-message {
+  color: #666;
+}
+
+.loading-spinner {
+  margin: 20px auto;
 }

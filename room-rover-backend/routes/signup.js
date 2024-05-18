@@ -1,61 +1,15 @@
 import express from "express";
 import User from "../models/User.js";
+import formData from "../routes/PropertyForm.js";
 const routers = express.Router();
 import bcrypt from "bcrypt";
 import EmailOTP from "../models/emailOTP.js";
 import dotenv from "dotenv";
 import nodemailer from "nodemailer";
+import multer from "multer";
+import path from "path";
 dotenv.config();
-import Chart from "chart.js/auto";
 
-routers.post("/", async (req, res) => {
-  const { name, email, number, password, cnic, gender, userType } = req.body;
-  const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(.{6,})$/;
-
-  if (!passwordRegex.test(password)) {
-    return res.send({
-      message:
-        "Password must be at least 6 characters long and include at least one uppercase letter, one digit, and one special character.",
-    });
-  }
-
-  try {
-    const existingUser = await User.findOne({ email: email });
-    if (existingUser) {
-      res.send({ message: "User already registered" });
-    } else {
-      const salt = await bcrypt.genSalt(10);
-      const secPass = await bcrypt.hash(req.body.password, salt);
-
-      const newUser = new User({
-        name,
-        email,
-        number,
-        password: secPass,
-        cnic,
-        gender,
-        userType,
-        approvedByAdmin: false,
-      });
-
-      await newUser.save();
-
-      const otpCode = Math.floor(Math.random() * 10000 + 1);
-      let otpData = new EmailOTP({
-        email: req.body.email,
-        code: otpCode,
-        expireIn: new Date().getTime() + 300 * 1000,
-      });
-
-      await otpData.save();
-
-      res.send({ message: "OTP Sent TO Your Email", name: name });
-      await sendOTPEmail(email, otpCode);
-    }
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
-});
 const sendOTPEmail = async (email, otpCode) => {
   try {
     const transporter = nodemailer.createTransport({
@@ -80,9 +34,79 @@ const sendOTPEmail = async (email, otpCode) => {
   } catch (error) {
     console.error("Error sending email:", error);
     throw new Error("Error sending email");
-    // You can also respond to the client with an appropriate error message here
   }
 };
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/Images");
+  },
+  filename: (req, file, cb) => {
+    cb(
+      null,
+      file.fieldname + "_" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
+const upload = multer({
+  storage: storage,
+});
+
+routers.post("/", upload.array("file", 3), async (req, res) => {
+  const { files } = req;
+  const { name, email, number, password, cnic, gender, userType } = req.body;
+  const fileNames = files.map((file) => file.filename);
+
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(.{6,})$/;
+
+  if (!passwordRegex.test(password)) {
+    return res.status(400).send({
+      message:
+        "Password must be at least 6 characters long and include at least one uppercase letter, one digit, and one special character.",
+    });
+  }
+
+  try {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).send({ message: "User already registered" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const secPass = await bcrypt.hash(password, salt);
+
+    const newUser = new User({
+      name,
+      email,
+      number,
+      password: secPass,
+      cnic,
+      gender,
+      userType,
+      file: fileNames,
+      approvedByAdmin: false,
+    });
+
+    await newUser.save();
+    console.log(newUser);
+
+    const otpCode = Math.floor(Math.random() * 10000 + 1);
+    const otpData = new EmailOTP({
+      email,
+      code: otpCode,
+      expireIn: new Date().getTime() + 300 * 1000,
+    });
+
+    await otpData.save();
+
+    await sendOTPEmail(email, otpCode);
+
+    res.send({ message: "OTP Sent TO Your Email", name });
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+});
 
 routers.get("/true-users", async (req, res) => {
   try {

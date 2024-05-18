@@ -71,7 +71,7 @@ function Bookings(props) {
             <div key={Product._id} className="card" style={{ width: "20rem" }}>
               <img
                 className="card-img-top image"
-                src={`http://localhost:4000/Images/${Product.file[0]}`}
+                src={`http://localhost:4000/assets/${Product.file[0]}`}
                 alt={Product.altText || "Product Image"}
               />
               <div className="card-body" key={Product._id}>

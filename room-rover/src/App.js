@@ -24,6 +24,8 @@ import TenantAgreement from "./Components/BookingDetails/TenantAgreement/TenantA
 import ViewBooking from "./Components/OwnerSide/ViewBooking/ViewBooking";
 import RequestVisit from "./Components/RequestVisit/RequestVisit";
 import Cart from "./Components/Cart/Cart";
+import Complaint from "./Components/Complaint/Complaint";
+// import Chat from "./Components/Chat/Chat";
 
 
 function App() {
@@ -44,20 +46,18 @@ function App() {
             <Route exact path="/Upload" element={<Upload />} />
             <Route exact path="/Dashboard" element={<Dashboard />} />
             <Route path="/product/:productId" element={<Detail />} />
+            {/* <Route path="/Chat/:productId" element={<Chat />} /> */}
             <Route exact path="/Post" element={<Post />} />
             <Route exact path="/Update/:id" element={<UpdateForm />} />
             <Route exact path="/UserProfile" element={<UserProfile />} />
             <Route exact path="/Agreement" element={<Agreement />} />
             <Route exact path="/TermsAndCondition" element={<Terms />} />
             <Route exact path="/payment/:productId" element={<Payment />} />
-
-
-            <Route exact path="/booking/product/:productId" element={<ViewBooking />} />
-
-            
+            <Route exact path="/booking/product/:productId" element={<ViewBooking />} />        
             <Route exact path="/RequestVisit/:productId" element={<RequestVisit />} />
             <Route exact path="/TenantAgreement/:productId" element={<TenantAgreement />} />
             <Route exact path="/Booking" element={<Cart />} />
+            <Route exact path="/Complaint/:productId" element={<Complaint />} />
 
 
           </Routes>

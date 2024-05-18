@@ -54,7 +54,7 @@
   margin: 10px;
 }
 
-.labels {
+.labels-one {
   margin: 15px 40px;
   font-size: 1rem;
   font-weight: bold;
@@ -82,11 +82,23 @@ label {
   padding-right: 10px;
 }
 
+.labels-one {
+  margin-left: 35px;
+  margin-top: 0px;
+}
+
+.select-one {
+  margin-top: 20px;
+}
+
 .radio-group {
   position: absolute;
   left: 105px;
-  bottom: 115px;
+  bottom: 137px;
+  display: flex;
+  align-items: center;
 }
+
 
 .male {
   display: inline-block;
@@ -97,9 +109,12 @@ label {
   margin-left: -100px;
 }
 
-.radio-group {
-  display: flex;
-  align-items: center;
+.signup-btn {
+  margin-top: -25px;
+}
+
+.radio-group{
+  margin-top: 10px;
 }
 
 .radio-group label {

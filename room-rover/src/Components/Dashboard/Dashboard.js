@@ -375,47 +375,53 @@ function Dashboard(props) {
       <br /> <br />
       <div className="main">
         <div className="grid-container">
-          {productsToDisplay.map((Product) => (
-            <div key={Product._id} className="card" style={{ width: "20rem" }}>
-              <img
-                className="card-img-top image"
-                src={`http://localhost:4000/Images/${Product.file[0]}`}
-                alt={Product.altText || "Product Image"}
-              />
-              <div className="card-body" key={Product._id}>
-                <h5 className="card-title">{Product.title}</h5>
-                <h5 className="card-title">
-                  <b>
-                    {Product.area}, {Product.location}
-                  </b>
-                </h5>
-                <p className="card-text">
-                  {Product.propertyType.room || Product.propertyType.flat}
-                </p>
-                <p className="card-text">
-                  <strong>Rent:</strong>{" "}
-                  {Product.pricing && Product.pricing.rent}
-                  {/* {
+          {productsToDisplay
+            .filter((Product) => Product.booking.status !== "approved") // Filter out products with approved booking status
+            .map((Product) => (
+              <div
+                key={Product._id}
+                className="card"
+                style={{ width: "20rem" }}
+              >
+                <img
+                  className="card-img-top image"
+                  src={`http://localhost:4000/assets/${Product.file[0]}`}
+                  alt={Product.altText || "Product Image"}
+                />
+                <div className="card-body" key={Product._id}>
+                  <h5 className="card-title">{Product.title}</h5>
+                  <h5 className="card-title">
+                    <b>
+                      {Product.area}, {Product.location}
+                    </b>
+                  </h5>
+                  <p className="card-text">
+                    {Product.propertyType.room || Product.propertyType.flat}
+                  </p>
+                  <p className="card-text">
+                    <strong>Rent:</strong> Rs{" "}
+                    {Product.pricing && Product.pricing.rent}
+                    {/* {
                     <FormatPrice
                       price={Product.pricing && Product.pricing.rent}
                     />
                   } */}
-                </p>
-                <Link
-                  to={`/product/${Product._id}`}
-                  className="btn btn-primary btnSee btn-details-mdeia"
-                >
-                  See Details
-                </Link>{" "}
+                  </p>
+                  <Link
+                    to={`/product/${Product._id}`}
+                    className="btn btn-primary btnSee btn-details-mdeia"
+                  >
+                    See Details
+                  </Link>{" "}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
       <div className="map">
         <Map
           google={props.google}
-          initialCenter={{ lat: 24.8607, lng: 67.0011 }}
+          initialCenter={{ lat: 25.8943, lng: 68.5247 }}
           zoom={14}
         >
           {userLocation && <Marker position={userLocation} />}

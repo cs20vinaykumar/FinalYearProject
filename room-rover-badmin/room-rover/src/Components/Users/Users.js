@@ -53,7 +53,7 @@ export default function Users() {
           <div className="headinv">
             {" "}
             <p className="total-users " id="book-total-user">
-              Verifeid Users: {totalUsers}
+            verified Users: {totalUsers}
             </p>
           </div>
         </div>{" "}

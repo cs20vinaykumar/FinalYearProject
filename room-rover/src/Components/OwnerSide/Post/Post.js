@@ -110,7 +110,7 @@ export default function Post() {
                 </Dropdown>
                 <img
                   className="card-img-top image"
-                  src={`http://localhost:4000/Images/${product.file[0]}`}
+                  src={`http://localhost:4000/assets/${product.file[0]}`}
                   alt={product.altText || "Product Image"}
                 />
                 <div className="card-body" key={product._id}>

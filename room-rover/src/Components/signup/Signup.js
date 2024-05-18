@@ -6,6 +6,7 @@ import axios from "axios";
 export default function Signup() {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
+  const [file, setFile] = useState([]);
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -16,6 +17,7 @@ export default function Signup() {
     cnic: "",
   });
 
+
   const hanldechange = (e) => {
     const { name, value } = e.target;
 
@@ -24,17 +26,24 @@ export default function Signup() {
       [name]: value,
     });
 
-    // Show validation message when full name is changed
     if (name === "name") {
       setMessage("Please enter your name exactly as it appears on your CNIC.");
     } else {
       setMessage("");
     }
 
-    // Show validation message only when CNIC is not 13 digits long
     if (name === "cnic" && value.length !== 13) {
       setMessage("CNIC should be exactly 13 digits long.");
     }
+  };
+
+  const handleFileChange = (event) => {
+    const newFiles = event.target.files;
+    const updatedFiles = [...file];
+    for (let i = 0; i < newFiles.length; i++) {
+      updatedFiles.push(newFiles[i]);
+    }
+    setFile(updatedFiles);
   };
 
   const validateCNIC = (cnic) => {
@@ -44,13 +53,25 @@ export default function Signup() {
   const register = async () => {
     const { name, email, number, password, gender, userType, cnic } = user;
 
-    if (name && email && number && password && gender && userType && cnic) {
+    if (name && email && number && password && gender && userType && cnic && file.length > 0) {
       if (!validateCNIC(cnic)) {
         setMessage("Please enter a valid CNIC (13 digits).");
         return;
       }
       try {
-        const response = await axios.post("http://localhost:4000/Signup", user);
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("email", email);
+        formData.append("number", number);
+        formData.append("password", password);
+        formData.append("gender", gender);
+        formData.append("userType", userType);
+        formData.append("cnic", cnic);
+        for (let i = 0; i < file.length; i++) {
+          formData.append("file", file[i]);
+        }
+
+        const response = await axios.post("http://localhost:4000/Signup", formData);
         setMessage(response.data.message);
         if (response.data.message === "OTP Sent TO Your Email") {
           setTimeout(() => {
@@ -147,7 +168,7 @@ export default function Signup() {
               <select
                 name="userType"
                 value={user.userType}
-                className="inputs"
+                className="inputs select-one"
                 onChange={hanldechange}
               >
                 <option value="">Select User Type</option>
@@ -156,7 +177,7 @@ export default function Signup() {
               </select>
             </div>
             <div className="form-group">
-              <label className="labels">Gender:</label>
+              <label className="labels-one">Gender:</label>
               <div className="radio-group">
                 <label htmlFor="male">Male</label>
                 <input
@@ -178,10 +199,26 @@ export default function Signup() {
                 />
               </div>
             </div>
+            <div className="form-group cnic">
+              <label htmlFor="cnicPhotos" className="labels">CNIC Photos:</label>
+              <input
+                type="file"
+                name="cnicPhotos"
+                accept="image/*"
+                id="cnicPhotos"
+                className="inputs"
+                multiple
+                onChange={handleFileChange}
+              />
+            </div>
+            {file.map((file, index) => (
+              <li key={index}>{file.name}</li>
+            ))}
           </form>
           <p className="tomato-red">{message}</p>
           <button
             className="btn btn-primary my-3 btn"
+            id="btn-top"
             style={{ background: "#8f2c24" }}
             onClick={register}
           >

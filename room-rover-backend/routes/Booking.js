@@ -79,24 +79,28 @@ booking.post("/", upload.single("image"), async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
 booking.get("/product/:productId", async (req, res) => {
   try {
     const { productId } = req.params;
     const bookings = await Booking.find({ productId }).populate({
       path: "userId",
-      select: " _id name email cnic number", // Include name and lname, exclude _id
+      select: "_id name email cnic number", // Remove space before _id
     });
 
-    const bookedPosts = bookings.map((booking) => ({
-      bookingId: booking._id,
-      _id: booking.userId._id,
-      name: booking.userId.name,
-      email: booking.userId.email,
-      number: booking.userId.number,
-      cnic: booking.userId.cnic,
-      status: booking.status,
-    }));
+    const bookedPosts = bookings
+      .map((booking) => {
+        if (!booking.userId) return null; // Check if userId exists
+        return {
+          bookingId: booking._id,
+          _id: booking.userId._id,
+          name: booking.userId.name,
+          email: booking.userId.email,
+          number: booking.userId.number,
+          cnic: booking.userId.cnic,
+          status: booking.status,
+        };
+      })
+      .filter((post) => post !== null); // Remove null entries from array
     console.log(bookedPosts);
     res.json(bookedPosts);
   } catch (error) {
@@ -104,6 +108,7 @@ booking.get("/product/:productId", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
 // PUT route to update booking status
 
 booking.put("/:bookingId/status", async (req, res) => {

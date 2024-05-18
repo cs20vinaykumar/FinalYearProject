@@ -6,7 +6,6 @@ export default function Navbar() {
   const [activeLink, setActiveLink] = useState(null);
   const isLoggedIn = localStorage.getItem("token");
 
-
   const handleLinkClick = (link) => {
     console.log("Clicked on link:", link);
     setActiveLink(link);
@@ -59,7 +58,7 @@ export default function Navbar() {
                   </Link>
                 </li>
                 <li>
-                                    <button
+                  <button
                     className="btn btn-primary buton "
                     onClick={handleLogout}
                   >
@@ -83,15 +82,6 @@ export default function Navbar() {
                 </li>
                 <li>
                   <Link
-                    to="/about"
-                    className={activeLink === "about" ? "active" : "hidden"}
-                    onClick={() => handleLinkClick("about")}
-                  >
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link
                     to="/Login"
                     className={activeLink === "login" ? "active" : "hidden"}
                     onClick={() => handleLinkClick("login")}
@@ -99,7 +89,7 @@ export default function Navbar() {
                     Login{" "}
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link
                     to="/Signup"
                     className={activeLink === "signup" ? "active" : "hidden"}
@@ -107,7 +97,7 @@ export default function Navbar() {
                   >
                     Signup
                   </Link>
-                </li>
+                </li> */}
               </>
             )}
             {/* <i className="fas fa-times" onClick={closeMenu}></i> */}

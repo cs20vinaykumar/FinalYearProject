@@ -3,7 +3,7 @@ import Navbar from "../src/Components/Navbar/Navbar"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Homepage from './Components/Homepage/Homepage';
 import Login from './Components/Login/Login';
-import Signup from './Components/Signup/Signup';
+// import Signup from './Components/Signup/Signup';
 import Dashboard from './Components/Dashboard/Dashboard';
 import Bookings from "../src/Components/Bookings/Bookings"
 import Users from './Components/Users/Users';
@@ -22,7 +22,7 @@ function App() {
           <Routes>
           <Route exact path="/" element={<Homepage />} />
           <Route exact path="/Login" element={<Login />} />
-          <Route exact path="/Signup" element={<Signup />} />
+          {/* <Route exact path="/Signup" element={<Signup />} /> */}
           <Route exact path="/Dashboard" element={<Dashboard />} />
           <Route exact path="/Bookings" element={<Bookings />} />
           <Route exact path="/UserList" element={<Users />} />

@@ -163,7 +163,6 @@ const Payment = ({ booking }) => {
       alert("Error deleting booking. Please try again later.");
     }
   };
-
   useEffect(() => {
     const fetchBookings = async () => {
       try {
@@ -177,14 +176,25 @@ const Payment = ({ booking }) => {
         );
         const statusData = response.data;
         setStatus(statusData);
+        if (statusData && statusData.status === "approved") {
+          await axios.put(
+            `http://localhost:4000/PropertyForm/${productId}/booking`,
+            { status: "approved" }, // Update status directly to "approved"
+            {
+              headers: {
+                authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
+        } 
       } catch (error) {
         console.error("Error fetching bookings:", error);
       }
     };
-
+  
     fetchBookings();
   }, [productId]);
-
+  
   return (
     <>
       <div className="container">

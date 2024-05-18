@@ -7,6 +7,7 @@ export default function Dashboard() {
   const [statistics, setStatistics] = useState({});
   const [users, setUsers] = useState([]);
   const [count, setCount] = useState("0");
+  const [counts, setCounts] = useState(null);
 
   const handleLinkClick = (link) => {
     console.log("Clicked on link:", link);
@@ -39,7 +40,25 @@ export default function Dashboard() {
 
     fetchUsers();
   }, []);
+  useEffect(() => {
+    async function fetchPostCounts() {
+      try {
+        const response = await axios.get(
+          "http://localhost:4000/GetPropertyForm/postStatus",
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        setCounts(response.data);
+      } catch (error) {
+        console.error("Error fetching post counts:", error);
+      }
+    }
 
+    fetchPostCounts();
+  }, []);
   return (
     <div>
       <div className="main-dashboard">
@@ -105,32 +124,44 @@ export default function Dashboard() {
         <div className="main-contnent">
           <div class="box box-1">
             <div className="box-content">
-              {/* <div className="box-icon">Icon</div> */}
+              <div className="box-number-wrapper">
+                <span className="box-number">{statistics.tenantCount}</span>
+                <i class="fa-solid fa-solid-1 fa-users"></i>
+              </div>
               <h3 style={{ color: "brown" }}>Tenant</h3>
-              <div className="box-number">{statistics.tenantCount}</div>
             </div>
           </div>
+
           <div class="box box-2">
             <div className="box-content">
-              {/* <div className="box-icon">Icon</div> */}
+              <div className="box-number-wrapper">
+                <span className="box-number">{statistics.ownerCount}</span>
+                <i class="fa-solid fa-solid-1 fa-user"></i>
+              </div>
               <h3 style={{ color: "brown" }}>Owner</h3>
-              <div className="box-number">{statistics.ownerCount}</div>
             </div>
           </div>
+
           <div class="box box-3">
             <div className="box-content">
-              {/* <div className="box-icon"></div> */}
-              <h3 style={{ color: "brown" }}>Male: </h3>
-              <div className="box-number ">{statistics.maleCount}</div>
+              <div className="box-number-wrapper">
+                <span className="box-number">{statistics.maleCount}</span>
+                <i class="fa-solid fa-solid-1 fa-person"></i>
+              </div>
+              <h3 style={{ color: "brown" }}>Male</h3>
             </div>
           </div>
+
           <div class="box box-4">
             <div className="box-content">
-              {/* <div className="box-icon"></div> */}
+              <div className="box-number-wrapper">
+                <span className="box-number">{statistics.femaleCount}</span>
+                <i class="fa-solid fa-solid-1 fa-person-dress"></i>
+              </div>
               <h3 style={{ color: "brown" }}>Female</h3>
-              <div className="box-number">{statistics.femaleCount}</div>
             </div>
           </div>
+
           <div className="Accounts">
             <div className="content-5">
               {" "}
@@ -145,10 +176,30 @@ export default function Dashboard() {
                     <span className="adminApprove">
                       {user.approvedByAdmin ? "verified" : "unverified"}
                     </span>
-                    
                   </li>
                 ))}
               </ul>
+            </div>
+          </div>
+          <div className="post-status">
+            <div className="content-5">
+              <br />
+              <h3>Booking Status</h3>
+              {counts ? (
+                <ul>
+                  <li>
+                    <strong>Approved posts:</strong> {counts.approvedCount}
+                  </li>
+                  <li>
+                    <strong>Waiting posts:</strong> {counts.waitingCount}
+                  </li>
+                  <li>
+                    <strong>Rejected posts:</strong> {counts.rejectedCount}
+                  </li>
+                </ul>
+              ) : (
+                <p className="loading-message">Loading...</p>
+              )}
             </div>
           </div>
         </div>

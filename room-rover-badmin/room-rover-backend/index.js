@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import morgan from "morgan";
 import connectToMongoDB from "../room-rover-backend/Databse-connection/db.js";
 import routers from "../room-rover-backend/routes/Singup.js";
 import router from "../room-rover-backend/routes/Login.js";
@@ -13,6 +14,8 @@ app.use(express.urlencoded());
 app.use(cors());
 app.use(express.static("public"));
 connectToMongoDB();
+
+app.use(morgan('dev'));
 
 // Signup Api
 app.use("/Signup", routers);

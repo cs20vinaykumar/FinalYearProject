@@ -17,8 +17,8 @@ const formDataSchema = new mongoose.Schema(
       toDate: String,
     },
     pricing: {
-      deposite: Number,
-      rent: Number,
+      deposite: String,
+      rent: String,
     },
     amenities: [String],
     description: String,
@@ -30,12 +30,12 @@ const formDataSchema = new mongoose.Schema(
       },
     ],
 
-    contactForm: {
-      name: String,
-      email: String,
-      cnic: String,
-      phoneNumber: Number,
-    },
+    // contactForm: {
+    //   name: String,
+    //   email: String,
+    //   cnic: String,
+    //   phoneNumber: Number,
+    // },
 
     accountDetails: [
       {
@@ -58,6 +58,17 @@ const formDataSchema = new mongoose.Schema(
     postedBy: {
       type: ObjectId,
       ref: "user",
+    },
+    booking: {
+      status: {
+        type: String,
+        enum: ["waiting", "approved", "rejected", "cancelled"],
+        default: "waiting",
+      },
+      user: {
+        type: ObjectId,
+        ref: "user",
+      },
     },
   },
   { timestamps: true }
