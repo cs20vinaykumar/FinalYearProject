@@ -5,7 +5,7 @@ import nodemailer from "nodemailer";
 
 import dotenv from "dotenv";
 
-dotenv.config(); 
+dotenv.config();
 
 const otpVerify = express.Router();
 

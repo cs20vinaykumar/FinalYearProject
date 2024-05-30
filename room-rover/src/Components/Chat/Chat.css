@@ -41,7 +41,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  
 }
 
 .close-button:hover {
@@ -99,4 +98,57 @@
 
 .chat-footer button:hover {
   background-color: #0056b3;
+}
+.chat-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-message {
+  display: flex;
+  clear: both;
+  margin-bottom: 10px;
+}
+
+.sent {
+  background-color: #dcf8c6;
+  align-self: flex-end;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 60%;
+  word-wrap: break-word;
+}
+
+.received {
+  background-color: #a3e570;
+  align-self: flex-start;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 60%;
+  word-wrap: break-word;
+}
+
+.message-time {
+  font-size: 10px;
+  color: #1c1b1b;
+  align-self: flex-end;
+}
+@media only screen and (max-width: 600px) {
+  .chat-modal {
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    right: 0;
+    border-radius: 0;
+  }
+
+  .chat-header {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  .chat-footer {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
 }

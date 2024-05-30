@@ -29,6 +29,7 @@
     "react-redux": "^9.1.0",
     "react-scripts": "5.0.1",
     "redux": "^5.0.1",
+    "socket.io-client": "^4.7.5",
     "typed.js": "^2.0.16",
     "web-vitals": "^2.1.4"
   },

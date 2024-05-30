@@ -1,6 +1,7 @@
 import express from "express";
 import Complain from "../models/Complaint.js";
 import formData from "../models/PropertyForm.js";
+import User from "../models/User.js";
 
 const Complaint = express.Router();
 

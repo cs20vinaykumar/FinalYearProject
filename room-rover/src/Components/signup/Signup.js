@@ -17,7 +17,6 @@ export default function Signup() {
     cnic: "",
   });
 
-
   const hanldechange = (e) => {
     const { name, value } = e.target;
 
@@ -53,7 +52,16 @@ export default function Signup() {
   const register = async () => {
     const { name, email, number, password, gender, userType, cnic } = user;
 
-    if (name && email && number && password && gender && userType && cnic && file.length > 0) {
+    if (
+      name &&
+      email &&
+      number &&
+      password &&
+      gender &&
+      userType &&
+      cnic &&
+      file.length > 0
+    ) {
       if (!validateCNIC(cnic)) {
         setMessage("Please enter a valid CNIC (13 digits).");
         return;
@@ -71,7 +79,10 @@ export default function Signup() {
           formData.append("file", file[i]);
         }
 
-        const response = await axios.post("http://localhost:4000/Signup", formData);
+        const response = await axios.post(
+          "http://localhost:4000/Signup",
+          formData
+        );
         setMessage(response.data.message);
         if (response.data.message === "OTP Sent TO Your Email") {
           setTimeout(() => {
@@ -200,7 +211,9 @@ export default function Signup() {
               </div>
             </div>
             <div className="form-group cnic">
-              <label htmlFor="cnicPhotos" className="labels">CNIC Photos:</label>
+              <label htmlFor="cnicPhotos" className="labels">
+                CNIC Photos:
+              </label>
               <input
                 type="file"
                 name="cnicPhotos"
