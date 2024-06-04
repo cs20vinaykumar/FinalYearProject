@@ -104,9 +104,9 @@ function UserPending() {
                 <div>
                   <strong>Phone Number:</strong> +92-{user.number}
                 </div>
-                <div>
+                {/* <div>
                   <strong>CNIC:</strong> {user.cnic}
-                </div>
+                </div> */}
                 <div>
                   <strong>Gender:</strong> {user.gender}
                 </div>

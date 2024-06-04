@@ -54,8 +54,8 @@ function Upload(props) {
       "DHA Phase 1",
       "DHA Phase 5",
     ],
-    Hyderabad: ["Area A", "Area B", "Area C"],
-    Sukkur: ["Area X", "Area Y", "Area Z"],
+    Hyderabad: ["Qasimabad ", "Latifabad", "Tando Jam"],
+    Sukkur: ["New Sukkur", "Sukkur City", " Rohri"],
   };
 
   const handleLocationChange = (event) => {
@@ -140,6 +140,12 @@ function Upload(props) {
     for (let i = 0; i < newFiles.length; i++) {
       updatedFiles.push(newFiles[i]);
     }
+    setFile(updatedFiles);
+  };
+
+  const handleDelete = (index) => {
+    const updatedFiles = [...file];
+    updatedFiles.splice(index, 1);
     setFile(updatedFiles);
   };
 
@@ -663,11 +669,22 @@ function Upload(props) {
           </div>
           {/* --------------------Upload Pictures------------------------- */}
           <div>
-            <input type="file" onChange={handleFileChange} multiple />
+            <div>
+              <input type="file" onChange={handleFileChange} multiple />
+            </div>
+            <ul>
+              {file.map((file, index) => (
+                <li key={index}>
+                  {" "}
+                  <i
+                    class="fa-solid fa-trash"
+                    onClick={() => handleDelete(index)}
+                  ></i>{" "}
+                  {file.name}{" "}
+                </li>
+              ))}
+            </ul>
           </div>
-          {file.map((file, index) => (
-            <li key={index}>{file.name}</li>
-          ))}
           <br />
           <span className="span-p">Upload Pictures of your flat or room</span>
           <br />

@@ -14,7 +14,7 @@ export default function Signup() {
     password: "",
     gender: "",
     userType: "",
-    cnic: "",
+    // cnic: "",
   });
 
   const hanldechange = (e) => {
@@ -31,9 +31,9 @@ export default function Signup() {
       setMessage("");
     }
 
-    if (name === "cnic" && value.length !== 13) {
-      setMessage("CNIC should be exactly 13 digits long.");
-    }
+    // if (name === "cnic" && value.length !== 13) {
+    //   setMessage("CNIC should be exactly 13 digits long.");
+    // }
   };
 
   const handleFileChange = (event) => {
@@ -45,12 +45,12 @@ export default function Signup() {
     setFile(updatedFiles);
   };
 
-  const validateCNIC = (cnic) => {
-    return /^\d{13}$/.test(cnic);
-  };
+  // const validateCNIC = (cnic) => {
+  //   return /^\d{13}$/.test(cnic);
+  // };
 
   const register = async () => {
-    const { name, email, number, password, gender, userType, cnic } = user;
+    const { name, email, number, password, gender, userType } = user;
 
     if (
       name &&
@@ -59,13 +59,13 @@ export default function Signup() {
       password &&
       gender &&
       userType &&
-      cnic &&
+      // cnic &&
       file.length > 0
     ) {
-      if (!validateCNIC(cnic)) {
-        setMessage("Please enter a valid CNIC (13 digits).");
-        return;
-      }
+      // if (!validateCNIC(cnic)) {
+      //   setMessage("Please enter a valid CNIC (13 digits).");
+      //   return;
+      // }
       try {
         const formData = new FormData();
         formData.append("name", name);
@@ -74,7 +74,7 @@ export default function Signup() {
         formData.append("password", password);
         formData.append("gender", gender);
         formData.append("userType", userType);
-        formData.append("cnic", cnic);
+        // formData.append("cnic", cnic);
         for (let i = 0; i < file.length; i++) {
           formData.append("file", file[i]);
         }
@@ -160,7 +160,7 @@ export default function Signup() {
                 onChange={hanldechange}
               />
             </div>
-            <div className="form-group">
+            {/* <div className="form-group">
               <label htmlFor="cnic" className="labels">
                 CNIC:
               </label>
@@ -173,7 +173,7 @@ export default function Signup() {
                 placeholder="Enter Your CNIC"
                 onChange={hanldechange}
               />
-            </div>
+            </div> */}
             <div className="form-group">
               <label className="labels">User Type:</label>
               <select
@@ -224,13 +224,13 @@ export default function Signup() {
                 onChange={handleFileChange}
               />
             </div>
-            {file.map((file, index) => (
+            {/* {file.map((file, index) => (
               <li key={index}>{file.name}</li>
-            ))}
+            ))} */}
           </form>
           <p className="tomato-red">{message}</p>
           <button
-            className="btn btn-primary my-3 btn"
+            className="btn btn-primary  btn"
             id="btn-top"
             style={{ background: "#8f2c24" }}
             onClick={register}

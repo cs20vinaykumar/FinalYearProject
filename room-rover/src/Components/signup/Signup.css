@@ -94,11 +94,10 @@ label {
 .radio-group {
   position: absolute;
   left: 105px;
-  bottom: 137px;
+  bottom: 205px;
   display: flex;
   align-items: center;
 }
-
 
 .male {
   display: inline-block;
@@ -113,7 +112,7 @@ label {
   margin-top: -25px;
 }
 
-.radio-group{
+.radio-group {
   margin-top: 10px;
 }
 
@@ -124,8 +123,12 @@ label {
 @media only screen and (max-width: 600px) {
   .radio-group {
     position: absolute;
-    top: 600px;
+    top: 527px;
     left: 0;
+  }
+  .labels-one {
+    margin-left: -84px;
+    margin-top: 0px;
   }
 
   .radio-group label {

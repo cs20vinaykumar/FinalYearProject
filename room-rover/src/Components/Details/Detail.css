@@ -335,33 +335,43 @@
     display: inline-block;
     width: 80vw;
     position: absolute;
-    top: 24.5%;
+    top: 26%;
+    left: 23px;
   }
 
   .posted-by {
-    margin-right: 30px;
+    margin-right: 85px;
     margin-top: 35px;
   }
 
   .pricing {
     margin-top: 35px;
-    margin-left: 10px;
+    margin-left: 75px;
     font-weight: bold;
   }
 
   .h-line {
     display: none;
   }
+  .total-views {
+    margin-top: 20px;
+    font-size: 15px;
+    color: #555;
+    text-align: center;
+    margin-left: 75px;
+  }
 
   .Details-button {
     display: flex;
     flex-direction: column;
     margin-left: 75px;
-    width: 75%;
+    width: 72%;
     justify-content: space-evenly;
   }
   .Details-button .btn-text {
-    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    border: 10px solid;
   }
   .main-description {
     display: flex;

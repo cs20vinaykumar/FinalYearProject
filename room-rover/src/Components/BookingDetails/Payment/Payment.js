@@ -186,15 +186,15 @@ const Payment = ({ booking }) => {
               },
             }
           );
-        } 
+        }
       } catch (error) {
         console.error("Error fetching bookings:", error);
       }
     };
-  
+
     fetchBookings();
   }, [productId]);
-  
+
   return (
     <>
       <div className="container">
@@ -326,7 +326,7 @@ const Payment = ({ booking }) => {
             </button>
           )}
 
-          {bookingDone && (
+          {bookingDone && status.status !== "approved" && (
             <button
               onClick={() => handleCancelBooking(booking, productId)}
               className="cancel-booking-button"

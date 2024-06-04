@@ -55,7 +55,7 @@ const upload = multer({
 
 routers.post("/", upload.array("file", 3), async (req, res) => {
   const { files } = req;
-  const { name, email, number, password, cnic, gender, userType } = req.body;
+  const { name, email, number, password, gender, userType } = req.body;
   const fileNames = files.map((file) => file.filename);
 
   const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(.{6,})$/;
@@ -81,7 +81,7 @@ routers.post("/", upload.array("file", 3), async (req, res) => {
       email,
       number,
       password: secPass,
-      cnic,
+      // cnic,
       gender,
       userType,
       file: fileNames,
@@ -90,7 +90,6 @@ routers.post("/", upload.array("file", 3), async (req, res) => {
 
     await newUser.save();
     console.log(newUser);
-
     const otpCode = Math.floor(Math.random() * 10000 + 1);
     const otpData = new EmailOTP({
       email,
