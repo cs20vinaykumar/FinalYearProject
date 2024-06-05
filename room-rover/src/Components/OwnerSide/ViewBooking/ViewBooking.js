@@ -19,11 +19,12 @@ const ViewBookings = () => {
             },
           }
         );
+        console.log("Fetched bookings:", response.data); // Debugging: Log fetched bookings
         setBookings(response.data);
-        setLoading(false); // Set loading to false after fetching data
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching bookings:", error);
-        setLoading(false); // Set loading to false in case of error
+        setLoading(false);
       }
     };
 
@@ -67,6 +68,34 @@ const ViewBookings = () => {
       console.error("Error rejecting booking:", error);
     }
   };
+  const handleCancelBooking = async (bookingId) => {
+    try {
+      await axios.put(
+        `http://localhost:4000/booking/${bookingId}/cancel`,
+        {},
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      await axios.put(
+        `http://localhost:4000/PropertyForm/${productId}/booking`,
+        { status: "waiting" }, // Update status directly to "waiting"
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setBookings((prevBookings) =>
+        prevBookings.filter((booking) => booking._id !== bookingId)
+      );
+      window.location.reload();
+    } catch (error) {
+      console.error("Error cancelling booking:", error);
+    }
+  };
 
   return (
     <div className="booking-container">
@@ -83,16 +112,23 @@ const ViewBookings = () => {
               <p>CNIC: {post.cnic}</p>
               <p>Number: {post.number}</p>
               <p className={`status ${post.status}`}>Status: {post.status}</p>
-              {post.status === "waiting" && (
-                <div className="button-group">
-                  <button onClick={() => handleApprove(post.bookingId)}>
-                    Approve
-                  </button>{" "}
-                  <button onClick={() => handleReject(post.bookingId)}>
-                    Reject
+              <div className="button-group">
+                {post.status === "waiting" && (
+                  <>
+                    <button onClick={() => handleApprove(post.bookingId)}>
+                      Approve
+                    </button>{" "}
+                    <button onClick={() => handleReject(post.bookingId)}>
+                      Reject
+                    </button>
+                  </>
+                )}
+                {post.status === "approved" && (
+                  <button onClick={() => handleCancelBooking(post.bookingId)}>
+                    Cancel Booking
                   </button>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           ))}
         </div>

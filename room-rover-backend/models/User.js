@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema({
       require: true,
     },
   ],
+  blocked: {
+    type: Boolean,
+    default: false, 
+  },
   approvedByAdmin: { type: Boolean, default: false },
   createdAt: {
     type: Date,

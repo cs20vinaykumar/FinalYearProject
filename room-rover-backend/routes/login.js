@@ -1,16 +1,19 @@
 import express from "express";
 import User from "../models/User.js";
-const router = express.Router();
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+
 dotenv.config();
+
+const router = express.Router();
+
 
 router.post("/", async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.send({
+    return res.status(400).json({
       message: "Please fill in both email and password fields",
     });
   }
@@ -18,27 +21,25 @@ router.post("/", async (req, res) => {
   try {
     const user = await User.findOne({ email: email });
 
-    if (user) {
-      const passwordMatch = await bcrypt.compare(password, user.password);
-
-      if (!user.approvedByAdmin) {
-        return res
-          .status(403)
-          .json({ message: "Your account is pending approval by admin" });
-      }
-      if (passwordMatch) {
-        const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET);
-
-        res.send({ message: "Login Successful", user: user, token: token });
-      } else {
-        res.send({ message: "Password didn't match" });
-      }
-    } else {
-      res.send({ message: "User not registered" });
+    if (!user) {
+      return res.status(404).json({ message: "User not registered" });
     }
-  } catch (err) {
-    console.error(err);
-    res.send({ message: "Internal Server Error" });
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ message: "Password didn't match" });
+    }
+
+    if (!user.approvedByAdmin) {
+      return res.status(403).json({ message: "Your account is pending approval by admin" });
+    }
+    const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET);
+
+    res.status(200).json({ message: "Login Successful", user: user, token: token });
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 

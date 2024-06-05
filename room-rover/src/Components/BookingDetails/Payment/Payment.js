@@ -3,6 +3,7 @@ import "./Payment.css";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import Terms from "../TermsAndCondition/Terms";
 
 const Payment = ({ booking }) => {
   const { productId } = useParams();
@@ -11,6 +12,7 @@ const Payment = ({ booking }) => {
   const [product, setProduct] = useState(null);
   const [bookingStatus, setBookingStatus] = useState("");
   const [status, setStatus] = useState("");
+  const [isTermConditonOpen, setTermConditonOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -65,7 +67,7 @@ const Payment = ({ booking }) => {
           },
         });
         setBookingDone(true);
-        alert("Payemnt initiated. Please wait for confirmation.");
+        alert("Payment initiated. Please wait for confirmation.");
         window.location.reload();
       }
     } catch (error) {
@@ -73,6 +75,27 @@ const Payment = ({ booking }) => {
     }
   };
 
+  const toggleTermConditonModal = (acceptingTerms = false) => {
+    setTermConditonOpen(!isTermConditonOpen);
+  };
+  const handleInitiatePayment = () => {
+    const userId = getUserId();
+    if (userId === product.postedBy._id) {
+      alert("Owner cannot book their own post.");
+      return; // Exit the function early if the user is the owner
+    }
+
+    if (!image) {
+      alert("Please upload an image before proceeding.");
+      return;
+    }
+    setTermConditonOpen(true);
+  };
+  const handleTermsAccepted = () => {
+    setBookingDone(true);
+    toggleTermConditonModal(false);
+    handleBookingDone();
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -94,6 +117,10 @@ const Payment = ({ booking }) => {
 
     fetchData();
   }, [productId]);
+
+  const handleDeleteImage = () => {
+    setImage(null); // Clear the selected image
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -163,6 +190,7 @@ const Payment = ({ booking }) => {
       alert("Error deleting booking. Please try again later.");
     }
   };
+
   useEffect(() => {
     const fetchBookings = async () => {
       try {
@@ -216,10 +244,10 @@ const Payment = ({ booking }) => {
           </div>
 
           <div className="payment-instructions">
-            <p className="instruction greeen blink ">
+            <p className="instruction green blink">
               After Payment, take a screenshot and upload it here.
             </p>
-            <p className="instruction green blink ">
+            <p className="instruction green blink">
               Wait Until Owner Confirms Your Booking
             </p>
           </div>
@@ -229,16 +257,36 @@ const Payment = ({ booking }) => {
               name="image"
               accept="image/*"
               onChange={handleImageUpload}
-            />{" "}
+            />
+            {image && (
+              <div className="image-preview">
+                <button
+                  type="button"
+                  onClick={handleDeleteImage}
+                  className="delete-icon"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-x-circle"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zM4.354 4.354a.5.5 0 0 1 .708 0L8 7.293l2.938-2.939a.5.5 0 1 1 .708.708L8.707 8l2.937 2.938a.5.5 0 0 1-.708.708L8 8.707l-2.938 2.937a.5.5 0 1 1-.708-.708L7.293 8 4.354 5.062a.5.5 0 0 1 0-.708z"
+                    />
+                  </svg>
+                </button>
+                <img src={URL.createObjectURL(image)} alt="Preview" />
+              </div>
+            )}
           </div>
-          {image && (
-            <div className="image-preview">
-              <img src={URL.createObjectURL(image)} alt="Preview" />
-            </div>
-          )}
+
           {!bookingDone && (
             <button
-              onClick={handleBookingDone}
+              onClick={handleInitiatePayment}
               className="booking-button btn-done"
             >
               Initiate Payment
@@ -336,6 +384,12 @@ const Payment = ({ booking }) => {
           )}
         </div>
       </div>
+      {isTermConditonOpen && (
+        <Terms
+          onAccept={handleTermsAccepted}
+          onClose={() => toggleTermConditonModal()}
+        />
+      )}
     </>
   );
 };

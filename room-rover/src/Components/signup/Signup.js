@@ -17,9 +17,8 @@ export default function Signup() {
     // cnic: "",
   });
 
-  const hanldechange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-
     setUser({
       ...user,
       [name]: value,
@@ -38,11 +37,7 @@ export default function Signup() {
 
   const handleFileChange = (event) => {
     const newFiles = event.target.files;
-    const updatedFiles = [...file];
-    for (let i = 0; i < newFiles.length; i++) {
-      updatedFiles.push(newFiles[i]);
-    }
-    setFile(updatedFiles);
+    setFile([...file, ...newFiles]);
   };
 
   // const validateCNIC = (cnic) => {
@@ -115,7 +110,7 @@ export default function Signup() {
                 id="name"
                 className="inputs"
                 placeholder="Enter Your Full Name"
-                onChange={hanldechange}
+                onChange={handleChange}
               />
             </div>
             <div className="form-group">
@@ -129,7 +124,7 @@ export default function Signup() {
                 id="email"
                 className="inputs"
                 placeholder="Enter Your email Id"
-                onChange={hanldechange}
+                onChange={handleChange}
               />
             </div>
             <div className="form-group">
@@ -143,7 +138,7 @@ export default function Signup() {
                 id="number"
                 className="inputs"
                 placeholder="Enter Your Phone Number"
-                onChange={hanldechange}
+                onChange={handleChange}
               />
             </div>
             <div className="form-group">
@@ -157,7 +152,7 @@ export default function Signup() {
                 id="pass"
                 className="inputs"
                 placeholder="Enter Your Password"
-                onChange={hanldechange}
+                onChange={handleChange}
               />
             </div>
             {/* <div className="form-group">
@@ -171,7 +166,7 @@ export default function Signup() {
                 id="cnic"
                 className={"inputs" + (message ? " invalid" : "")}
                 placeholder="Enter Your CNIC"
-                onChange={hanldechange}
+                onChange={handleChange}
               />
             </div> */}
             <div className="form-group">
@@ -180,7 +175,7 @@ export default function Signup() {
                 name="userType"
                 value={user.userType}
                 className="inputs select-one"
-                onChange={hanldechange}
+                onChange={handleChange}
               >
                 <option value="">Select User Type</option>
                 <option value="tenant">Tenant</option>
@@ -196,7 +191,7 @@ export default function Signup() {
                   id="male"
                   name="gender"
                   value="male"
-                  onChange={hanldechange}
+                  onChange={handleChange}
                 />
                 <label htmlFor="female" className="female">
                   Female
@@ -206,7 +201,7 @@ export default function Signup() {
                   id="female"
                   name="gender"
                   value="female"
-                  onChange={hanldechange}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -239,7 +234,7 @@ export default function Signup() {
           </button>
 
           <p id="para-login" className="my-3">
-            Already have an account ? <Link to="/Login">Login</Link>
+            Already have an account? <Link to="/Login">Login</Link>
           </p>
         </div>
       </div>

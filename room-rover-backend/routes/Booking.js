@@ -4,6 +4,7 @@ import Booking from "../models/Booking.js";
 import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 import User from "../models/User.js";
+import formData from "../models/PropertyForm.js";
 
 dotenv.config();
 
@@ -269,6 +270,25 @@ booking.delete("/:userId/:productId", async (req, res) => {
   } catch (error) {
     console.error("Error deleting booking:", error);
     res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+booking.put("/:bookingId/cancel", async (req, res) => {
+  const { bookingId } = req.params;
+
+  try {
+    await Booking.findByIdAndUpdate(bookingId, { $set: { status: "waiting" } });
+
+    await formData.findOneAndUpdate(
+      { "booking.user": bookingId },
+      { $set: { "booking.status": "waiting" } },
+      { new: true }
+    );
+
+    res.send({ message: "Booking status updated successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error.");
   }
 });
 

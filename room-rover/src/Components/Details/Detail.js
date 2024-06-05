@@ -156,6 +156,9 @@ const Detail = () => {
               <p>
                 <strong>Email:</strong> {product.postedBy?.email}
               </p>
+              {/* <p>
+                <strong>Booking Status:</strong> <span className="green-one">{product.booking.status === `approved`? `Booked`: product.booking.status }</span> 
+              </p> */}
             </div>
           </div>{" "}
           <br />

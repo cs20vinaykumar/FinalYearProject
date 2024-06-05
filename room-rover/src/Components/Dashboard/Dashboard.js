@@ -109,8 +109,14 @@ function Dashboard(props) {
             ? (product.propertyType.room || product.propertyType.flat) ===
               selectedType
             : true) &&
-          (minPrice ? product.pricing.rent >= minPrice : true) &&
-          (maxPrice ? product.pricing.rent <= maxPrice : true)
+          (minPrice
+            ? parseFloat(product.pricing.rent.replace(/,/g, "")) >=
+              parseFloat(minPrice.replace(/,/g, ""))
+            : true) && // Compare with parsed and unformatted minPrice
+          (maxPrice
+            ? parseFloat(product.pricing.rent.replace(/,/g, "")) <=
+              parseFloat(maxPrice.replace(/,/g, ""))
+            : true) // Compare with parsed and unformatted maxPrice
       );
     }
   };

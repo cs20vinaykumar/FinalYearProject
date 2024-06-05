@@ -58,6 +58,29 @@
 .upload-section {
   margin-bottom: 20px;
 }
+.image-preview {
+  position: relative;
+}
+
+.delete-icon {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.delete-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: red; /* Adjust the color as needed */
+}
+
+.image-preview img {
+  max-width: 200px; /* Adjust the size as needed */
+}
 
 .file-label {
   background-color: #007bff;
@@ -236,7 +259,7 @@ h4 {
   font-weight: 200;
 }
 
-.seperator{
+.seperator {
   width: 100%;
   color: black;
   border-radius: 40%;

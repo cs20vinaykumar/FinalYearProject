@@ -11,7 +11,7 @@ GetForm.get("/", async (req, res) => {
       .sort("-createdAt");
     res.status(200).json(data);
   } catch (error) {
-    console.error(err);
+    console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

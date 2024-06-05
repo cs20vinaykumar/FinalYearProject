@@ -28,7 +28,7 @@ uploadForm.post("/", upload.array("file", 10), async (req, res) => {
     const accountDetails = JSON.parse(req.body.accountDetails);
     const formDataEntry = new formData({
       ...req.body,
-      file: fileNames, 
+      file: fileNames,
       timeSlots: timeSlots,
       accountDetails: accountDetails,
       postedBy: req.user,

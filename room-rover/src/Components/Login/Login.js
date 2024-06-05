@@ -2,20 +2,18 @@ import React, { useState } from "react";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Login(props) {
+export default function Login() {
   const navigate = useNavigate();
-  const [message, setMessage] = useState(false);
-  const [password, setPassword] = useState(true);
+  const [message, setMessage] = useState(""); 
+  const [passwordVisible, setPasswordVisible] = useState(false); 
 
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
 
-  const hanldechange = (e) => {
-    console.log(e.target);
+  const handleChange = (e) => {
     const { name, value } = e.target;
-
     setUser({
       ...user,
       [name]: value,
@@ -38,7 +36,6 @@ export default function Login(props) {
 
       if (data.message === "Login Successful") {
         const token = data.token;
-
         localStorage.setItem("token", token);
 
         setTimeout(() => {
@@ -47,75 +44,78 @@ export default function Login(props) {
       }
     } catch (error) {
       console.error("Login error:", error);
+      setMessage("An error occurred during login. Please try again.");
     }
   };
 
-  const handleClick = () => {
-    setPassword(!password);
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
   };
 
   return (
-    <>
-      <div className="main-container vh-100 gradient-custom">
-        <div className="main-content">
-          <div className="signup">
-            <div className="image" id="svgimg"></div>
-            <h4>Login</h4> <br />
-            <form action="" className="form-class">
-              <div className="form-group ">
-                <label htmlFor="email" className="labels">
-                  Email Id
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className="inputs"
-                  value={user.email}
-                  placeholder="Enter your email"
-                  onChange={hanldechange}
-                  required
-                />
-              </div>
+    <div className="main-container vh-100 gradient-custom">
+      <div className="main-content">
+        <div className="signup">
+          <div className="image" id="svgimg"></div>
+          <h4>Login</h4> <br />
+          <form className="form-class">
+            <div className="form-group">
+              <label htmlFor="email" className="labels">
+                Email Id
+              </label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                className="inputs"
+                value={user.email}
+                placeholder="Enter your email"
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-              <div className="form-group ">
-                <label htmlFor="password" className="labels">
-                  Password
-                </label>
-                <input
-                  type={password ? "password" : "text"}
-                  name="password"
-                  id="password"
-                  value={user.password}
-                  className="inputs "
-                  placeholder="Enter your password"
-                  onChange={hanldechange}
-                  required
-                />
-
-                <i class="fa-solid fa-eye icon3" onClick={handleClick}></i>
-              </div>
-            </form>
-            <br />
-            <br />
-            <button className="btn btn-primary" onClick={login}>
-              Login
-            </button>{" "}
-            <br />
-            <button className="btn btn-primary">
-              <Link to="/Login/Forgot" className="login-forgot">
-                Forgot Password ?
-              </Link>{" "}
-            </button>
-            <br />
-            <p className="tomato-red">{message}</p>
-            <br />
-            <p id="para-login " className="my-3 text-color">
-              Dont have an account ? <Link to="/Signup">Sign up</Link>
-            </p>
-          </div>
+            <div className="form-group">
+              <label htmlFor="password" className="labels">
+                Password
+              </label>
+              <input
+                type={passwordVisible ? "text" : "password"}
+                name="password"
+                id="password"
+                value={user.password}
+                className="inputs"
+                placeholder="Enter your password"
+                onChange={handleChange}
+                required
+              />
+              <i
+                className={`fa-solid fa-eye icon3 ${
+                  passwordVisible ? "visible" : ""
+                }`}
+                onClick={togglePasswordVisibility}
+              ></i>{" "}
+            </div>
+          </form>
+          <br />
+          <br />
+          <button className="btn btn-primary" onClick={login}>
+            Login
+          </button>
+          <br />
+          <button className="btn btn-primary">
+            <Link to="/Login/Forgot" className="login-forgot">
+              Forgot Password?
+            </Link>
+          </button>
+          <br />
+          <p className="tomato-red">{message}</p>{" "}
+          <br />
+          <p id="para-login" className="my-3 text-color">
+            Don't have an account? <Link to="/Signup">Sign up</Link>
+          </p>
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -25,11 +25,11 @@ Complaint.post("/:productId", async (req, res) => {
         status: { $ne: "resolved" }, // Exclude resolved complaints
       });
 
-      if (userComplaintsCount >= 3) {
-        // Block user
-        await User.findByIdAndUpdate(againstId, { blocked: true });
-        return res.status(400).json({ message: "User has been blocked" });
-      }
+      // if (userComplaintsCount >= 3) {
+      //   // Block user
+      //   await User.findByIdAndUpdate(againstId, { blocked: true });
+      //   return res.status(400).json({ message: "User has been blocked" });
+      // }
 
       const newComplaint = new Complain({
         userId,
