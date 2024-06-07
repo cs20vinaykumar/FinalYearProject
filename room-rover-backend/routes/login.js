@@ -31,6 +31,10 @@ router.post("/", async (req, res) => {
       return res.status(401).json({ message: "Password didn't match" });
     }
 
+    if(user.blocked === true){
+      return res.status(901).json({message: "Your account is blocked by admin. Contact Admin"})
+    }
+
     if (!user.approvedByAdmin) {
       return res.status(403).json({ message: "Your account is pending approval by admin" });
     }

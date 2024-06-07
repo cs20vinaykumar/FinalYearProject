@@ -26,6 +26,7 @@ import RequestVisit from "../room-rover-backend/routes/RequestVisit.js";
 import Complaint from "./routes/Complaint.js";
 import cityRouter from "./routes/City.js";
 import path from "path";
+import userBlocked from "./routes/userBlocked.js"
 import propertyViews from "./routes/PropertyView.js";
 // import searchUser from "./routes/SearchUser.js";
 
@@ -93,6 +94,7 @@ app.use("/complaints", authMiddleware, Complaint);
 app.use("/Cities", authMiddleware, cityRouter);
 app.use("/chat", authMiddleware, routerChat);
 app.use("/property", authMiddleware, propertyViews);
+app.use("/Blocked-user", authMiddleware, userBlocked)
 
 // Socket.io connection handling
 io.on("connection", (socket) => {

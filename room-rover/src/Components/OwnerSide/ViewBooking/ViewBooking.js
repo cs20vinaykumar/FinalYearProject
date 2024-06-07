@@ -6,7 +6,7 @@ import "./ViewBooking.css";
 const ViewBookings = () => {
   const { productId } = useParams();
   const [bookings, setBookings] = useState([]);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -19,7 +19,7 @@ const ViewBookings = () => {
             },
           }
         );
-        console.log("Fetched bookings:", response.data); // Debugging: Log fetched bookings
+        console.log("Fetched bookings:", response.data);
         setBookings(response.data);
         setLoading(false);
       } catch (error) {
@@ -35,16 +35,20 @@ const ViewBookings = () => {
     try {
       await axios.put(
         `http://localhost:4000/booking/${bookingId}/status`,
-        { status: "approved" }, // Change status to "accepted"
+        { status: "approved" },
         {
           headers: {
             authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      // Refresh bookings after approval
-      setBookings();
-      window.location.reload();
+      setBookings((prevBookings) =>
+        prevBookings.map((booking) =>
+          booking.bookingId === bookingId
+            ? { ...booking, status: "approved" }
+            : booking
+        )
+      );
     } catch (error) {
       console.error("Error approving booking:", error);
     }
@@ -61,45 +65,53 @@ const ViewBookings = () => {
           },
         }
       );
-
-      setBookings();
-      window.location.reload();
+      setBookings((prevBookings) =>
+        prevBookings.map((booking) =>
+          booking.bookingId === bookingId
+            ? { ...booking, status: "rejected" }
+            : booking
+        )
+      );
     } catch (error) {
       console.error("Error rejecting booking:", error);
     }
   };
+
   const handleCancelBooking = async (bookingId) => {
+    const reason = prompt("Please provide a reason for cancellation:");
+    if (!reason) {
+      alert("Cancellation reason is required");
+      return;
+    }
+
     try {
       await axios.put(
         `http://localhost:4000/booking/${bookingId}/cancel`,
-        {},
+        { reason },
         {
           headers: {
             authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      await axios.put(
-        `http://localhost:4000/PropertyForm/${productId}/booking`,
-        { status: "waiting" }, // Update status directly to "waiting"
-        {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      setBookings((prevBookings) =>
-        prevBookings.filter((booking) => booking._id !== bookingId)
-      );
+      alert("Booking cancelled successfully");
       window.location.reload();
+      setBookings((prevBookings) =>
+        prevBookings.filter((booking) => booking.bookingId !== bookingId)
+      );
     } catch (error) {
-      console.error("Error cancelling booking:", error);
+      if (error.response && error.response.status === 400) {
+        alert(error.response.data.message);
+      } else {
+        console.error("Error cancelling booking:", error);
+      }
     }
   };
 
   return (
     <div className="booking-container">
-      <h2>Accept it or Reject Booking</h2> <br />
+      <h2>Accept or Reject Booking</h2>
+      <br />
       {loading ? (
         <p>Loading...</p>
       ) : (
@@ -117,7 +129,7 @@ const ViewBookings = () => {
                   <>
                     <button onClick={() => handleApprove(post.bookingId)}>
                       Approve
-                    </button>{" "}
+                    </button>
                     <button onClick={() => handleReject(post.bookingId)}>
                       Reject
                     </button>
@@ -136,4 +148,5 @@ const ViewBookings = () => {
     </div>
   );
 };
+
 export default ViewBookings;

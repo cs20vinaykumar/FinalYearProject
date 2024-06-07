@@ -2,11 +2,23 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Dropdown, Modal, Button } from "react-bootstrap";
 import "./post.css";
+import Typed from "typed.js";
 
 export default function Post() {
   const [products, setProducts] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [productToDelete, setProductToDelete] = useState(null);
+
+  useEffect(() => {
+    let typed = new Typed(".headinv", {
+      strings: ["  Here are the post you published."],
+      typeSpeed: 20,
+    });
+
+    return () => {
+      typed.destroy();
+    };
+  }, []);
 
   useEffect(() => {
     fetch("http://localhost:4000/mypost", {
@@ -61,9 +73,7 @@ export default function Post() {
       <div className="dashboard">
         <legend>My Post</legend>
         <hr className="lakeer" />
-        <div div className="headinv">
-          Here is the post you published.
-        </div>
+        <div div className="headinv"></div>
       </div>
       <br /> <br />
       <div className="main">
@@ -124,18 +134,19 @@ export default function Post() {
                   <p className="card-text">
                     Rent <b>{product.pricing && product.pricing.rent}</b>
                   </p>
-                  <Link
-                    to={`/product/${product._id}`}
-                    className="btn btn-primary btnSee btn-details-mdeia "
-                    style={{ marginLeft: "20px" }}
-                  >
-                    See Details
-                  </Link>{" "}
-                  <Link to={`/booking/product/${product._id}`}>
-                    <button className="btn btn-success btn-media">
-                      View Booking
-                    </button>
-                  </Link>
+                  <div className="button-container">
+                    <Link
+                      to={`/product/${product._id}`}
+                      className="custom-button"
+                    >
+                      See Details
+                    </Link>
+                    <Link to={`/booking/product/${product._id}`}>
+                      <button className="custom-view-button">
+                        View Booking
+                      </button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}

@@ -13,6 +13,7 @@ import UserPending from './Components/UserPending/UserPending';
 import Profile from './Components/Profile/Profile';
 import Detail from './Components/Details/Details';
 import Complain from './Components/Complain/Complain';
+import UserBlock from './Components/UserBlock/UserBlock';
 
 function App() {
   return (
@@ -30,8 +31,9 @@ function App() {
           <Route exact path="/UserBooking/:userId" element={<UserBooking />} />
           <Route exact path="/UserPending" element={<UserPending />} />
           <Route exact path="/Profile" element={<Profile />} />
-          <Route path="/product/:productId" element={<Detail />} />
-          <Route path="/Complaints" element={<Complain />} />
+          <Route exact path="/product/:productId" element={<Detail />} />
+          <Route exact path="/Complaints" element={<Complain />} />
+          <Route exact path="/user-block" element={<UserBlock />} />
           </Routes>
         </Router>
 </>

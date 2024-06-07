@@ -3,6 +3,7 @@ import "./Dashboard.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
+import Typed from "typed.js";
 // import FormatPrice from "../Helper/FormatPrice";
 
 function Dashboard(props) {
@@ -21,6 +22,25 @@ function Dashboard(props) {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [userLocation, setUserLocation] = useState(null);
+  const [showMap, setShowMap] = useState(false);
+
+  const toggleMap = () => {
+    setShowMap(!showMap);
+  };
+  useEffect(() => {
+    let typed = new Typed(".headinv", {
+      strings: [
+        "Welcome at the Room Rover",
+        "Find Your Ideal room for rent.",
+        "Find home together",
+      ],
+      typeSpeed: 20,
+    });
+
+    return () => {
+      typed.destroy();
+    };
+  }, []);
 
   useEffect(() => {
     fetchData();
@@ -173,7 +193,7 @@ function Dashboard(props) {
           </button>
           <div className="collapse navbar-collapse" id="navbarNavDropdown">
             <ul className="navbar-nav">
-              <li className="nav-item dropdown ">
+              <li className="nav-item dropdown">
                 <Link
                   className="nav-link dropdown-toggle"
                   to="/"
@@ -215,7 +235,6 @@ function Dashboard(props) {
                 </ul>
               </li>
               {/* ---------------------------------------------------------- */}
-
               <li className="nav-item dropdown">
                 <Link
                   className="nav-link dropdown-toggle"
@@ -231,7 +250,7 @@ function Dashboard(props) {
                   aria-labelledby="navbarDropdownMenuLink"
                 >
                   <li
-                    className="dropdown-item dropdown-item-media "
+                    className="dropdown-item dropdown-item-media"
                     onMouseEnter={() => setShowFlatSubDropdown(true)}
                     onMouseLeave={() => setShowFlatSubDropdown(false)}
                   >
@@ -310,7 +329,6 @@ function Dashboard(props) {
                   </li>
                 </ul>
               </li>
-
               {/* -------------------------------------------------- */}
               <li className="nav-item dropdown">
                 <Link
@@ -340,35 +358,39 @@ function Dashboard(props) {
                     value={maxPrice}
                     onChange={handleMaxPriceChange}
                   />
-                  {/* <button onClick={handleClear}>Clear Price Range</button> */}
                 </div>
               </li>
-
-              <li className="nav-item active">
-                {isFiltered && (
-                  <Link
-                    className="nav-link"
-                    to="/Dashboard"
-                    onClick={handleClear}
-                  >
-                    <i className="fa-regular fa-circle-xmark"></i>{" "}
-                    <span>Clear Filter</span>
-                  </Link>
-                )}
+              {/* ----------------------------------Map Button---------------------------------- */}
+              <li className="nav-item">
+                <div className="toggle-map-button nav-link" onClick={toggleMap}>
+                  {showMap ? "Hide Map" : "Show Map"}
+                </div>
               </li>
               {/* --------------------SEARCH BAR-------------------------------------- */}
-              <li>
+              <li className="nav-item search-bar-container">
                 <div className="search-barr">
                   <i className="fa-solid fa-location-dot fa-2xs icon-1"></i>
                   <input
                     type="text"
                     name="eingabe"
                     className="input-text-2 searchbarr"
-                    placeholder="Search, Flat, Rooms"
+                    placeholder="Search by City, Flat and Rooms"
                     onChange={searchHandle}
                   />
                 </div>
               </li>
+              {/* --------------------CLEAR FILTER------------------------------------ */}
+              {isFiltered && (
+                <li className="nav-item clear-filter-btn">
+                  <Link
+                    className="nav-link"
+                    to="/Dashboard"
+                    onClick={handleClear}
+                  >
+                    <i className="fa-regular fa-circle-xmark"></i> Clear Filter
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>
@@ -376,63 +398,71 @@ function Dashboard(props) {
       <div className="dashboard">
         <legend>dashboard</legend>
         <hr className="lakeer lakeer-media" />
-        <div className="headinv">Welcome to Room Rover </div>
+        <div className="headinv"></div>
       </div>
       <br /> <br />
       <div className="main">
         <div className="grid-container">
-          {productsToDisplay
-            .filter((Product) => Product.booking.status !== "approved") // Filter out products with approved booking status
-            .map((Product) => (
-              <div
-                key={Product._id}
-                className="card"
-                style={{ width: "20rem" }}
-              >
-                <img
-                  className="card-img-top image"
-                  src={`http://localhost:4000/assets/${Product.file[0]}`}
-                  alt={Product.altText || "Product Image"}
-                />
-                <div className="card-body" key={Product._id}>
-                  <h5 className="card-title">{Product.title}</h5>
-                  <h5 className="card-title">
-                    <b>
-                      {Product.area}, {Product.location}
-                    </b>
-                  </h5>
-                  <p className="card-text">
-                    {Product.propertyType.room || Product.propertyType.flat}
-                  </p>
-                  <p className="card-text">
-                    <strong>Rent:</strong> Rs{" "}
-                    {Product.pricing && Product.pricing.rent}
-                    {/* {
+          <div
+            className={`grid-container ${
+              showMap ? "grid-container-map-shown" : ""
+            }`}
+          >
+            {productsToDisplay
+              .filter((Product) => Product.booking.status !== "approved") // Filter out products with approved booking status
+              .map((Product) => (
+                <div
+                  key={Product._id}
+                  className="card"
+                  style={{ width: "20rem" }}
+                >
+                  <img
+                    className="card-img-top image"
+                    src={`http://localhost:4000/assets/${Product.file[0]}`}
+                    alt={Product.altText || "Product Image"}
+                  />
+                  <div className="card-body" key={Product._id}>
+                    <h5 className="card-title">{Product.title}</h5>
+                    <h5 className="card-title">
+                      <b>
+                        {Product.area}, {Product.location}
+                      </b>
+                    </h5>
+                    <p className="card-text">
+                      {Product.propertyType.room || Product.propertyType.flat}
+                    </p>
+                    <p className="card-text">
+                      <strong>Rent:</strong> Rs{" "}
+                      {Product.pricing && Product.pricing.rent}
+                      {/* {
                     <FormatPrice
                       price={Product.pricing && Product.pricing.rent}
                     />
                   } */}
-                  </p>
-                  <Link
-                    to={`/product/${Product._id}`}
-                    className="btn btn-primary btnSee btn-details-mdeia"
-                  >
-                    See Details
-                  </Link>{" "}
+                    </p>
+                    <Link
+                      to={`/product/${Product._id}`}
+                      className="btn btn-primary btnSee btn-details-mdeia"
+                    >
+                      See Details
+                    </Link>{" "}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+          </div>
         </div>
       </div>
-      <div className="map">
-        <Map
-          google={props.google}
-          initialCenter={{ lat: 25.8943, lng: 68.5247 }}
-          zoom={14}
-        >
-          {userLocation && <Marker position={userLocation} />}
-        </Map>
-      </div>
+      {showMap && (
+        <div className="map">
+          <Map
+            google={props.google}
+            initialCenter={{ lat: 25.8943, lng: 68.5247 }}
+            zoom={14}
+          >
+            {userLocation && <Marker position={userLocation} />}
+          </Map>
+        </div>
+      )}
     </>
   );
 }

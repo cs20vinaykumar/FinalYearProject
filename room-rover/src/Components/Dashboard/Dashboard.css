@@ -1,29 +1,59 @@
-.filters {
-  height: 55px;
+body {
+  font-family: Arial, sans-serif;
 }
-.main {
-  display: flex;
-  justify-content: space-between;
-  margin: 50px 40px;
+
+/* Navbar and Filters */
+.navbar.filters {
   z-index: 1;
 }
 
+.filters {
+  height: 55px;
+  position: relative;
+  z-index: 10;
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.nav-item {
+  position: relative;
+  margin-right: 20px;
+}
+
+.clear-filter-btn {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+/* Main Layout */
+.main {
+  display: flex;
+  justify-content: space-between;
+  margin: 25px 40px;
+}
+
+/* Grid Containers */
 .grid-container {
   display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 30px;
+}
+
+.grid-container-map-shown {
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 16px;
+  grid-gap: 16px;
 }
 
-.btnSee {
-  margin-left: 80px;
-}
-
-.image {
-  height: 150px;
-}
-
+/* Cards */
 .card {
   max-width: 100%;
+  transition: background 0.3s ease;
 }
 
 .card:hover {
@@ -31,69 +61,70 @@
   backdrop-filter: blur(10px);
 }
 
+.image {
+  height: 150px;
+}
+
+.btnSee {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Dashboard */
 .dashboard {
   position: relative;
   left: 5px;
-  background-color: white;
 }
 
-legend {
-  border-bottom: 0px !important;
-  width: auto !important;
-  text-transform: uppercase;
-  font-size: 21px;
-  padding-right: 15px;
-  color: #063566;
-  font-weight: 600;
-  position: absolute;
-  top: 30px;
-  left: 45px;
+/* Toggle Map Button */
+.toggle-map-button {
+  display: block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #212529;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.lakeer {
-  position: absolute;
-  top: 46px;
-  left: 189px;
-  width: 54vw;
-  border: 2px solid #0c54a3 !important;
-  border-bottom: 0px;
-  border-left: 0px !important;
-  border-right: 0px !important;
-  border-bottom: 0px !important;
-  padding: 0px !important;
-  margin: 0 2px !important;
+.toggle-map-button:hover,
+.toggle-map-button:focus {
+  background-color: #f8f9fa;
+  color: #007bff;
 }
 
-.headinv {
-  text-transform: uppercase;
-  font-size: 21px;
-  font-weight: 600;
-  position: absolute;
-  left: 32%;
-  top: 15px;
-  color: #063566;
+.toggle-map-button:focus {
+  outline: none;
 }
 
-.map {
-  position: absolute;
-  right: 25px;
-  top: 220px;
-  height: 495px;
-  width: 30%;
+/* Search Bar */
+.search-bar-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 1000;
+  position: relative;
 }
 
 .search-barr {
-  margin-left: 80%;
+  margin-left: auto;
   margin-top: 2px;
   position: relative;
+  width: 100%;
+  max-width: 400px;
+  z-index: 1001;
 }
+
 .search-barr .icon-1 {
   position: absolute;
-  top: 63%;
+  top: 50%;
   left: 10px;
   transform: translateY(-50%);
   height: 10px;
   font-size: 18px;
+  z-index: 1002;
 }
 
 .search-barr .input-text-2 {
@@ -103,11 +134,14 @@ legend {
   background-color: #b0abab65;
   padding: 10px 10px 10px 35px;
   border-radius: 8px;
+  z-index: 1003;
 }
-.search-barr .input-text:focus {
+
+.search-barr .input-text-2:focus {
   background-color: #ccc;
 }
 
+/* Dropdown Menus */
 .dropdown-menu {
   display: none;
   position: absolute;
@@ -151,7 +185,6 @@ legend {
 .dropdown-item:focus {
   color: #1e2125;
   text-decoration: none;
-  /* background-color: #f8f9fa; */
   background-color: #b0b1b2;
 }
 
@@ -178,6 +211,7 @@ legend {
   display: block;
 }
 
+/* Price Range Filter */
 .price-range-filter {
   display: none;
   position: absolute;
@@ -191,10 +225,57 @@ legend {
   display: block;
 }
 
+/* Miscellaneous */
+legend {
+  border-bottom: 0;
+  width: auto;
+  text-transform: uppercase;
+  font-size: 21px;
+  padding-right: 15px;
+  color: #063566;
+  font-weight: 600;
+  position: absolute;
+  top: 30px;
+  left: 45px;
+}
+
+.lakeer {
+  position: absolute;
+  top: 46px;
+  left: 189px;
+  width: 54vw;
+  border: 2px solid #0c54a3;
+  border-bottom: 0;
+  border-left: 0;
+  border-right: 0;
+  padding: 0;
+  margin: 0 2px;
+}
+
+.headinv {
+  text-transform: uppercase;
+  font-size: 21px;
+  font-weight: 600;
+  position: absolute;
+  left: 32%;
+  top: 15px;
+  color: #063566;
+}
+
+.map {
+  position: absolute;
+  right: 25px;
+  top: 220px;
+  height: 495px;
+  width: 30%;
+}
+
+/* Media Queries */
 @media only screen and (max-width: 600px) {
   .filters {
     z-index: 1;
   }
+
   .navbar-nav {
     background-color: #333;
     color: white;
@@ -215,6 +296,7 @@ legend {
   .dropdown-item-media {
     margin-left: 20px;
   }
+
   .dropdown-menu {
     margin-left: -23px;
   }
@@ -266,6 +348,7 @@ legend {
   .dropdown-item {
     padding: 10px 15px;
   }
+
   .headinv {
     text-transform: uppercase;
     font-size: 12px;
@@ -277,8 +360,8 @@ legend {
   }
 
   legend {
-    border-bottom: 0px !important;
-    width: auto !important;
+    border-bottom: 0;
+    width: auto;
     text-transform: uppercase;
     font-size: 18px;
     padding-right: 15px;
@@ -288,18 +371,18 @@ legend {
     top: 45px;
     left: 25px;
   }
+
   .lakeer {
     position: absolute;
     top: 60px;
     left: 155px;
     width: 54vw;
-    border: 2px solid #0c54a3 !important;
-    border-bottom: 0px;
-    border-left: 0px !important;
-    border-right: 0px !important;
-    border-bottom: 0px !important;
-    padding: 0px !important;
-    margin: 0 2px !important;
+    border: 2px solid #0c54a3;
+    border-bottom: 0;
+    border-left: 0;
+    border-right: 0;
+    padding: 0;
+    margin: 0 2px;
   }
 
   .map {

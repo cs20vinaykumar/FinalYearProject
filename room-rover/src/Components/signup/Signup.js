@@ -180,6 +180,7 @@ export default function Signup() {
                 <option value="">Select User Type</option>
                 <option value="tenant">Tenant</option>
                 <option value="owner">Owner</option>
+                <option value="both">Both Tenant and Owner</option>
               </select>
             </div>
             <div className="form-group">

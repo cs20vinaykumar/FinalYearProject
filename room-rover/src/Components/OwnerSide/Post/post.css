@@ -12,6 +12,43 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.button-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.custom-button,
+.custom-view-button {
+  width: 100%;
+  height: 40px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 4px;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.custom-button:hover,
+.custom-view-button:hover {
+  background-color: #0056b3;
+}
+
+.custom-view-button {
+  background-color: #28a745;
+}
+
+.custom-view-button:hover {
+  background-color: #218838;
+}
+
 @media only screen and (max-width: 600px) {
   .grid-container {
     display: grid;

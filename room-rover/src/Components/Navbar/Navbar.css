@@ -10,7 +10,6 @@ body {
   background-color: rgb(240, 238, 238);
 }
 
-/* ---------------Navbar------------------- */
 nav-head {
   height: 70px;
   width: 100vw;
@@ -45,14 +44,6 @@ ul li {
 .green {
   color: #00ed64;
 }
-/* .logo-image{
-  background: url('E:\FinalYearProject\room-rover\Images\Logo.png');
-  height: 50px;
-  width: 50px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-} */
 
 nav-head ul li a {
   text-decoration: none;
@@ -74,6 +65,7 @@ nav-head ul li a::after {
   bottom: -6px;
   left: 0;
 }
+
 nav-head ul li a:hover::after {
   width: 100%;
   transition: 0.5s;
@@ -124,27 +116,27 @@ ul li {
 .buton {
   margin: 0;
 }
-.fa-cart-shopping{
+
+.fa-cart-shopping {
   margin-top: 10px;
 }
 
-/* --------------------------------css for small scree-------------------------------- */
 .right-text .fas {
   display: none;
 }
+
 .hamburger-icon {
-  display: none; /* Hide by default on larger screens */
+  display: none;
   cursor: pointer;
-  transition: transform 0.3s ease-in-out; /* Transition for hamburger icon */
+  transition: transform 0.3s ease-in-out;
 }
 
-/* Navigation Menu */
 .nav-menu {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
-  transition: transform 0.3s ease-in-out; /* Transition for navigation menu */
+  transition: transform 0.3s ease-in-out;
 }
 
 .nav-item {
@@ -174,7 +166,6 @@ ul li {
     cursor: pointer;
   }
 
-  /* Side Menu */
   #sidemenu {
     transition: right 0.3s ease-in-out;
     position: fixed;
@@ -194,7 +185,6 @@ ul li {
     right: 0;
   }
 
-  /* Menu Items */
   #sidemenu li {
     margin-bottom: 20px;
   }

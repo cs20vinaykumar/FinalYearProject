@@ -51,11 +51,12 @@ function Upload(props) {
       "Clifton Block 8",
       "Clifton Block 9",
       "Clifton Block 5",
+      "Cant Station",
       "DHA Phase 1",
       "DHA Phase 5",
     ],
     Hyderabad: ["Qasimabad ", "Latifabad", "Tando Jam"],
-    Sukkur: ["New Sukkur", "Sukkur City", " Rohri"],
+    Sukkur: ["New Sukkur", "Sukkur City", " Rohri", "Military Road"],
   };
 
   const handleLocationChange = (event) => {

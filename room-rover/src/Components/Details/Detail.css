@@ -245,8 +245,10 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   width: 60%;
   margin: auto;
-  height: 250px;
+  /* Remove fixed height */
+  /* height: 250px; */
 }
+
 
 .head-des {
   margin-left: 50px;
@@ -259,13 +261,16 @@
 }
 
 .description-1 {
-  height: 250px;
+  /* Remove fixed height */
+  /* height: 250px; */
   width: 90%;
   font-size: medium;
   margin: initial;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  /* Allow content to determine height */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
-
 #bottom-side {
   margin-top: 50px;
 }
@@ -335,7 +340,7 @@
     display: inline-block;
     width: 80vw;
     position: absolute;
-    top: 26%;
+    top: 22%;
     left: 23px;
   }
 
@@ -359,6 +364,12 @@
     color: #555;
     text-align: center;
     margin-left: 75px;
+  }
+  .description-1 {
+    width: 100%;
+    /* Ensure content determines height */
+    /* Remove fixed height */
+    /* height: auto; */
   }
 
   .Details-button {
@@ -398,6 +409,9 @@
   .head-des-container {
     width: 100%;
     margin-left: 10px;
+    /* Ensure content determines height */
+    /* Remove fixed height */
+    /* height: auto; */
   }
 
   .size-font-amenities {

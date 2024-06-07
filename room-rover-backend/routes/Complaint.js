@@ -2,8 +2,19 @@ import express from "express";
 import Complain from "../models/Complaint.js";
 import formData from "../models/PropertyForm.js";
 import User from "../models/User.js";
+import nodemailer from "nodemailer";
 
 const Complaint = express.Router();
+
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: process.env.SMTP_PORT,
+  secure: true,
+  auth: {
+    user: process.env.SMTP_MAIL,
+    pass: process.env.SMTP_PASSWORD,
+  },
+});
 
 Complaint.post("/:productId", async (req, res) => {
   try {
@@ -24,12 +35,6 @@ Complaint.post("/:productId", async (req, res) => {
         againstId,
         status: { $ne: "resolved" }, // Exclude resolved complaints
       });
-
-      // if (userComplaintsCount >= 3) {
-      //   // Block user
-      //   await User.findByIdAndUpdate(againstId, { blocked: true });
-      //   return res.status(400).json({ message: "User has been blocked" });
-      // }
 
       const newComplaint = new Complain({
         userId,
@@ -73,17 +78,36 @@ Complaint.get("/", async (req, res) => {
     res.status(500).json({ message: "Failed to fetch complaints" });
   }
 });
-
 Complaint.put("/:id/resolve", async (req, res) => {
   try {
+    const { message } = req.body;
     const complaint = await Complain.findByIdAndUpdate(
       req.params.id,
       { status: "resolved" },
       { new: true }
     );
+
     if (!complaint) {
       return res.status(404).json({ message: "Complaint not found" });
     }
+
+    const user = await User.findById(complaint.userId);
+    if (user && user.email) {
+      const mailOptions = {
+        from: "your-email@example.com",
+        to: user.email,
+        subject: "Your complaint has been resolved",
+        text: `Your complaint has been resolved.\nMessage from admin: ${message}`,
+      };
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error("Error sending email:", error);
+        } else {
+          console.log("Email sent:", info.response);
+        }
+      });
+    }
+
     res
       .status(200)
       .json({ message: "Complaint resolved successfully", complaint });
@@ -93,7 +117,6 @@ Complaint.put("/:id/resolve", async (req, res) => {
   }
 });
 
-// Delete complaint endpoint
 Complaint.delete("/:id", async (req, res) => {
   try {
     const complaint = await Complain.findByIdAndDelete(req.params.id);
@@ -104,6 +127,40 @@ Complaint.delete("/:id", async (req, res) => {
   } catch (error) {
     console.error("Error deleting complaint:", error);
     res.status(500).json({ message: "Failed to delete complaint" });
+  }
+});
+
+Complaint.put("/check-block-status/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    // Count unresolved complaints against the user
+    const unresolvedComplaintsCount = await Complain.countDocuments({
+      againstType: "user",
+      againstId: userId,
+      status: { $ne: "resolved" },
+    });
+
+    if (unresolvedComplaintsCount > 3) {
+      // Update the user's blocked status to true
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { blocked: true },
+        { new: true }
+      );
+
+      return res.status(200).json({
+        message: "User blocked due to excessive complaints",
+        user: updatedUser,
+      });
+    } else {
+      return res.status(200).json({
+        message: "User has less than 3 unresolved complaints",
+      });
+    }
+  } catch (error) {
+    console.error("Error checking user block status:", error);
+    res.status(500).json({ message: "Failed to check user block status" });
   }
 });
 

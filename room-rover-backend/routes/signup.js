@@ -243,6 +243,10 @@ routers.get("/admin/user-statistics", async (req, res) => {
       userType: "owner",
       approvedByAdmin: true,
     });
+    const bothCount = await User.countDocuments({
+      userType: "both",
+      approvedByAdmin: true,
+    });
     const tenantCount = await User.countDocuments({
       userType: "tenant",
       approvedByAdmin: true,
@@ -255,6 +259,7 @@ routers.get("/admin/user-statistics", async (req, res) => {
       maleCount,
       femaleCount,
       ownerCount,
+      bothCount,
       tenantCount,
       unapprovedCount,
     });

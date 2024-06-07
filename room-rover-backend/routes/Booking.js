@@ -1,17 +1,17 @@
 import express from "express";
-import multer from "multer"; // Middleware for handling file uploads
+import multer from "multer";
 import Booking from "../models/Booking.js";
 import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 import User from "../models/User.js";
 import formData from "../models/PropertyForm.js";
+import moment from "moment";
 
 dotenv.config();
 
 const booking = express.Router();
 
-// Multer configuration for handling file uploads
-const upload = multer({ dest: "uploads/" }); // Define a destination folder for uploaded files
+const upload = multer({ dest: "uploads/" });
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -21,7 +21,47 @@ const transporter = nodemailer.createTransport({
     user: process.env.SMTP_MAIL,
     pass: process.env.SMTP_PASSWORD,
   },
+  // logger: true,
+  // debug: true,
 });
+
+// transporter.verify(function (error, success) {
+//   if (error) {
+//     console.error("Error with SMTP configuration:", error);
+//   } else {
+//     console.log("SMTP server is ready to take messages");
+//   }
+// });
+
+const sendApprovalEmail = async (booking, user) => {
+  try {
+    await transporter.sendMail({
+      from: process.env.SMTP_MAIL,
+      to: user.email,
+      subject: "Booking Approved",
+      text: `Your booking with ID ${booking._id} has been approved.`,
+    });
+    console.log("Approval email sent successfully");
+  } catch (error) {
+    console.error("Error sending approval email:", error);
+    console.error("Error details:", error.message, error.stack);
+  }
+};
+
+const sendCancellationEmail = async (booking, user, reason) => {
+  try {
+    await transporter.sendMail({
+      from: process.env.SMTP_MAIL,
+      to: user.email,
+      subject: "Booking Cancelled",
+      text: `Your booking with ID ${booking._id} has been cancelled for the following reason: ${reason}.`,
+    });
+    console.log("Cancellation email sent successfully");
+  } catch (error) {
+    console.error("Error sending cancellation email:", error);
+    console.error("Error details:", error.message, error.stack);
+  }
+};
 
 booking.post("/", upload.single("image"), async (req, res) => {
   try {
@@ -37,6 +77,7 @@ booking.post("/", upload.single("image"), async (req, res) => {
       productId,
       status,
       image: image.path,
+      createdAt: new Date(),
     });
 
     res.status(200).json({ message: "Booking initiated", booking });
@@ -80,17 +121,18 @@ booking.post("/", upload.single("image"), async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
 booking.get("/product/:productId", async (req, res) => {
   try {
     const { productId } = req.params;
     const bookings = await Booking.find({ productId }).populate({
       path: "userId",
-      select: "_id name email cnic number", // Remove space before _id
+      select: "_id name email cnic number",
     });
 
     const bookedPosts = bookings
       .map((booking) => {
-        if (!booking.userId) return null; // Check if userId exists
+        if (!booking.userId) return null;
         return {
           bookingId: booking._id,
           _id: booking.userId._id,
@@ -101,7 +143,7 @@ booking.get("/product/:productId", async (req, res) => {
           status: booking.status,
         };
       })
-      .filter((post) => post !== null); // Remove null entries from array
+      .filter((post) => post !== null);
     console.log(bookedPosts);
     res.json(bookedPosts);
   } catch (error) {
@@ -110,26 +152,28 @@ booking.get("/product/:productId", async (req, res) => {
   }
 });
 
-// PUT route to update booking status
-
 booking.put("/:bookingId/status", async (req, res) => {
   try {
     const { bookingId } = req.params;
     const { status } = req.body;
 
     const updatedBooking = await Booking.findByIdAndUpdate(
-      bookingId, // No need to wrap in an object
-      { status }, // Simplified syntax
+      bookingId,
+      { status },
       { new: true }
-    );
+    ).populate("userId");
 
-    console.log("Updated Booking:", updatedBooking); // Log for verification
+    console.log("Updated Booking:", updatedBooking);
 
     if (!updatedBooking) {
       return res.status(404).json({ message: "Booking not found" });
     }
 
-    // Respond with the updated booking
+    if (status === "approved") {
+      const user = updatedBooking.userId;
+      await sendApprovalEmail(updatedBooking, user);
+    }
+
     res
       .status(200)
       .json({ message: "Booking status updated", booking: updatedBooking });
@@ -150,7 +194,7 @@ booking.get("/", async (req, res) => {
     const bookedPosts = bookings
       .map((booking) => {
         if (!booking.productId) {
-          return null; // Skip this booking if productId is null
+          return null;
         }
 
         return {
@@ -174,7 +218,7 @@ booking.get("/", async (req, res) => {
           status: booking.status,
         };
       })
-      .filter((booking) => booking !== null); // Filter out null values
+      .filter((booking) => booking !== null);
 
     res.json(bookedPosts);
   } catch (error) {
@@ -185,7 +229,7 @@ booking.get("/", async (req, res) => {
 
 booking.get("/adminGet/:userId", async (req, res) => {
   try {
-    const userId = req.params.userId; // Extract user ID from URL
+    const userId = req.params.userId;
     const bookings = await Booking.find({ userId })
       .populate("productId")
       .select("status");
@@ -221,19 +265,16 @@ booking.get("/adminGet/:userId", async (req, res) => {
 booking.get("/GetStatus/:id", async (req, res) => {
   try {
     const userId = req.user._id;
-    const productId = req.params.id; // Extract product ID from request parameters
+    const productId = req.params.id;
 
-    // Find bookings with matching userId and productId, and populate the status field
     const bookings = await Booking.find({ userId, productId }).populate(
       "status"
     );
 
-    // If there are no bookings, send a 404 response
     if (!bookings || bookings.length === 0) {
       return res.status(404).json({ message: "Bookings not found" });
     }
 
-    // Since productId is unique, there should be only one booking, so we take the first one
     const status = bookings[0].status;
 
     res.json({ status });
@@ -259,10 +300,8 @@ booking.delete("/:userId/:productId", async (req, res) => {
   try {
     const { userId, productId } = req.params;
 
-    // Find the booking
     const booking = await Booking.findOneAndDelete({ userId, productId });
 
-    // Check if booking exists
     if (!booking) {
       return res.status(404).json({ message: "Booking not found" });
     }
@@ -275,15 +314,45 @@ booking.delete("/:userId/:productId", async (req, res) => {
 
 booking.put("/:bookingId/cancel", async (req, res) => {
   const { bookingId } = req.params;
+  const { reason } = req.body;
 
   try {
-    await Booking.findByIdAndUpdate(bookingId, { $set: { status: "waiting" } });
+    const booking = await Booking.findById(bookingId).populate({
+      path: "productId",
+      populate: {
+        path: "postedBy",
+        model: "user",
+      },
+    });
+
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    const now = moment();
+    const bookingTime = moment(booking.createdAt);
+    const duration = moment.duration(now.diff(bookingTime));
+    const hours = duration.asHours();
+
+    if (hours > 5) {
+      return res.status(400).json({
+        message:
+          "Booking cannot be cancelled after 6 hours",
+      });
+    }
+
+    await Booking.findByIdAndUpdate(bookingId, {
+      $set: { status: "cancelled" },
+    });
 
     await formData.findOneAndUpdate(
       { "booking.user": bookingId },
       { $set: { "booking.status": "waiting" } },
       { new: true }
     );
+
+    const user = await User.findById(booking.userId);
+    await sendCancellationEmail(booking, user, reason);
 
     res.send({ message: "Booking status updated successfully." });
   } catch (error) {

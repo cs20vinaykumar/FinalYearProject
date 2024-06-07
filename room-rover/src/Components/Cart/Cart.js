@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Typed from "typed.js";
+import "./Cart.css"
 
 export default function Cart() {
   const [bookedPosts, setBookedPosts] = useState([]);
@@ -24,13 +26,22 @@ export default function Cart() {
 
     fetchBookings();
   }, []);
+  useEffect(() => {
+    let typed = new Typed(".headinv", {
+      strings: ["Here are the posts you booked."],
+      typeSpeed: 35,
+    });
 
+    return () => {
+      typed.destroy();
+    };
+  }, []);
   return (
     <div>
-      <div className="dashboard">
+      <div className="dashboard-cart">
         <legend>Booked Post</legend>
         <hr className="lakeer lakeer-media" />
-        <div className="headinv">Here are the posts you booked.</div>
+        <div className="headinv"></div>
       </div>
       <br /> <br />
       <div className="main">

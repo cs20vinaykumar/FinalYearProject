@@ -1,33 +1,75 @@
+.dashboard {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.legend {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.lakeer {
+  border: 1px solid #ccc;
+  margin: 10px 0;
+}
+.headinv {
+  margin-bottom: 10px;
+}
+.total-users {
+  font-size: 1.2em;
+  font-weight: bold;
+}
 .complaints-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
 }
-
 .complaint-box {
+  width: calc(33.33% - 50px);
+  margin: 10px;
+  padding: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 10px;
-  margin: 10px;
-  width: calc(33.33% - 20px); /* Adjust based on your design */
   box-sizing: border-box;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: large;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1em;
+  background-color: #fff;
 }
-
-.status-complain{
+.status-complain {
+  display: inline-block;
   background-color: rgb(180, 137, 30);
-  border-radius: 2px;
-  padding: 5px;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 3px;
   font-weight: bold;
 }
+.button-container {
+  margin-top: 10px;
+}
+.delete-user-btn,
+.view-posts-btn {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 1em;
+  margin-right: 5px;
+}
+.delete-user-btn {
+  background-color: #dc3545;
+  color: #fff;
+}
+.view-posts-btn {
+  background-color: #007bff;
+  color: #fff;
+}
 
-/* Adjust width and margins based on your design and layout */
+/* Responsive styles */
 @media screen and (max-width: 768px) {
   .complaint-box {
     width: calc(50% - 20px);
   }
 }
-
 @media screen and (max-width: 480px) {
   .complaint-box {
     width: calc(100% - 20px);

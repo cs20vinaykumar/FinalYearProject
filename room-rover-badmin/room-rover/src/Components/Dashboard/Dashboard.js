@@ -88,6 +88,16 @@ export default function Dashboard() {
                 <i class="fa-solid fa-users"></i> User List
               </Link>
             </li>
+
+            <li>
+              <Link
+                to="/user-block"
+                className="menu-link"
+                activeClassName="active"
+              >
+                <i class="fa-solid fa-user-lock"></i> Block User
+              </Link>
+            </li>
             <li>
               <Link
                 to="/Bookings"
@@ -122,13 +132,22 @@ export default function Dashboard() {
         </div>
 
         <div className="main-contnent">
+          <div class="box box-2">
+            <div className="box-content">
+              <div className="box-number-wrapper">
+                <span className="box-number">{statistics.bothCount}</span>
+                <i class="fa-solid fa-solid-1 fa-user"></i>
+              </div>
+              <h3 style={{ color: "brown" }}>Both: Tenant and Owner</h3>
+            </div>
+          </div>
           <div class="box box-1">
             <div className="box-content">
               <div className="box-number-wrapper">
                 <span className="box-number">{statistics.tenantCount}</span>
                 <i class="fa-solid fa-solid-1 fa-users"></i>
               </div>
-              <h3 style={{ color: "brown" }}>Tenant</h3>
+              <h3 style={{ color: "brown" }}>Only Tenant</h3>
             </div>
           </div>
 
@@ -138,7 +157,7 @@ export default function Dashboard() {
                 <span className="box-number">{statistics.ownerCount}</span>
                 <i class="fa-solid fa-solid-1 fa-user"></i>
               </div>
-              <h3 style={{ color: "brown" }}>Owner</h3>
+              <h3 style={{ color: "brown" }}>Only Owner</h3>
             </div>
           </div>
 
