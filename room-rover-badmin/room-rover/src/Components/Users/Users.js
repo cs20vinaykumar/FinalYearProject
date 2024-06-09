@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Users.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
   const [totalUsers, setTotalUsers] = useState(0);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -22,6 +23,14 @@ export default function Users() {
 
     fetchUsers();
   }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/Login");
+    }
+  }, [navigate]);
 
   const deleteUser = async (userId) => {
     try {

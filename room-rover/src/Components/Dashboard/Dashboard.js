@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import Typed from "typed.js";
 // import FormatPrice from "../Helper/FormatPrice";
@@ -9,6 +9,7 @@ import Typed from "typed.js";
 function Dashboard(props) {
   const [originalProducts, setOriginalProducts] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  const [search, setSearch] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedLocationHeader, setSelectedLocationHeader] =
     useState("Location");
@@ -23,6 +24,7 @@ function Dashboard(props) {
   const [maxPrice, setMaxPrice] = useState("");
   const [userLocation, setUserLocation] = useState(null);
   const [showMap, setShowMap] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMap = () => {
     setShowMap(!showMap);
@@ -42,6 +44,13 @@ function Dashboard(props) {
     };
   }, []);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/Login");
+    }
+  }, [navigate]);
   useEffect(() => {
     fetchData();
     getUserLocation();
@@ -65,6 +74,7 @@ function Dashboard(props) {
 
   const searchHandle = async (event) => {
     const key = event.target.value.trim();
+    setSearch(key);
     if (key === "") {
       setSearchResults([]);
     } else {
@@ -119,7 +129,7 @@ function Dashboard(props) {
     minPrice,
     maxPrice
   ) => {
-    if (searchResults.length > 0) {
+    if (searchResults.length > 0 || search !== "") {
       return searchResults;
     } else {
       return originalProducts.filter(
@@ -132,11 +142,11 @@ function Dashboard(props) {
           (minPrice
             ? parseFloat(product.pricing.rent.replace(/,/g, "")) >=
               parseFloat(minPrice.replace(/,/g, ""))
-            : true) && // Compare with parsed and unformatted minPrice
+            : true) && 
           (maxPrice
             ? parseFloat(product.pricing.rent.replace(/,/g, "")) <=
               parseFloat(maxPrice.replace(/,/g, ""))
-            : true) // Compare with parsed and unformatted maxPrice
+            : true) 
       );
     }
   };
@@ -178,6 +188,7 @@ function Dashboard(props) {
   };
   return (
     <>
+    {/* ........................Filters....................... */}
       <nav className="navbar navbar-expand-lg navbar-light bg-light filters">
         <div className="container-fluid">
           <button
@@ -230,6 +241,14 @@ function Dashboard(props) {
                       onClick={() => filterByLocation("Sukkur")}
                     >
                       Sukkur
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="dropdown-item"
+                      onClick={() => filterByLocation("Larkana")}
+                    >
+                      Larkana
                     </Link>
                   </li>
                 </ul>
@@ -395,6 +414,8 @@ function Dashboard(props) {
           </div>
         </div>
       </nav>
+
+      {/* ---------------------main dashboard.................. */}
       <div className="dashboard">
         <legend>dashboard</legend>
         <hr className="lakeer lakeer-media" />
@@ -409,7 +430,7 @@ function Dashboard(props) {
             }`}
           >
             {productsToDisplay
-              .filter((Product) => Product.booking.status !== "approved") // Filter out products with approved booking status
+              .filter((Product) => Product.booking.status !== "approved") 
               .map((Product) => (
                 <div
                   key={Product._id}

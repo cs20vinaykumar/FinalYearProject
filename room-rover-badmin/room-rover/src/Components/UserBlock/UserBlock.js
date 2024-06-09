@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./UserBlock.css";
+import { useNavigate } from "react-router-dom";
 
 const UserBlock = () => {
   const [blockedUsers, setBlockedUsers] = useState([]);
@@ -8,6 +9,7 @@ const UserBlock = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [successMessage, setSuccessMessage] = useState(false);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchBlockedUsers = async () => {
@@ -27,6 +29,14 @@ const UserBlock = () => {
 
     fetchBlockedUsers();
   }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/Login");
+    }
+  }, [navigate]);
 
   const handleUnblock = (id) => {
     setSelectedUserId(id);

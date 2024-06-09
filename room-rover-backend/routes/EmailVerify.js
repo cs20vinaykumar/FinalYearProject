@@ -11,7 +11,7 @@ EmailVerify.post("/", async (req, res) => {
 
   if (!enteredOtp) {
     return res.send({
-      message: "Please fill in both email and OTP fields",
+      message: "Please fill OTP fields",
     });
   }
 

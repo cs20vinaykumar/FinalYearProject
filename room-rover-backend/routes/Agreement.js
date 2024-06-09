@@ -19,7 +19,7 @@ Agreement.post("/", upload.single("image"), async (req, res) => {
   try {
     const { bulletPoints, ownerName, ownerLName } = req.body;
     const image = req.file.path;
-  
+
     const agreement = new AgreementForm({
       bulletPoints,
       image,

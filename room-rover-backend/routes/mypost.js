@@ -20,7 +20,7 @@ myPost.get("/", async (req, res) => {
 
 myPost.get("/:userId", async (req, res) => {
   try {
-    const userId = req.params.userId; // Extract user ID from URL parameters
+    const userId = req.params.userId; 
     let posts = await formData
       .find({ postedBy: userId })
       .sort("-createdAt");

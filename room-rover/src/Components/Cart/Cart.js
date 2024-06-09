@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Typed from "typed.js";
-import "./Cart.css"
+import "./Cart.css";
 
 export default function Cart() {
   const [bookedPosts, setBookedPosts] = useState([]);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -17,10 +18,10 @@ export default function Cart() {
           },
         });
         setBookedPosts(response.data);
-        setLoading(false); // Set loading to false after fetching data
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching bookings:", error);
-        setLoading(false); // Set loading to false in case of error
+        setLoading(false);
       }
     };
 
@@ -36,6 +37,14 @@ export default function Cart() {
       typed.destroy();
     };
   }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/Login");
+    }
+  }, [navigate]);
   return (
     <div>
       <div className="dashboard-cart">
@@ -45,9 +54,9 @@ export default function Cart() {
       </div>
       <br /> <br />
       <div className="main">
-        {loading ? ( // Check if loading
+        {loading ? (
           <div>Loading...</div>
-        ) : bookedPosts.length === 0 ? ( // Check if bookedPosts array is empty
+        ) : bookedPosts.length === 0 ? (
           <div>No posts booked yet.</div>
         ) : (
           <div className="grid-container">

@@ -31,7 +31,7 @@ GetForm.delete("/:id", async (req, res) => {
 
 GetForm.get("/postStatus", async (req, res) => {
   try {
-    // Count documents based on booking status
+    
     const approvedCount = await formData.countDocuments({
       "booking.status": "approved",
     });
@@ -41,7 +41,6 @@ GetForm.get("/postStatus", async (req, res) => {
     const rejectedCount = await formData.countDocuments({
       "booking.status": "rejected",
     });
-    // Alternatively, you can return these counts and use them in your React component
     res.status(201).json({ approvedCount, waitingCount, rejectedCount });
   } catch (error) {
     console.error("Error fetching post counts:", error);

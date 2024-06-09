@@ -25,7 +25,7 @@ import ViewBooking from "./Components/OwnerSide/ViewBooking/ViewBooking";
 import RequestVisit from "./Components/RequestVisit/RequestVisit";
 import Cart from "./Components/Cart/Cart";
 import Complaint from "./Components/Complaint/Complaint";
-// import Chat from "./Components/Chat/Chat";
+
 
 
 function App() {
@@ -46,7 +46,6 @@ function App() {
             <Route exact path="/Upload" element={<Upload />} />
             <Route exact path="/Dashboard" element={<Dashboard />} />
             <Route path="/product/:productId" element={<Detail />} />
-            {/* <Route path="/Chat/:productId" element={<Chat />} /> */}
             <Route exact path="/Post" element={<Post />} />
             <Route exact path="/Update/:id" element={<UpdateForm />} />
             <Route exact path="/UserProfile" element={<UserProfile />} />
@@ -58,8 +57,6 @@ function App() {
             <Route exact path="/TenantAgreement/:productId" element={<TenantAgreement />} />
             <Route exact path="/Booking" element={<Cart />} />
             <Route exact path="/Complaint/:productId" element={<Complaint />} />
-
-
           </Routes>
         </Router>
       </AppProvider>

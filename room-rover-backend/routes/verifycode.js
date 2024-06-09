@@ -17,14 +17,14 @@ verifycode.post("/", async (req, res) => {
   }
 
   try {
-    // Find the user by email
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(404).json({ success: false, message: "Email not found." });
+      return res
+        .status(404)
+        .json({ success: false, message: "Email not found." });
     }
 
-    // Find the OTP data from the database
     const otpData = await OTP.findOne({ email, code: enteredOtp });
 
     if (!otpData) {
@@ -47,7 +47,9 @@ verifycode.post("/", async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ success: false, message: "Internal Server Error" });
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
   }
 });
 

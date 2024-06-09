@@ -188,6 +188,7 @@ body {
   background-color: #b0b1b2;
 }
 
+/* Sub Dropdown Menus */
 .sub-dropdown {
   display: none;
   position: absolute;
@@ -266,7 +267,7 @@ legend {
   position: absolute;
   right: 25px;
   top: 220px;
-  height: 495px;
+  height: 67vh;
   width: 30%;
 }
 

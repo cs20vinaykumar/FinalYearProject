@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Profile.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
   const [userProfile, setUserProfile] = useState(null);
@@ -8,6 +9,7 @@ function Profile() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -29,6 +31,14 @@ function Profile() {
 
     fetchUserProfile();
   }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/Login");
+    }
+  }, [navigate]);
 
   const handleChangePassword = async () => {
     try {

@@ -1,33 +1,43 @@
-// UserPending.js
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./UserPending.css";
+import { useNavigate } from "react-router-dom";
 
 function UserPending() {
   const [pendingUsers, setPendingUsers] = useState([]);
   const [length, setLength] = useState(0);
   const [loading, setLoading] = useState(true);
   const [rejectMessages, setRejectMessages] = useState({});
-  const [showImagesMap, setShowImagesMap] = useState({}); // State to track image visibility for each user
-
+  const [showImagesMap, setShowImagesMap] = useState({});
+  const navigate = useNavigate();
   useEffect(() => {
     fetchPendingUsers();
   }, []);
 
   const fetchPendingUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/Signup/pending-users");
+      const response = await axios.get(
+        "http://localhost:4000/Signup/pending-users"
+      );
       setPendingUsers(response.data);
       setLength(response.data.length);
       setLoading(false);
-      // Initialize the showImagesMap with default visibility as false for each user
-      setShowImagesMap(Object.fromEntries(response.data.map(user => [user._id, false])));
+      setShowImagesMap(
+        Object.fromEntries(response.data.map((user) => [user._id, false]))
+      );
     } catch (error) {
       console.error(error);
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/Login");
+    }
+  }, [navigate]);
 
   const toggleImageVisibility = (userId) => {
     setShowImagesMap((prevMap) => ({
@@ -39,7 +49,9 @@ function UserPending() {
   const handleApproveUser = async (userId) => {
     try {
       await axios.put(`http://localhost:4000/Signup/approve-user/${userId}`);
-      setPendingUsers((prevUsers) => prevUsers.filter((user) => user._id !== userId));
+      setPendingUsers((prevUsers) =>
+        prevUsers.filter((user) => user._id !== userId)
+      );
       setLength((prevLength) => prevLength - 1);
     } catch (error) {
       console.error(error);
@@ -51,7 +63,9 @@ function UserPending() {
       await axios.put(`http://localhost:4000/Signup/reject-user/${userId}`, {
         rejectMessage: message,
       });
-      setPendingUsers((prevUsers) => prevUsers.filter((user) => user._id !== userId));
+      setPendingUsers((prevUsers) =>
+        prevUsers.filter((user) => user._id !== userId)
+      );
       setLength((prevLength) => prevLength - 1);
       setRejectMessages((prevMessages) => ({
         ...prevMessages,
@@ -127,16 +141,26 @@ function UserPending() {
                             src={`http://localhost:4000/assets/${photo}`}
                             alt={`CNIC ${index}`}
                             className="cnic-photo"
-                            onClick={() => window.open(`http://localhost:4000/assets/${photo}`, "_blank")}
+                            onClick={() =>
+                              window.open(
+                                `http://localhost:4000/assets/${photo}`,
+                                "_blank"
+                              )
+                            }
                           />
                         ))}
                     </div>
                   )}
                 </div>
                 <div className="button-container">
-                  <button onClick={() => handleApproveUser(user._id)}>Approve</button>
-                 
-                  <button className="delete-user-btn" onClick={() => confirmRejectUser(user._id)}>
+                  <button onClick={() => handleApproveUser(user._id)}>
+                    Approve
+                  </button>
+
+                  <button
+                    className="delete-user-btn"
+                    onClick={() => confirmRejectUser(user._id)}
+                  >
                     Reject
                   </button>
                 </div>

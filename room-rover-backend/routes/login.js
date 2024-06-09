@@ -32,7 +32,7 @@ router.post("/", async (req, res) => {
     }
 
     if(user.blocked === true){
-      return res.status(901).json({message: "Your account is blocked by admin. Contact Admin"})
+      return res.status(901).json({message: "Your account is blocked by admin. Contact Admin at vinaychoithani223@gmail.com"})
     }
 
     if (!user.approvedByAdmin) {
@@ -41,6 +41,7 @@ router.post("/", async (req, res) => {
     const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET);
 
     res.status(200).json({ message: "Login Successful", user: user, token: token });
+    console.log(user)
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ message: "Internal Server Error" });

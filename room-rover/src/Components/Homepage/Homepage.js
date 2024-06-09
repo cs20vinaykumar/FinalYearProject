@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import Typed from "typed.js";
 import "./Homepage.css";
 
@@ -52,10 +53,10 @@ export default function Homepage() {
             </h2>
             <div className="secondsection">
               <div className="box-left midDiv">
-                <button className=" btn btn-dark btnB"> + Find a Place</button>
+                <Link  to="/login" ><button className=" btn btn-dark btnB"> + Find a Place</button></Link>
               </div>
               <div className="box-right midDiv">
-                <button className=" btn btn-dark btnB"> + List a Place</button>
+                <Link  to="/login"><button className=" btn btn-dark btnB"> + List a Place</button></Link>
               </div>
             </div>
           </div>

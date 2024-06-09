@@ -21,17 +21,8 @@ const transporter = nodemailer.createTransport({
     user: process.env.SMTP_MAIL,
     pass: process.env.SMTP_PASSWORD,
   },
-  // logger: true,
-  // debug: true,
 });
 
-// transporter.verify(function (error, success) {
-//   if (error) {
-//     console.error("Error with SMTP configuration:", error);
-//   } else {
-//     console.log("SMTP server is ready to take messages");
-//   }
-// });
 
 const sendApprovalEmail = async (booking, user) => {
   try {

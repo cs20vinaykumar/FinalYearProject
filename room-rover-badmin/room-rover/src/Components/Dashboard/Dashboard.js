@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Dashboard() {
@@ -8,11 +8,20 @@ export default function Dashboard() {
   const [users, setUsers] = useState([]);
   const [count, setCount] = useState("0");
   const [counts, setCounts] = useState(null);
+  const navigate = useNavigate();
 
   const handleLinkClick = (link) => {
     console.log("Clicked on link:", link);
     // setActiveLink(link);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/Login");
+    }
+  }, [navigate]);
 
   useEffect(() => {
     axios

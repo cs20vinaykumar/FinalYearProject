@@ -35,6 +35,13 @@ const Payment = ({ booking }) => {
     }
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/Login");
+    }
+  }, [navigate]);
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     setImage(file);
@@ -58,11 +65,11 @@ const Payment = ({ booking }) => {
         formData.append("userId", userId);
         formData.append("productId", productId);
         formData.append("status", "waiting");
-        formData.append("image", image); // Append the image file to the form data
+        formData.append("image", image);
 
         await axios.post("http://localhost:4000/booking", formData, {
           headers: {
-            "Content-Type": "multipart/form-data", // Set content type to multipart form data
+            "Content-Type": "multipart/form-data",
             authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
@@ -78,11 +85,12 @@ const Payment = ({ booking }) => {
   const toggleTermConditonModal = (acceptingTerms = false) => {
     setTermConditonOpen(!isTermConditonOpen);
   };
+
   const handleInitiatePayment = () => {
     const userId = getUserId();
     if (userId === product.postedBy._id) {
       alert("Owner cannot book their own post.");
-      return; // Exit the function early if the user is the owner
+      return;
     }
 
     if (!image) {
@@ -91,11 +99,13 @@ const Payment = ({ booking }) => {
     }
     setTermConditonOpen(true);
   };
+
   const handleTermsAccepted = () => {
     setBookingDone(true);
     toggleTermConditonModal(false);
     handleBookingDone();
   };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -119,7 +129,7 @@ const Payment = ({ booking }) => {
   }, [productId]);
 
   const handleDeleteImage = () => {
-    setImage(null); // Clear the selected image
+    setImage(null);
   };
 
   useEffect(() => {
@@ -153,7 +163,7 @@ const Payment = ({ booking }) => {
     );
 
     if (!confirmDelete) {
-      return; // If user cancels, do nothing
+      return;
     }
 
     try {
@@ -207,7 +217,7 @@ const Payment = ({ booking }) => {
         if (statusData && statusData.status === "approved") {
           await axios.put(
             `http://localhost:4000/PropertyForm/${productId}/booking`,
-            { status: "approved" }, // Update status directly to "approved"
+            { status: "approved" },
             {
               headers: {
                 authorization: `Bearer ${localStorage.getItem("token")}`,

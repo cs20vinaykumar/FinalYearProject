@@ -51,7 +51,7 @@ button[type="submit"]:hover {
   background-color: #0056b3;
 }
 /* src/components/Complaint/Complaint.css */
-.modal {
+.modall {
   position: sticky;
   bottom: 20px;
   left: 70%;
@@ -65,7 +65,7 @@ button[type="submit"]:hover {
   flex-direction: column;
 }
 
-.modal-content {
+.modal-contentt {
   background-color: white;
   display: flex;
   flex-direction: column;

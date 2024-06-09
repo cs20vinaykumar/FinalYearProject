@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./UserPost.css";
 
 export default function UserPost() {
   const [products, setProducts] = useState([]);
   const [length, setLength] = useState(0);
   const { userId } = useParams();
+  const navigate = useNavigate();
   console.log(userId);
 
   useEffect(() => {
@@ -17,16 +18,22 @@ export default function UserPost() {
       .then((res) => res.json())
       .then((result) => {
         setProducts(result.myPost);
-        setLength(result.myPost.length)
+        setLength(result.myPost.length);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }, [userId]);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
+    if (!token) {
+      navigate("/Login");
+    }
+  }, [navigate]);
   return (
     <div>
-    <br />
+      <br />
       <div className="dashboard">
         <legend>Dashboard</legend>
         <hr className="lakeer lakeer-media" />

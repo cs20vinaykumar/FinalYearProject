@@ -52,25 +52,36 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage: storage,
 });
-
+// POST: Register a new user
 routers.post("/", upload.array("file", 3), async (req, res) => {
   const { files } = req;
   const { name, email, number, password, gender, userType } = req.body;
   const fileNames = files.map((file) => file.filename);
 
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(.{6,})$/;
+  const phoneNumberRegex = /^\d{11}$/;
+
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({ message: "Invalid email address" });
+  }
 
   if (!passwordRegex.test(password)) {
-    return res.status(400).send({
+    return res.status(400).json({
       message:
         "Password must be at least 6 characters long and include at least one uppercase letter, one digit, and one special character.",
     });
+  }
+  if (!phoneNumberRegex.test(number)) {
+    return res
+      .status(400)
+      .json({ message: "Phone number must be exactly 11 digits long" });
   }
 
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).send({ message: "User already registered" });
+      return res.status(400).json({ message: "User already registered" });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -81,7 +92,6 @@ routers.post("/", upload.array("file", 3), async (req, res) => {
       email,
       number,
       password: secPass,
-      // cnic,
       gender,
       userType,
       file: fileNames,
@@ -90,6 +100,7 @@ routers.post("/", upload.array("file", 3), async (req, res) => {
 
     await newUser.save();
     console.log(newUser);
+
     const otpCode = Math.floor(Math.random() * 10000 + 1);
     const otpData = new EmailOTP({
       email,
@@ -101,23 +112,12 @@ routers.post("/", upload.array("file", 3), async (req, res) => {
 
     await sendOTPEmail(email, otpCode);
 
-    res.send({ message: "OTP Sent TO Your Email", name });
+    res.status(200).json({ message: "OTP sent to your email", name });
   } catch (err) {
-    res.status(500).send({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 });
-
-routers.get("/true-users", async (req, res) => {
-  try {
-    // Find users where approvedByAdmin is true
-    const approvedUsers = await User.find({ approvedByAdmin: true });
-    res.json(approvedUsers);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
-
+// DELETE: Delete a user by ID
 routers.delete("/users/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -129,10 +129,9 @@ routers.delete("/users/:userId", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
+// GET: Fetch all pending users
 routers.get("/pending-users", async (req, res) => {
   try {
-    // Fetch pending users (approvedByAdmin: false)
     const pendingUsers = await User.find({ approvedByAdmin: false });
     res.json(pendingUsers);
   } catch (error) {
@@ -143,7 +142,7 @@ routers.get("/pending-users", async (req, res) => {
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: process.env.SMTP_PORT,
-  secure: true, // Use SSL/TLS
+  secure: true,
   auth: {
     user: process.env.SMTP_MAIL,
     pass: process.env.SMTP_PASSWORD,
@@ -229,6 +228,7 @@ routers.put("/reject-user/:userId", async (req, res) => {
   }
 });
 
+// GET: Admin user statistics
 routers.get("/admin/user-statistics", async (req, res) => {
   try {
     const maleCount = await User.countDocuments({
@@ -267,7 +267,7 @@ routers.get("/admin/user-statistics", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-
+// GET: Fetch users with only name and approvedByAdmin fields
 routers.get("/users/verifed", async (req, res) => {
   try {
     // Query all users and select only the name and approvedByAdmin fields
@@ -278,5 +278,14 @@ routers.get("/users/verifed", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
+// GET: Fetch all approved users
+routers.get("/true-users", async (req, res) => {
+  try {
+    const approvedUsers = await User.find({ approvedByAdmin: true });
+    res.json(approvedUsers);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 export default routers;

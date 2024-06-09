@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Dropdown, Modal, Button } from "react-bootstrap";
 import "./post.css";
 import Typed from "typed.js";
@@ -8,6 +8,7 @@ export default function Post() {
   const [products, setProducts] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [productToDelete, setProductToDelete] = useState(null);
+  const navigate = useNavigate()
 
   useEffect(() => {
     let typed = new Typed(".headinv", {
@@ -19,6 +20,14 @@ export default function Post() {
       typed.destroy();
     };
   }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/Login");
+    }
+  }, [navigate]);
 
   useEffect(() => {
     fetch("http://localhost:4000/mypost", {
@@ -108,14 +117,14 @@ export default function Post() {
                         </button>
                       </Link>
                     </Dropdown.Item>
-                    <Dropdown.Item></Dropdown.Item>
-                    <Dropdown.Item>
+                
+                    {/* <Dropdown.Item>
                       <Link>
                         <button className="btn btn-success btn-media">
                           View Request Visit
                         </button>
                       </Link>
-                    </Dropdown.Item>
+                    </Dropdown.Item> */}
                   </Dropdown.Menu>
                 </Dropdown>
                 <img

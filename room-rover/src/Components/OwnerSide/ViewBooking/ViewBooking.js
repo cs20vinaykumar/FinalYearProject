@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./ViewBooking.css";
 
 const ViewBookings = () => {
   const { productId } = useParams();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate =  useNavigate()
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -30,6 +31,14 @@ const ViewBookings = () => {
 
     fetchBookings();
   }, [productId]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/Login");
+    }
+  }, [navigate]);
 
   const handleApprove = async (bookingId) => {
     try {

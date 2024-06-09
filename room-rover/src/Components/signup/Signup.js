@@ -14,7 +14,6 @@ export default function Signup() {
     password: "",
     gender: "",
     userType: "",
-    // cnic: "",
   });
 
   const handleChange = (e) => {
@@ -29,22 +28,14 @@ export default function Signup() {
     } else {
       setMessage("");
     }
-
-    // if (name === "cnic" && value.length !== 13) {
-    //   setMessage("CNIC should be exactly 13 digits long.");
-    // }
   };
 
   const handleFileChange = (event) => {
-    const newFiles = event.target.files;
-    setFile([...file, ...newFiles]);
+    setFile(Array.from(event.target.files));
   };
 
-  // const validateCNIC = (cnic) => {
-  //   return /^\d{13}$/.test(cnic);
-  // };
-
-  const register = async () => {
+  const register = async (e) => {
+    e.preventDefault();
     const { name, email, number, password, gender, userType } = user;
 
     if (
@@ -54,13 +45,8 @@ export default function Signup() {
       password &&
       gender &&
       userType &&
-      // cnic &&
       file.length > 0
     ) {
-      // if (!validateCNIC(cnic)) {
-      //   setMessage("Please enter a valid CNIC (13 digits).");
-      //   return;
-      // }
       try {
         const formData = new FormData();
         formData.append("name", name);
@@ -69,24 +55,24 @@ export default function Signup() {
         formData.append("password", password);
         formData.append("gender", gender);
         formData.append("userType", userType);
-        // formData.append("cnic", cnic);
-        for (let i = 0; i < file.length; i++) {
-          formData.append("file", file[i]);
-        }
+        file.forEach((file) => formData.append("file", file));
 
         const response = await axios.post(
           "http://localhost:4000/Signup",
           formData
         );
+
         setMessage(response.data.message);
-        if (response.data.message === "OTP Sent TO Your Email") {
+        if (response.data.message === "OTP sent to your email") {
           setTimeout(() => {
             navigate("/EmailVerify");
           }, 2000);
         }
       } catch (error) {
-        console.error(error.message || error.response.data);
-        setMessage("An error occurred. Please try again later.");
+        setMessage(
+          error.response?.data?.message ||
+            "An error occurred. Please try again later."
+        );
       }
     } else {
       setMessage("Please fill in all the required fields");
@@ -98,7 +84,7 @@ export default function Signup() {
       <div className="main-content">
         <div className="signup">
           <h4>Create Account</h4>
-          <form action="" className="form-class">
+          <form className="form-class" onSubmit={register}>
             <div className="form-group">
               <label htmlFor="name" className="labels">
                 Name:
@@ -111,6 +97,7 @@ export default function Signup() {
                 className="inputs"
                 placeholder="Enter Your Full Name"
                 onChange={handleChange}
+                required
               />
             </div>
             <div className="form-group">
@@ -125,6 +112,7 @@ export default function Signup() {
                 className="inputs"
                 placeholder="Enter Your email Id"
                 onChange={handleChange}
+                required
               />
             </div>
             <div className="form-group">
@@ -132,43 +120,31 @@ export default function Signup() {
                 Phone No:
               </label>
               <input
-                type="number"
+                type="tel"
                 name="number"
                 value={user.number}
                 id="number"
                 className="inputs"
                 placeholder="Enter Your Phone Number"
                 onChange={handleChange}
+                required
               />
             </div>
             <div className="form-group">
-              <label htmlFor="pass" className="labels">
+              <label htmlFor="password" className="labels">
                 Password:
               </label>
               <input
                 type="password"
                 name="password"
                 value={user.password}
-                id="pass"
+                id="password"
                 className="inputs"
                 placeholder="Enter Your Password"
                 onChange={handleChange}
+                required
               />
             </div>
-            {/* <div className="form-group">
-              <label htmlFor="cnic" className="labels">
-                CNIC:
-              </label>
-              <input
-                type="text"
-                name="cnic"
-                value={user.cnic}
-                id="cnic"
-                className={"inputs" + (message ? " invalid" : "")}
-                placeholder="Enter Your CNIC"
-                onChange={handleChange}
-              />
-            </div> */}
             <div className="form-group">
               <label className="labels">User Type:</label>
               <select
@@ -176,6 +152,7 @@ export default function Signup() {
                 value={user.userType}
                 className="inputs select-one"
                 onChange={handleChange}
+                required
               >
                 <option value="">Select User Type</option>
                 <option value="tenant">Tenant</option>
@@ -193,6 +170,7 @@ export default function Signup() {
                   name="gender"
                   value="male"
                   onChange={handleChange}
+                  required
                 />
                 <label htmlFor="female" className="female">
                   Female
@@ -203,10 +181,11 @@ export default function Signup() {
                   name="gender"
                   value="female"
                   onChange={handleChange}
+                  required
                 />
               </div>
             </div>
-            <div className="form-group cnic">
+            <div className="form-group">
               <label htmlFor="cnicPhotos" className="labels">
                 CNIC Photos:
               </label>
@@ -218,25 +197,22 @@ export default function Signup() {
                 className="inputs"
                 multiple
                 onChange={handleFileChange}
+                required
               />
             </div>
-            {/* {file.map((file, index) => (
-              <li key={index}>{file.name}</li>
-            ))} */}
+            <p className="tomato-red">{message}</p>
+            <button
+              className="btn btn-primary btn"
+              id="btn-top"
+              style={{ background: "#8f2c24" }}
+              onClick={register}
+            >
+              Register
+            </button>
+            <p className="my-3">
+              Already have an account? <Link to="/Login">Login</Link>
+            </p>
           </form>
-          <p className="tomato-red">{message}</p>
-          <button
-            className="btn btn-primary  btn"
-            id="btn-top"
-            style={{ background: "#8f2c24" }}
-            onClick={register}
-          >
-            Register
-          </button>
-
-          <p id="para-login" className="my-3">
-            Already have an account? <Link to="/Login">Login</Link>
-          </p>
         </div>
       </div>
     </div>

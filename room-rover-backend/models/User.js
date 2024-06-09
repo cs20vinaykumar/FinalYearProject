@@ -5,7 +5,6 @@ const userSchema = new mongoose.Schema({
   email: String,
   number: Number,
   password: String,
-  // cnic: String,
   gender: String,
   userType: String,
   file: [
@@ -23,8 +22,8 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "formData" }], // Posts made by the user
-  bookedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Booking" }], // Posts booked by the user
+  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "formData" }], 
+  bookedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Booking" }], 
 });
 
 const User = new mongoose.model("user", userSchema);

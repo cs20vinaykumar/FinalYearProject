@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function UserBooking() {
   const [bookedPosts, setBookedPosts] = useState([]);
   const [loading, setLoading] = useState(true); // Add loading state
   const { userId } = useParams();
   const [length, setLength] = useState(0);
+  const navigate = useNavigate()
   useEffect(() => {
     const fetchBookings = async () => {
       try {
@@ -30,7 +31,13 @@ export default function UserBooking() {
 
     fetchBookings();
   }, [userId]);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
+    if (!token) {
+      navigate("/Login");
+    }
+  }, [navigate]);
   return (
     <div>
     <br />

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const complaintSchema = new mongoose.Schema({
   userId: {
-    type: mongoose.Schema.Types.ObjectId, // Assuming userId is the ID of the user posting the complaint
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   heading: {
@@ -15,7 +15,7 @@ const complaintSchema = new mongoose.Schema({
   },
   againstType: {
     type: String,
-    enum: ["user", "property"], // Adding enum for againstType
+    enum: ["user", "property"],
     required: true,
   },
   againstId: {
@@ -28,12 +28,12 @@ const complaintSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["pending", "resolved", "closed"], // Adding status field with enum
-    default: "pending", // Default value for status
+    enum: ["pending", "resolved", "closed"],
+    default: "pending",
   },
   resolvedAt: {
     type: Date,
-    default: null, // Default value for resolvedAt
+    default: null,
   },
 });
 

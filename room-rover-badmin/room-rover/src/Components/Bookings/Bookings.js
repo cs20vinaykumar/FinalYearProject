@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Booking.css";
 
 function Bookings(props) {
   const [originalProducts, setOriginalProducts] = useState([]);
   const [totalBookings, setTotalBookings] = useState(0);
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchData();
@@ -28,6 +29,13 @@ function Bookings(props) {
       // Handle error, e.g., display a message to the user
     }
   };
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/Login");
+    }
+  }, [navigate]);
 
   const handleDelete = async (productId) => {
     const confirmed = window.confirm("Are you sure you want to delete this booking?");

@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./Details.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Detail = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +31,14 @@ const Detail = () => {
 
     fetchData();
   }, [productId]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/Login");
+    }
+  }, [navigate]);
 
   const goToPrevSlide = () => {
     setCurrentIndex((prevIndex) =>
@@ -97,7 +106,12 @@ const Detail = () => {
                 <strong>Email:</strong> {product.postedBy?.email}
               </p>
               <p>
-                <strong>Booking Status:</strong> <span className="green-one">{product.booking.status === `approved`? `Booked`: product.booking.status }</span> 
+                <strong>Booking Status:</strong>{" "}
+                <span className="green-one">
+                  {product.booking.status === `approved`
+                    ? `Booked`
+                    : product.booking.status}
+                </span>
               </p>
             </div>
           </div>{" "}

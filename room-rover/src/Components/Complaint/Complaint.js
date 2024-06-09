@@ -9,7 +9,7 @@ const Complaint = ({ onClose }) => {
   const { productId } = useParams();
   const [heading, setHeading] = useState("");
   const [description, setDescription] = useState("");
-  const [againstType, setAgainstType] = useState("user"); // Assuming default is user
+  const [againstType, setAgainstType] = useState("user"); 
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -43,8 +43,8 @@ const Complaint = ({ onClose }) => {
   };
 
   return (
-    <div className="modal">
-      <div className="modal-content">
+    <div className="modall">
+      <div className="modal-contentt">
         <div className="modal-header">
           <h3>Submit Complaint</h3>
           <span className="close-button" onClick={onClose}>

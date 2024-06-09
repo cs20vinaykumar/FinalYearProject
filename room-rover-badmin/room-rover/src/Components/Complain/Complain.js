@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Complain.css";
+import { useNavigate } from "react-router-dom";
 
 const Complain = () => {
   const [complaints, setComplaints] = useState([]);
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchComplaints = async () => {
@@ -29,6 +31,14 @@ const Complain = () => {
   }, []);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/Login");
+    }
+  }, [navigate]);
+
+  useEffect(() => {
     const checkAndUpdateBlockStatus = async (userId) => {
       try {
         const response = await axios.put(
@@ -42,7 +52,9 @@ const Complain = () => {
         );
 
         if (response.data.user && response.data.user.blocked) {
-          alert(`User ${response.data.user.name} has been blocked due to multiple complaints.`);
+          alert(
+            `User ${response.data.user.name} has been blocked due to multiple complaints.`
+          );
         }
       } catch (error) {
         console.error("Error checking and updating block status:", error);
@@ -75,7 +87,9 @@ const Complain = () => {
       );
 
       const updatedComplaints = complaints.map((complaint) =>
-        complaint._id === id ? { ...complaint, status: "resolved", resolutionMessage: message } : complaint
+        complaint._id === id
+          ? { ...complaint, status: "resolved", resolutionMessage: message }
+          : complaint
       );
       setComplaints(updatedComplaints);
 
@@ -90,7 +104,9 @@ const Complain = () => {
   };
 
   const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this complaint?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this complaint?"
+    );
     if (!confirmDelete) {
       return;
     }
@@ -159,7 +175,9 @@ const Complain = () => {
               {complaint.status !== "resolved" && (
                 <button
                   className="delete-user-btn"
-                  onClick={() => handleResolve(complaint._id, complaint.againstId)}
+                  onClick={() =>
+                    handleResolve(complaint._id, complaint.againstId)
+                  }
                 >
                   Resolve
                 </button>

@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./UserProfile.css";
 import axios from "axios";
-import Alert from "@mui/material/Alert";
-import CheckIcon from "@mui/icons-material/Check";
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
   const [userProfile, setUserProfile] = useState(null);
-  const [submitMessage, setSubmitMessage] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -30,139 +34,99 @@ const UserProfile = () => {
     fetchUserProfile();
   }, []);
 
-  const handleInputChange = (e) => {
-    setUserProfile({ ...userProfile, [e.target.id]: e.target.value });
-  };
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
-  const handleSubmit = async () => {
+    if (!token) {
+      navigate("/Login");
+    }
+  }, [navigate]);
+
+  const handleChangePassword = async () => {
+    if (newPassword !== confirmNewPassword) {
+      setErrorMessage("New password and confirm new password do not match");
+      return;
+    }
+
+    setLoading(true);
+
     try {
-      const updateUserProfile = await axios.put(
-        "http://localhost:4000/updateProfile",
-        userProfile,
+      const response = await axios.put(
+        "http://localhost:4000/updateProfile/changePassword",
+        {
+          currentPassword,
+          newPassword,
+          confirmNewPassword,
+        },
         {
           headers: {
-            authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      const responseData = updateUserProfile.data;
-      setSubmitMessage(responseData.message);
-      setShowAlert(true);
-      
-      setTimeout(() => {
-        window.location.reload();
-      }, 10);
+
+      setErrorMessage("");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmNewPassword("");
+      alert(response.data.message);
     } catch (error) {
-      console.error("Error updating user profile", error);
+      setErrorMessage(
+        error.response?.data?.message || "Error updating password"
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div>
-      {userProfile ? (
-        <div className="profile-container">
-          <div className="profile-header">
-            <img src="" alt="" />
-            <h2>
-              {userProfile.name} {userProfile.lname}
-            </h2>
+    <div className="container-one vh-100 gradient-custom">
+      <h2>User Profile</h2>
+      {userProfile && (
+        <div>
+          <div className="form-group-pro">
+            <label>Name:</label>
+            <input type="text" value={userProfile.name} disabled />
           </div>
-          <div className="profile-content">
-            <div className="user-details">User Profile</div>
-            <label htmlFor="name">First Name</label>
+          <div className="form-group-pro">
+            <label>Email:</label>
+            <input type="email" value={userProfile.email} disabled />
+          </div>
+          <div className="form-group-pro">
+            <label>Number:</label>
+            <input type="text" value={userProfile.number} disabled />
+          </div>
+          <div className="form-group-pro">
+            <label>Current Password:</label>
             <input
-              type="text"
-              id="name"
-              value={userProfile.name}
-              onChange={handleInputChange}
-            />{" "}
-            <br />
-            <br />
-            <label htmlFor="lname">Last Name</label>
+              type="password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+            />
+          </div>
+          <div className="form-group-pro">
+            <label>New Password:</label>
             <input
-              type="text"
-              id="lname"
-              value={userProfile.lname}
-              onChange={handleInputChange}
-            />{" "}
-            <br />
-            <br />
-            <label htmlFor="email">Email</label>
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+          </div>
+          <div className="form-group-pro">
+            <label>Confirm New Password:</label>
             <input
-              type="email"
-              id="email"
-              value={userProfile.email}
-              // onChange={handleInputChange}
-            />{" "}
-            <br />
-            <br />
-            <label htmlFor="number">Number</label>
-            <input
-              type="Number"
-              id="number"
-              value={userProfile.number}
-              onChange={handleInputChange}
-            />{" "}
-            <br />
-            <br />
-            <label htmlFor="Password">Password</label>
-            <input
-              type="Password"
-              id="Password"
-              value={userProfile.password}
-              onChange={handleInputChange}
-            />{" "}
-            <br />
-            <br /> <br />
-            <div className="gender">
-              <label htmlFor="">Gender</label>
-              <label htmlFor="male" className="label-gender">
-                Male
-              </label>
-              <input
-                type="radio"
-                id="male"
-                value="male"
-                checked={userProfile.gender === "male"}
-                onChange={handleInputChange}
-              />
-              <br />
-              <label htmlFor="female" className="label-gender">
-                Female
-              </label>
-              <input
-                type="radio"
-                id="female"
-                value="female"
-                checked={userProfile.gender === "female"}
-                onChange={handleInputChange}
-              />{" "}
-              <br />
-            </div>
-            <button
-              className="btn btn-primary btn-profile"
-              onClick={handleSubmit}
-            >
-              Submit changes
-            </button>{" "}
-            <br />
-            {/* {submitMessage && <p>{submitMessage}</p>} */}
-            {showAlert && (
-              <div className="alert-container">
-                <div className="alert-message">
-                  <Alert
-                    icon={<CheckIcon fontSize="inherit" />}
-                    severity="success"
-                  >
-                    <strong>{submitMessage}</strong>
-                  </Alert>
-                </div>
-              </div>
-            )}
+              type="password"
+              value={confirmNewPassword}
+              onChange={(e) => setConfirmNewPassword(e.target.value)}
+            />
+          </div>
+          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+          <div className="form-group-pro">
+            <button onClick={handleChangePassword} disabled={loading}>
+              {loading ? "Changing..." : "Change Password"}
+            </button>
           </div>
         </div>
-      ) : (
-        <p></p>
       )}
     </div>
   );

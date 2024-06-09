@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import Chat from "../Chat/Chat";
@@ -13,6 +13,7 @@ const Detail = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isComplaintOpen, setIsComplaintOpen] = useState(false);
   const [totalViews, setTotalViews] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,7 +33,6 @@ const Detail = () => {
         console.error("Error fetching data:", error);
       }
     };
-
     const fetchTotalViews = async () => {
       try {
         const response = await axios.get(
@@ -81,6 +81,14 @@ const Detail = () => {
       postView();
     }
   }, [product, productId]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/Login");
+    }
+  }, [navigate]);
 
   const goToPrevSlide = () => {
     setCurrentIndex((prevIndex) =>

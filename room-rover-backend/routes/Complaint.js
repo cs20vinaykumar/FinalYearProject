@@ -23,7 +23,6 @@ Complaint.post("/:productId", async (req, res) => {
     const userId = req.user.id;
 
     if (againstType === "user") {
-      // Fetch the user ID from the productId's postedBy field
       const product = await formData.findById(productId);
       if (!product) {
         return res.status(404).json({ message: "Product not found" });
@@ -33,7 +32,7 @@ Complaint.post("/:productId", async (req, res) => {
       const userComplaintsCount = await Complain.countDocuments({
         againstType: "user",
         againstId,
-        status: { $ne: "resolved" }, // Exclude resolved complaints
+        status: { $ne: "resolved" },
       });
 
       const newComplaint = new Complain({
@@ -48,7 +47,6 @@ Complaint.post("/:productId", async (req, res) => {
         .status(201)
         .json({ message: "Complaint submitted successfully" });
     } else if (againstType === "property") {
-      // If the complaint is against a product, directly use productId
       const newComplaint = new Complain({
         userId,
         heading,
@@ -134,7 +132,6 @@ Complaint.put("/check-block-status/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
 
-    // Count unresolved complaints against the user
     const unresolvedComplaintsCount = await Complain.countDocuments({
       againstType: "user",
       againstId: userId,
@@ -142,7 +139,6 @@ Complaint.put("/check-block-status/:userId", async (req, res) => {
     });
 
     if (unresolvedComplaintsCount > 3) {
-      // Update the user's blocked status to true
       const updatedUser = await User.findByIdAndUpdate(
         userId,
         { blocked: true },

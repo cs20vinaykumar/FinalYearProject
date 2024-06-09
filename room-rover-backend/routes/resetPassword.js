@@ -24,7 +24,6 @@ resetPassword.post("/", async (req, res) => {
   }
 
   try {
-    // Check if passwords match
     if (newPassword !== confirmPassword) {
       return res.json({
         success: false,
@@ -32,18 +31,12 @@ resetPassword.post("/", async (req, res) => {
       });
     }
 
-    // Find the user by email
     const user = await User.findOne({ email });
 
     if (user) {
-      // Hash the new password
       const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-      // Update the user's password in the database
       await User.updateOne({ email }, { password: hashedPassword });
-
-      // Optionally, you can delete the OTP record after password reset
-      // await OTP.deleteOne({ email });
 
       return res.json({
         success: true,
